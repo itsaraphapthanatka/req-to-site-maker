@@ -8,42 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Saranya Clothing Premium Color Palette */
-    --background: 40 33% 97.6%; /* Ivory White #F9F9F6 */
-    --foreground: 30 8% 30%;
+    /* Saranya Clothing Warm Bohemian Color Palette */
+    --background: 30 40% 96%; /* Warm Cream #FAF7F2 */
+    --foreground: 25 15% 25%;
 
-    --card: 40 33% 97.6%;
-    --card-foreground: 30 8% 30%;
+    --card: 30 40% 96%;
+    --card-foreground: 25 15% 25%;
 
-    --popover: 40 33% 97.6%;
-    --popover-foreground: 30 8% 30%;
+    --popover: 30 40% 96%;
+    --popover-foreground: 25 15% 25%;
 
-    --primary: 37 33% 64%; /* Champagne Gold #C8A97E */
-    --primary-foreground: 40 33% 97.6%;
+    --primary: 25 55% 55%; /* Terracotta #C8845E */
+    --primary-foreground: 30 40% 96%;
 
-    --secondary: 30 30% 81%; /* Warm Beige #DCC8B2 */
-    --secondary-foreground: 30 8% 30%;
+    --secondary: 35 45% 75%; /* Warm Sand #DDBFA0 */
+    --secondary-foreground: 25 15% 25%;
 
-    --muted: 30 18% 65%; /* Soft Taupe #B9A18C */
-    --muted-foreground: 30 8% 45%;
+    --muted: 30 25% 70%; /* Dusty Rose Tan #C4AA95 */
+    --muted-foreground: 25 15% 40%;
 
-    --accent: 37 33% 64%;
-    --accent-foreground: 40 33% 97.6%;
+    --accent: 20 60% 50%; /* Burnt Sienna #CC6633 */
+    --accent-foreground: 30 40% 96%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 40 33% 97.6%;
+    --destructive-foreground: 30 40% 96%;
 
     --border: 30 30% 88%;
     --input: 30 30% 88%;
-    --ring: 37 33% 64%;
+    --ring: 25 55% 55%;
 
     --radius: 0.75rem;
     
-    /* Custom design tokens */
-    --gradient-gold: linear-gradient(135deg, hsl(37 33% 64%), hsl(37 43% 74%));
-    --gradient-elegant: linear-gradient(180deg, hsl(40 33% 97.6%), hsl(30 30% 93%));
-    --shadow-elegant: 0 10px 40px -10px hsl(37 33% 64% / 0.2);
-    --shadow-soft: 0 4px 20px -4px hsl(30 18% 65% / 0.15);
+    /* Custom design tokens - Warm Bohemian */
+    --gradient-warm: linear-gradient(135deg, hsl(25 55% 55%), hsl(35 50% 65%));
+    --gradient-sunset: linear-gradient(180deg, hsl(30 40% 96%), hsl(35 35% 90%));
+    --gradient-hero: linear-gradient(120deg, hsl(25 15% 25% / 0.85), hsl(25 55% 55% / 0.6));
+    --shadow-warm: 0 10px 40px -10px hsl(25 55% 55% / 0.3);
+    --shadow-soft: 0 4px 20px -4px hsl(30 25% 70% / 0.2);
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
@@ -117,16 +118,20 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-  .gradient-gold {
-    background: var(--gradient-gold);
+  .gradient-warm {
+    background: var(--gradient-warm);
   }
   
-  .gradient-elegant {
-    background: var(--gradient-elegant);
+  .gradient-sunset {
+    background: var(--gradient-sunset);
   }
   
-  .shadow-elegant {
-    box-shadow: var(--shadow-elegant);
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
   }
   
   .shadow-soft {
