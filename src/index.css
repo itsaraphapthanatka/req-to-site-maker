@@ -8,35 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Saranya Clothing Premium Color Palette */
+    --background: 40 33% 97.6%; /* Ivory White #F9F9F6 */
+    --foreground: 30 8% 30%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 40 33% 97.6%;
+    --card-foreground: 30 8% 30%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 40 33% 97.6%;
+    --popover-foreground: 30 8% 30%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 37 33% 64%; /* Champagne Gold #C8A97E */
+    --primary-foreground: 40 33% 97.6%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 30% 81%; /* Warm Beige #DCC8B2 */
+    --secondary-foreground: 30 8% 30%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 18% 65%; /* Soft Taupe #B9A18C */
+    --muted-foreground: 30 8% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 37 33% 64%;
+    --accent-foreground: 40 33% 97.6%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 40 33% 97.6%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 30% 88%;
+    --input: 30 30% 88%;
+    --ring: 37 33% 64%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+    
+    /* Custom design tokens */
+    --gradient-gold: linear-gradient(135deg, hsl(37 33% 64%), hsl(37 43% 74%));
+    --gradient-elegant: linear-gradient(180deg, hsl(40 33% 97.6%), hsl(30 30% 93%));
+    --shadow-elegant: 0 10px 40px -10px hsl(37 33% 64% / 0.2);
+    --shadow-soft: 0 4px 20px -4px hsl(30 18% 65% / 0.15);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +64,33 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 30 10% 12%;
+    --foreground: 40 33% 97.6%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 30 10% 15%;
+    --card-foreground: 40 33% 97.6%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 30 10% 15%;
+    --popover-foreground: 40 33% 97.6%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 37 33% 64%;
+    --primary-foreground: 30 10% 12%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 30 12% 20%;
+    --secondary-foreground: 40 33% 97.6%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 30 12% 25%;
+    --muted-foreground: 30 18% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 37 33% 64%;
+    --accent-foreground: 30 10% 12%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 40 33% 97.6%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 30 12% 25%;
+    --input: 30 12% 25%;
+    --ring: 37 33% 64%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +108,32 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .gradient-gold {
+    background: var(--gradient-gold);
+  }
+  
+  .gradient-elegant {
+    background: var(--gradient-elegant);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
   }
 }
