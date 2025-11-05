@@ -19,22 +19,10 @@ const Index = () => {
         <section className="w-full">
           <Hero />
         </section>
-
-        <section className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
           <About />
-        </section>
-
-        <section className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
           <Services />
-        </section>
-
-        <section className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
           <Products />
-        </section>
-
-        <section className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20">
           <Contact />
-        </section>
       </main>
 
       {/* Footer */}

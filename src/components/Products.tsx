@@ -65,7 +65,7 @@ const Products = () => {
         </h3>
 
         {/* ปุ่ม Filter */}
-        <div className="flex justify-center gap-3 mb-12">
+        <div className="flex justify-center gap-3 mb-12 flex-wrap">
           <Button
             variant={filter === "new" ? "default" : "outline"}
             onClick={() => {
