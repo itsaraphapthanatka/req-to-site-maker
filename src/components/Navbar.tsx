@@ -1,43 +1,55 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link"; // ✅ เพิ่มบรรทัดนี้
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
-    { name: "หน้าแรก", href: "#home" },
-    { name: "เกี่ยวกับเรา", href: "#about" },
-    { name: "บริการ", href: "#services" },
-    { name: "สินค้า", href: "#products" },
-    { name: "ติดต่อเรา", href: "#contact" },
+    { name: "Home", href: "#home" },
+    { name: "About Us", href: "#about" },
+    { name: "Services", href: "#services" },
+    { name: "Products", href: "#products" },
+    { name: "Blogs", href: "/blogs", isPage: true },
+    { name: "Contact Us", href: "#contact" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border shadow-soft">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-primary">SARANYA CLOTHING</h1>
-          </div>
+          <Link to="/">
+            <img src={logo} alt="logo" className="w-40 h-40 object-contain" />
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-foreground hover:text-primary transition-smooth text-sm font-medium"
-              >
-                {link.name}
-              </a>
-            ))}
-            <Button variant="default" size="sm">
-              ขอใบเสนอราคา
-            </Button>
+            {navLinks.map((link) =>
+              link.isPage ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-foreground hover:text-primary transition-smooth text-sm font-medium"
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <HashLink
+                  key={link.name}
+                  smooth
+                  to={`/${link.href}`} // ✅ ใช้ HashLink เพื่อให้กลับจาก /blogs ได้
+                  className="text-foreground hover:text-primary transition-smooth text-sm font-medium"
+                >
+                  {link.name}
+                </HashLink>
+              )
+            )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu */}
           <button
             className="md:hidden p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -46,25 +58,6 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden py-4 border-t border-border">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="block py-3 text-foreground hover:text-primary transition-smooth"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </a>
-            ))}
-            <Button variant="default" size="sm" className="w-full mt-4">
-              ขอใบเสนอราคา
-            </Button>
-          </div>
-        )}
       </div>
     </nav>
   );

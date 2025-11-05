@@ -1,40 +1,89 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import heroImage from "@/assets/hero-fashion.jpg";
+import heroImage from "@/assets/2.png";
+import heroVideo from "@/assets/Saranya_1.mp4";
+import heroVideo2 from "@/assets/Saranya_2.mp4";
+import { Carousel } from "antd";
+import workshopImage from "@/assets/workshop.jpg";
 
 const Hero = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleCarouselChange = (current: number) => {
+    setCurrentIndex(current);
+  };
+
   return (
     <section id="home" className="relative h-screen flex items-center">
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 gradient-hero" />
+      <div className="absolute inset-0 z-0">
+        <Carousel autoplay={true} autoplaySpeed={10000} afterChange={handleCarouselChange}>
+          <div className="h-screen">
+            <video 
+              src={heroVideo}
+              autoPlay
+              loop
+              muted
+              className="w-full h-screen object-cover"
+              title="Saranya_1"
+            />
+          </div>
+          <div>
+            {/* <video
+              src={heroVideo2}
+              autoPlay
+              loop
+              muted
+              className="w-full h-screen object-cover"
+              title="Saranya_2"
+            /> */}
+            <img src={workshopImage} alt="Saranya_2" className="w-full h-screen object-cover" />
+          </div>
+          <div>
+            <img src={heroImage} alt="Saranya_3" className="pt-20 w-full h-screen object-cover" />
+          </div>
+        </Carousel>
+        <div className="absolute inset-0" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight text-background">
-            ผลิตเสื้อผ้า <span className="text-primary">ODM & OEM</span> ครบวงจร
-          </h1>
+          <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight text-background">
+            {currentIndex === 0 ? (
+              <>
+               
+              </>
+            ) : currentIndex === 1 ? (
+              <>
+              Producing brand-level fashion with international standards.
+              </>
+            ) : currentIndex === 2 ? (
+              <>
+                Where simplicity becomes art.
+              </>
+            ) : null
+            }
+          </h4>
           <p className="text-xl md:text-2xl mb-4 text-background/90">
-            สร้างแบรนด์ของคุณให้เกิดขึ้นจริง
+            {currentIndex === 0
+              ? ""
+              : "From the expert team in fashion, from idea to design, production and delivery."}
           </p>
           <p className="text-lg mb-8 text-background/80 max-w-2xl">
-            จากทีมผู้เชี่ยวชาญด้านแฟชั่น ที่ดูแลตั้งแต่ไอเดีย ออกแบบ ไปจนถึงผลิตและจัดส่ง
-            งานคุณภาพมาตรฐานส่งออก พร้อมให้คำปรึกษาแบรนด์เสื้อผ้าใหม่
+            {currentIndex === 0
+              ? ""
+              : "Quality standard export, ready to advise new fashion brands."}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="text-lg shadow-warm">
-              ขอใบเสนอราคา <ArrowRight className="ml-2" />
-            </Button>
-            <Button size="lg" variant="secondary" className="text-lg">
-              ดูบริการของเรา
-            </Button>
+            {currentIndex === 0 ? (
+              <>
+               
+              </>
+            ) : (
+              <>
+              
+              </>
+            )}
           </div>
         </div>
       </div>

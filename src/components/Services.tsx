@@ -1,164 +1,344 @@
-import { Card } from "@/components/ui/card";
+import { useState } from "react";
+import { Image, Carousel, Collapse, Modal, CollapseProps } from "antd";
 import { Button } from "@/components/ui/button";
-import { Palette, Cog, ArrowRight, CheckCircle2 } from "lucide-react";
+import fac1 from "@/assets/fac1.jpg";
+import fac2 from "@/assets/fac2.jpg";
+import RE_01 from "@/assets/RE_01.jpg";
+import RE_02 from "@/assets/RE_02.jpg";
+import RE_03 from "@/assets/RE_03.jpg";
+import RE_04 from "@/assets/RE_04.jpg";
+// ✅ ต้อง import รูปทั้งหมดที่คุณอ้างถึง
+import RE_05 from "@/assets/RE_05.jpg";
+import RE_06 from "@/assets/RE_06.jpg";
+import RE_07 from "@/assets/RE_07.jpg";
+import RE_08 from "@/assets/RE_08.jpg";
+import RE_09 from "@/assets/RE_09.jpg";
+import RE_10 from "@/assets/RE_10.jpg";
+import RE_11 from "@/assets/RE_11.jpg";
+import RE_12 from "@/assets/RE_12.jpg";
+import RE_13 from "@/assets/RE_13.jpg";
+import RE_14 from "@/assets/RE_14.jpg";
+import RE_15 from "@/assets/RE_15.jpg";
+import RE_16 from "@/assets/RE_16.jpg";
+import styled from "styled-components";
+import workspace from "@/assets/workspace.jpg";
+
+// const StyledCollapse = styled(Collapse)`
+//   .ant-collapse-content {
+//     // background-color: #f3f4f6; /* ✅ สีพื้นหลังของเนื้อหา */
+//     background-image: url(@/assets/workspace.jpg)
+//     color: #111827;
+//   }
+// `;
+const StyledCollapse = styled(Collapse)`
+  position: relative;
+  overflow: hidden;
+
+  .ant-collapse-content {
+    position: relative;
+    background-image: url(${workspace});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #111827;
+    z-index: 1;
+  }
+
+  /* ✅ เพิ่ม overlay โปร่งใส */
+  .ant-collapse-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.6); /* ปรับค่าความโปร่งใสได้ */
+    z-index: 0;
+  }
+
+  /* ✅ ทำให้ข้อความอยู่เหนือ overlay */
+  .ant-collapse-content > * {
+    position: relative;
+    z-index: 1;
+  }
+`;
+
+
 
 const Services = () => {
+
+  
+  // 👇 state สำหรับ modal
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedStep, setSelectedStep] = useState<any>(null);
+
+  // 👇 state สำหรับเลือกประเภท modal (odm / oem)
+  const [selectedModal, setSelectedModal] = useState<"odm" | "oem" | null>(null);
+
+  // ... (odmSteps, oemSteps เหมือนเดิม แต่เปลี่ยน src ของรูปให้ใช้ตัวแปร import)
   const odmSteps = [
-    "รับบรีฟความต้องการลูกค้า",
-    "โรงงานนำเสนอแบบสำเร็จ (Catalog ODM)",
-    "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
-    "ผลิตตัวอย่าง (Sample)",
-    "ลูกค้ายืนยันแบบ",
-    "วางแผนการผลิต",
-    "ผลิตจริง (Mass Production)",
-    "ตรวจสอบคุณภาพ (QC)",
-    "ติดแบรนด์ / บรรจุภัณฑ์",
-    "จัดส่งสินค้าให้ลูกค้า",
+    {
+      id: 1,
+      title: "รับบรีฟความต้องการลูกค้า",
+      description: "รับบรีฟความต้องการลูกค้า",
+      image: [
+        {
+          src: fac1,
+          alt: "รับบรีฟความต้องการลูกค้า",
+        },
+        {
+          src: fac2,
+          alt: "รับบรีฟความต้องการลูกค้า",
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: "โรงงานนำเสนอแบบสำเร็จ (Catalog ODM)",
+      description: "โรงงานนำเสนอแบบสำเร็จ (Catalog ODM)",
+      image: [
+        {
+          src: RE_04,
+          alt: "โรงงานนำเสนอแบบสำเร็จ (Catalog ODM)",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+      description: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+    },
+    {
+      id: 4,
+      title: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+      description: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+      image: [
+        {
+          src: "@/assets/RE_05.jpg",
+          alt: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+        },
+      ],
+    },
+    {
+      id: 5,
+      title: "ผลิตจริง (Mass Production)",
+      description: "ผลิตจริง (Mass Production)",
+      image: [
+        {
+          src: "@/assets/RE_06.jpg",
+          alt: "ผลิตจริง (Mass Production)",
+        },
+      ],
+    },
+    {
+      id: 6,
+      title: "ตรวจสอบคุณภาพ (QC)",
+      description: "ตรวจสอบคุณภาพ (QC)",
+      image: [
+        {
+          src: "@/assets/RE_07.jpg",
+          alt: "ตรวจสอบคุณภาพ (QC)",
+        },
+      ],
+    },
+    {
+      id: 7,
+      title: "ติดแบรนด์ / บรรจุภัณฑ์",
+      description: "ติดแบรนด์ / บรรจุภัณฑ์",
+      image: [
+        {
+          src: "@/assets/RE_08.jpg",
+          alt: "ติดแบรนด์ / บรรจุภัณฑ์",
+        },
+      ],
+    },
   ];
 
   const oemSteps = [
-    "รับแบบจากลูกค้า",
-    "ผลิตตัวอย่าง (Sample)",
-    "ลูกค้ายืนยันแบบ",
-    "วางแผนการผลิต",
-    "ผลิตจริง (Mass Production)",
-    "ตรวจสอบคุณภาพ (QC)",
-    "ติดแบรนด์ / บรรจุภัณฑ์",
-    "จัดส่งสินค้าให้ลูกค้า",
+    {
+      title: "รับแบบจากลูกค้า",
+      description: "รับแบบจากลูกค้า",
+      image: [
+        {
+          src: "@/assets/RE_09.jpg",
+          alt: "รับแบบจากลูกค้า",
+        },
+      ],
+    },
+    {
+      title: "ผลิตตัวอย่าง (Sample)",
+      description: "ผลิตตัวอย่าง (Sample)",
+      image: [
+        {
+          src: "@/assets/RE_10.jpg",
+          alt: "ผลิตตัวอย่าง (Sample)",
+        },
+      ],
+    },
+    {
+      title: "ลูกค้ายืนยันแบบ",
+      description: "ลูกค้ายืนยันแบบ",
+      image: [
+        {
+          src: "@/assets/RE_11.jpg",
+          alt: "ลูกค้ายืนยันแบบ",
+        },
+      ],
+    },
+    {
+      title: "วางแผนการผลิต",
+      description: "วางแผนการผลิต",
+      image: [
+        {
+          src: "@/assets/RE_12.jpg",
+          alt: "วางแผนการผลิต",
+        },
+      ],
+    },
+    {
+      title: "ผลิตจริง (Mass Production)",
+      description: "ผลิตจริง (Mass Production)",
+      image: [
+        {
+          src: "@/assets/RE_13.jpg",
+          alt: "ผลิตจริง (Mass Production)",
+        },
+      ],
+    },
+    {
+      title: "ตรวจสอบคุณภาพ (QC)",
+      description: "ตรวจสอบคุณภาพ (QC)",
+      image: [
+        {
+          src: "@/assets/RE_14.jpg",
+          alt: "ตรวจสอบคุณภาพ (QC)",
+        },
+      ],
+    },
+    {
+      title: "ติดแบรนด์ / บรรจุภัณฑ์",
+      description: "ติดแบรนด์ / บรรจุภัณฑ์",
+      image: [
+        {
+          src: "@/assets/RE_15.jpg",
+          alt: "ติดแบรนด์ / บรรจุภัณฑ์",
+        },
+      ],
+    },
+    {
+      title: "จัดส่งสินค้าให้ลูกค้า",
+      description: "จัดส่งสินค้าให้ลูกค้า",
+      image: [
+        {
+          src: "@/assets/RE_16.jpg",
+          alt: "จัดส่งสินค้าให้ลูกค้า",
+        },
+      ],
+    },
   ];
 
+  // ✅ ฟังก์ชันเปิด modal และเลือก step ที่ต้องการ
+  const handleOpenModal = (type: "odm" | "oem", step: any) => {
+    setSelectedModal(type);
+    setSelectedStep(step);
+    setOpenModal(true);
+  };
+
+  const items: CollapseProps["items"] = [
+    {
+      key: "1",
+      label: "ODM",
+      children: (
+        <p className="space-y-3 mb-8">
+          {odmSteps.map((step, idx) => (
+            <a
+              onClick={() => handleOpenModal("odm", step)}
+              key={idx}
+              className="flex items-start cursor-pointer"
+            >
+              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
+                {idx + 1}
+              </span>
+              <p className="pt-0">{step.description}</p>
+            </a>
+          ))}
+        </p>
+      ),
+      showArrow: false,
+    },
+    {
+      key: "2",
+      label: "OEM",
+      children: (
+        <p className="space-y-3 mb-8">
+          {oemSteps.map((step, idx) => (
+            <a
+              onClick={() => handleOpenModal("oem", step)}
+              key={idx}
+              className="flex items-start cursor-pointer"
+            >
+              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
+                {idx + 1}
+              </span>
+              <p className="pt-0">{step.description}</p>
+            </a>
+          ))}
+        </p>
+      ),
+      showArrow: false,
+    },
+  ];
+
+  // ✅ แสดงเฉพาะรูปใน step ที่ถูกเลือก
+  const modalContent = selectedStep?.image ? (
+    <Carousel autoplay autoplaySpeed={5000} slidesToShow={1} slidesToScroll={1} dots={true} arrows={true}>
+      {selectedStep.image.map((img: any, idx: number) => (
+        <div key={idx} className="flex justify-center items-center">
+          <Image.PreviewGroup
+            items={selectedStep.image.map((img: any) => ({
+              src: img.src,
+              alt: img.alt,
+            }))}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+            />
+          </Image.PreviewGroup>
+        </div>
+      ))}
+    </Carousel>
+  ) : (
+    <p className="text-center py-10 text-muted-foreground">
+      ไม่มีรูปภาพสำหรับขั้นตอนนี้
+    </p>
+  );
+
   return (
-    <section id="services" className="py-24 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">บริการของเรา</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            ครบวงจร ทั้ง ODM และ OEM ด้วยมาตรฐานระดับสากล
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          {/* ODM Service */}
-          <Card className="p-8 hover:shadow-elegant transition-smooth bg-gradient-elegant">
-            <div className="flex items-center mb-6">
-              <div className="p-4 rounded-full bg-primary mr-4">
-                <Palette className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold">ODM</h3>
-                <p className="text-sm text-muted-foreground">Original Design Manufacturing</p>
-              </div>
-            </div>
-            
-            <p className="text-lg mb-6 text-muted-foreground">
-              สำหรับผู้ที่ต้องการดีไซน์เสื้อผ้าพร้อมขายจากทีมเรา
-            </p>
-
-            <div className="space-y-3 mb-8">
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>บริการออกแบบดีไซน์และแพทเทิร์น</p>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>คัดผ้า สี และวัสดุให้เหมาะกับตลาด</p>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>ผลิตตัวอย่าง / ถ่ายภาพสินค้า / แพ็กเกจครบชุด</p>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>พร้อมให้คำแนะนำสร้างแบรนด์ตั้งแต่เริ่มต้น</p>
-              </div>
-            </div>
-
-            <Button variant="default" className="w-full">
-              ดูรายละเอียด ODM <ArrowRight className="ml-2" />
-            </Button>
-          </Card>
-
-          {/* OEM Service */}
-          <Card className="p-8 hover:shadow-elegant transition-smooth bg-gradient-elegant">
-            <div className="flex items-center mb-6">
-              <div className="p-4 rounded-full bg-muted mr-4">
-                <Cog className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold">OEM</h3>
-                <p className="text-sm text-muted-foreground">Original Equipment Manufacturing</p>
-              </div>
-            </div>
-            
-            <p className="text-lg mb-6 text-muted-foreground">
-              สำหรับลูกค้าที่มีแบบเสื้อผ้าอยู่แล้ว และต้องการให้เราผลิตตามสเปก
-            </p>
-
-            <div className="space-y-3 mb-8">
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>ผลิตตามแพทเทิร์น / ตัวอย่างของลูกค้า</p>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>ทีม QC ตรวจคุณภาพทุกขั้นตอน</p>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>รองรับการผลิตจำนวนมาก</p>
-              </div>
-              <div className="flex items-start">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                <p>ส่งมอบตรงเวลา พร้อมบริการจัดส่งทั่วประเทศและต่างประเทศ</p>
-              </div>
-            </div>
-
-            <Button variant="outline" className="w-full">
-              ดูรายละเอียด OEM <ArrowRight className="ml-2" />
-            </Button>
-          </Card>
-        </div>
-
-        {/* Process Comparison */}
-        <div className="bg-secondary/20 rounded-2xl p-8 md:p-12">
-          <h3 className="text-3xl font-bold text-center mb-12">ขั้นตอนการผลิต</h3>
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* ODM Process */}
-            <div>
-              <h4 className="text-xl font-bold mb-6 text-primary">ODM - บริการออกแบบและผลิตครบวงจร</h4>
-              <div className="space-y-3">
-                {odmSteps.map((step, idx) => (
-                  <div key={idx} className="flex items-start">
-                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
-                      {idx + 1}
-                    </span>
-                    <p className="pt-1">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* OEM Process */}
-            <div>
-              <h4 className="text-xl font-bold mb-6 text-muted">OEM - บริการผลิตตามแบบ</h4>
-              <div className="space-y-3">
-                {oemSteps.map((step, idx) => (
-                  <div key={idx} className="flex items-start">
-                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center text-sm font-bold mr-3">
-                      {idx + 1}
-                    </span>
-                    <p className="pt-1">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+    <>
+      <section id="services" className="py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h2>
           </div>
-          <p className="text-center mt-8 text-muted-foreground italic">
-            ทุกขั้นตอนดูแลโดยทีมมืออาชีพ เพื่อคุณภาพที่สม่ำเสมอ
-          </p>
+          <div className="text-center">
+            <StyledCollapse
+              size="large"
+              style={{ background: "var(--background, #fff)", color: "var(--foreground,rgb(243, 237, 237))", border: "1px solid rgb(220, 220, 220)", borderRadius: "10px", padding: "10px", marginBottom: "10px", boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)", transition: "all 0.3s ease" }}
+              
+              items={items}
+            />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* ✅ Modal แสดงเฉพาะรูปของ step ที่ถูกเลือก */}
+      <Modal
+        centered
+        open={openModal}
+        onCancel={() => setOpenModal(false)}
+        footer={null}
+      >
+        {modalContent}
+      </Modal>
+    </>
   );
 };
 
