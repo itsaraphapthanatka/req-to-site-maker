@@ -144,15 +144,21 @@ const Contact = () => {
             </Card>
 
             {/* Map Placeholder */}
-            <Card className="p-6">
+           <Card className="p-6">
               <h4 className="font-bold text-lg mb-4">Map</h4>
-              <div className="w-full h-64 bg-muted rounded-lg flex items-center justify-center">
-                <div className="text-center text-muted-foreground">
-                  <MapPin className="w-12 h-12 mx-auto mb-2" />
-                  <p>Google Maps</p>
-                </div>
+              <div className="w-full h-64 rounded-lg overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.730107369797!2d100.50729357601814!3d13.692384787361086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2990022e3c029%3A0x770bf520b233dc07!2sSARANYA%20CLOTHING%20SINCE%201974%20CO.%2C%20LTD.!5e0!3m2!1sen!2sth!4v1730784000000!5m2!1sen!2sth"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
               </div>
             </Card>
+
           </div>
         </div>
       </div>
