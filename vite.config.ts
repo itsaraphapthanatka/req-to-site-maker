@@ -8,7 +8,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8080,
+    port: 3100,
   },
   plugins: [react(), mode === "development" && componentTagger(), viteStaticCopy({
     targets: [
