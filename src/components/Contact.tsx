@@ -4,6 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
+import facebook from "@/assets/social/facebook.png";
+import instagram from "@/assets/social/instagram.png";
+import line from "@/assets/social/line.png";
+import youtube from "@/assets/social/youtube.png";
+import tiktok from "@/assets/social/tiktok.png";
+import twitter from "@/assets/social/twitter.png";
 
 const Contact = () => {
   const contactInfo = [
@@ -112,19 +118,28 @@ const Contact = () => {
             {/* Social Links */}
             <Card className="p-6">
               <h4 className="font-bold text-lg mb-4">Contact via other channels</h4>
+              <div className="mt-4 flex space-x-2">
               <div className="flex flex-wrap gap-3">
-                <Button variant="outline" size="sm">
-                  <MessageCircle className="w-4 h-4 mr-2" /> LINE
-                </Button>
-                <Button variant="outline" size="sm">
-                  Facebook
-                </Button>
-                <Button variant="outline" size="sm">
-                  Instagram
-                </Button>
-                <Button variant="outline" size="sm">
-                  WhatsApp
-                </Button>
+                <a href="https://www.facebook.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
+                  <img src={facebook} alt="Facebook" className="w-8 h-8" />
+                </a>
+                <a href="https://www.instagram.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
+                  <img src={instagram} alt="Instagram" className="w-8 h-8" />
+                </a>
+                <a href="https://line.me/R/ti/p/%40saranyaclothing" target="_blank" rel="noopener noreferrer">
+                  <img src={line} alt="Line" className="w-8 h-8" />
+                </a>
+                <a href="https://www.youtube.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
+                  <img src={youtube} alt="YouTube" className="w-8 h-8" />
+                </a>
+                <a href="https://www.tiktok.com/@saranyaclothing" target="_blank" rel="noopener noreferrer">
+                  <img src={tiktok} alt="TikTok" className="w-8 h-8" />
+                </a>
+                <a href="https://twitter.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
+                  <img src={twitter} alt="Twitter" className="w-8 h-8" />
+                </a>
+              </div>
+               
               </div>
             </Card>
 
