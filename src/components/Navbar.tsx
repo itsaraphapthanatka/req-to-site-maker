@@ -3,7 +3,7 @@ import { Menu, X } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link"; // ✅ เพิ่มบรรทัดนี้
+import { HashLink } from "react-router-hash-link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <Link to="/">
-            <img src={logo} alt="logo" className="w-40 h-40 object-contain" />
+            <img src={logo} alt="logo" className="w-32 h-32 object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -40,7 +40,7 @@ const Navbar = () => {
                 <HashLink
                   key={link.name}
                   smooth
-                  to={`/${link.href}`} // ✅ ใช้ HashLink เพื่อให้กลับจาก /blogs ได้
+                  to={`/${link.href}`}
                   className="text-foreground hover:text-primary transition-smooth text-sm font-medium"
                 >
                   {link.name}
@@ -49,7 +49,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Toggle Button */}
           <button
             className="md:hidden p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -59,6 +59,36 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+
+      {/* ✅ Mobile Dropdown Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-background border-t border-border shadow-md">
+          <div className="flex flex-col space-y-4 p-4">
+            {navLinks.map((link) =>
+              link.isPage ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-foreground hover:text-primary transition-smooth text-base font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <HashLink
+                  key={link.name}
+                  smooth
+                  to={`/${link.href}`}
+                  className="text-foreground hover:text-primary transition-smooth text-base font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.name}
+                </HashLink>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
