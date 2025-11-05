@@ -16,7 +16,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Factory Address",
-      details: ["SARANYA CLOTHING Factory", "Bangkok, Thailand"],
+      details: ["SARANYA CLOTHING SINCE 1974 CO., LTD.", "Bangkok, Thailand"],
     },
     {
       icon: Phone,
