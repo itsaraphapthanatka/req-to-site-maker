@@ -3,11 +3,15 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
 import Blogs from "./components/Blogs";
+import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
 
+import LoginPage from "./backend/Page";
+import BackendLayout from "./backend/base/Page";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -19,9 +23,23 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
+          {/* Public routes */}
           <Route path="/" element={<Index />} />
           <Route path="/blogs" element={<Blogs />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/blogs/:id" element={<Blogs />} />
+          <Route path="/admin" element={<LoginPage />} />
+
+          {/* Protected routes */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <BackendLayout />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

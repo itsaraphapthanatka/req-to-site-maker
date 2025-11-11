@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Collapse } from "antd";
+import { Collapse, Modal } from "antd";
 import workshopImage from "@/assets/workshop.jpg";
 
 import product1 from "@/assets/RE_01.jpg";
@@ -16,11 +16,23 @@ import product8 from "@/assets/RE_08.jpg";
 const Products = () => {
   const [filter, setFilter] = useState<"all" | "new" | "season" | "original">("all");
   const [visibleCount, setVisibleCount] = useState(8); // ✅ แสดงเริ่มต้น 8 ชิ้น (2 แถว)
+  const [openModal, setOpenModal] = useState(false);
+  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
   const itemsPerRow = 4; // สมมติว่าหน้าจอใหญ่สุดแสดง 4 ต่อแถว
   const rowsPerLoad = 2; // โหลดเพิ่มทีละ 2 แถว
   const itemsPerLoad = itemsPerRow * rowsPerLoad;
 
-  const portfolio = [
+  const handleCardClick = (item: { image: string; desc: string; type: string }) => {
+    setModalContent(
+      <div>
+        <img src={item.image} alt={item.desc} className="w-full h-auto mb-4" />
+        <p className="text-center">{item.desc}</p>
+      </div>
+    );
+    setOpenModal(true);
+  }
+
+  const portfolio =  [
     { image: product1, desc: "New Collection", type: "new" },
     { image: product2, desc: "New Collection", type: "new" },
     { image: product3, desc: "Season Collection", type: "season" },
@@ -48,6 +60,7 @@ const Products = () => {
   };
 
   return (
+    <>
     <section id="products" className="gradient-sunset relative py-24">
       {/* BG */}
       <div className="absolute inset-0 z-0">
@@ -109,6 +122,7 @@ const Products = () => {
           {visiblePortfolio.map((item, idx) => (
             <Card
               key={idx}
+              onClick={() => handleCardClick(item)}
               className="group relative overflow-hidden aspect-[3/4] cursor-pointer hover:shadow-warm transition-smooth border hover:border-primary/50"
             >
               <img
@@ -173,6 +187,15 @@ const Products = () => {
         </div>
       </div>
     </section>
+    <Modal
+        centered
+        open={openModal}
+        onCancel={() => setOpenModal(false)}
+        footer={null}
+      >
+        {modalContent}
+      </Modal>
+  </>  
   );
 };
 

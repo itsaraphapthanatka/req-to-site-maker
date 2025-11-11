@@ -23,13 +23,6 @@ import RE_16 from "@/assets/RE_16.jpg";
 import styled from "styled-components";
 import workspace from "@/assets/workspace.jpg";
 
-// const StyledCollapse = styled(Collapse)`
-//   .ant-collapse-content {
-//     // background-color: #f3f4f6; /* ✅ สีพื้นหลังของเนื้อหา */
-//     background-image: url(@/assets/workspace.jpg)
-//     color: #111827;
-//   }
-// `;
 const StyledCollapse = styled(Collapse)`
   position: relative;
   overflow: hidden;
@@ -111,7 +104,7 @@ const Services = () => {
       description: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
       image: [
         {
-          src: "@/assets/RE_05.jpg",
+          src: RE_05,
           alt: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
         },
       ],
@@ -122,7 +115,7 @@ const Services = () => {
       description: "ผลิตจริง (Mass Production)",
       image: [
         {
-          src: "@/assets/RE_06.jpg",
+          src: RE_06,
           alt: "ผลิตจริง (Mass Production)",
         },
       ],
@@ -133,7 +126,7 @@ const Services = () => {
       description: "ตรวจสอบคุณภาพ (QC)",
       image: [
         {
-          src: "@/assets/RE_07.jpg",
+          src: RE_07,
           alt: "ตรวจสอบคุณภาพ (QC)",
         },
       ],
