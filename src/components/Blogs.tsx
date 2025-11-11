@@ -66,51 +66,9 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Featured Post */}
-      <section className="section-padding m-10">
-        <div className="container-custom">
-          <div className="bg-gradient-to-br from-primary/10 to-secondary/20 rounded-3xl overflow-hidden shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 md:p-12">
-              <div className="flex flex-col justify-center">
-                <div className="inline-block bg-primary/20 px-4 py-2 rounded-full mb-4 w-fit">
-                  <span className="text-sm font-semibold text-primary">บทความแนะนำ</span>
-                </div>
-                <h2 className="text-4xl font-bold mb-4">{posts[0].title}</h2>
-                <p className="text-lg text-muted-foreground mb-6">
-                  {posts[0].excerpt}
-                </p>
-                <div className="flex items-center text-sm text-muted-foreground mb-6">
-                  <Calendar size={16} className="mr-2 text-primary" />
-                  <span>{posts[0].date}</span>
-                  <span className="mx-3">•</span>
-                  <span className="text-primary font-semibold">{posts[0].category}</span>
-                </div>
-                <Button className="btn-gradient text-white w-fit">
-                  อ่านต่อ
-                  <ArrowRight className="ml-2" size={16} />
-                </Button>
-              </div>
-              <div className="bg-card rounded-2xl p-8 shadow-lg">
-                <div className="space-y-4">
-                  <div className="bg-secondary/30 rounded-xl p-6">
-                    <h3 className="font-bold text-lg mb-2 text-primary">ODM</h3>
-                    <p className="text-sm text-muted-foreground">โรงงานเป็นผู้ออกแบบสินค้าให้ทั้งหมด แล้วลูกค้านำไปติดแบรนด์ของตัวเอง</p>
-                  </div>
-                  <div className="bg-accent/10 rounded-xl p-6">
-                    <h3 className="font-bold text-lg mb-2 text-accent">OEM</h3>
-                    <p className="text-sm text-muted-foreground">ลูกค้าเป็นผู้ออกแบบเอง แล้วให้โรงงานผลิตตามแบบที่กำหนด</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Blog Grid */}
       <section className="section-padding bg-secondary/5 pb-32 m-10">
         <div className="container-custom">
-          <h2 className="text-3xl font-bold mb-12 text-center">บทความทั้งหมด</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.slice(1).map((post) => (
               <article 
