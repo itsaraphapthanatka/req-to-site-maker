@@ -76,7 +76,7 @@ const Blog = () => {
       <section className="section-padding bg-secondary/5 pb-32 m-10">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.slice(1).map((post) => (
+            {posts.map((post) => (
               <article 
                 key={post.id}
                 className="bg-card rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
