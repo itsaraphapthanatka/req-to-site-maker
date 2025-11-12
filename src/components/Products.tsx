@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Collapse, Modal } from "antd";
+import { Collapse, Modal, Carousel, Image, CollapseProps} from "antd";
 import workshopImage from "@/assets/workshop.jpg";
 
 import product1 from "@/assets/RE_01.jpg";
@@ -12,12 +12,16 @@ import product5 from "@/assets/RE_05.jpg";
 import product6 from "@/assets/RE_06.jpg";
 import product7 from "@/assets/RE_07.jpg";
 import product8 from "@/assets/RE_08.jpg";
+import { title } from "process";
+import { set } from "date-fns";
 
 const Products = () => {
   const [filter, setFilter] = useState<"all" | "new" | "season" | "original">("all");
   const [visibleCount, setVisibleCount] = useState(8); // ✅ แสดงเริ่มต้น 8 ชิ้น (2 แถว)
   const [openModal, setOpenModal] = useState(false);
+  const [openModalStandard, setOpenModalStandard] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
+  const [selectedStep, setSelectedStep] = useState<any>(null);
   const itemsPerRow = 4; // สมมติว่าหน้าจอใหญ่สุดแสดง 4 ต่อแถว
   const rowsPerLoad = 2; // โหลดเพิ่มทีละ 2 แถว
   const itemsPerLoad = itemsPerRow * rowsPerLoad;
@@ -59,6 +63,90 @@ const Products = () => {
     setVisibleCount((prev) => prev + itemsPerLoad);
   };
 
+  const handleOpenModalStandard = (item) => {
+    setOpenModalStandard(true);
+    setSelectedStep(item);
+  };
+
+  const ContantProductStandard = selectedStep?.image ? (
+    <Carousel autoplay autoplaySpeed={5000} slidesToShow={1} slidesToScroll={1} dots={true} arrows={true}>
+      {selectedStep.image.map((img: any, idx: number) => (
+        <div key={idx} className="flex justify-center items-center">
+          <Image.PreviewGroup
+            items={selectedStep.image.map((img: any) => ({
+              src: img.src,
+              alt: img.alt,
+            }))}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+            />
+          </Image.PreviewGroup>
+          {img.alt && <p className="text-center mt-2 text-muted-foreground">{img.alt}</p>}
+        </div>
+      ))}
+    </Carousel>
+  ) : (
+    <p className="text-center py-10 text-muted-foreground">
+      ไม่มีรูปภาพสำหรับขั้นตอนนี้
+    </p>
+  );
+
+  const standardProductionItems = [
+    {
+      title: "TOPS",
+      image: [
+        { src: product1, alt: "TOPS - เสื้อยืดแฟชั่น" },
+        { src: product4, alt: "TOPS - เสื้อเชิ้ตลำลอง" },
+      ],
+    },
+    {
+      title: "PANTS",
+      image: [
+        { src: product2, alt: "PANTS - กางเกงยีนส์" },
+        { src: product5, alt: "PANTS - กางเกงชิโน่" },
+      ],
+    },
+    {
+      title: "SKIRT",
+      image: [
+        { src: product3, alt: "SKIRT - กระโปรงสั้น" },
+        { src: product6, alt: "SKIRT - กระโปรงยาว" },
+      ],
+    },
+    {
+      title: "DRESSES",
+      image: [
+        { src: product7, alt: "DRESSES - เดรสลำลอง" },
+        { src: product8, alt: "DRESSES - เดรสงานเลี้ยง" },
+      ],
+    },
+  ];
+
+
+  const item: CollapseProps["items"] = [
+    {
+      key: "1",
+      label: "Standard Production",
+      children: (
+        <div className="space-y-2">
+          {standardProductionItems.map((step, idx) => (
+            <a
+              key={idx}
+              onClick={() => handleOpenModalStandard(step)}
+              href={`#${step.title}`}
+              className="block hover:text-primary"
+            >
+              {step.title}
+            </a>
+          ))}
+        </div>
+      ),
+    },
+  ];
+
+  
   return (
     <>
     <section id="products" className="gradient-sunset relative py-24">
@@ -173,6 +261,7 @@ const Products = () => {
                     {["TOPS", "PANTS", "SKIRT", "DRESSES"].map((cat, idx) => (
                       <a
                         key={idx}
+                        onClick={() => handleOpenModalStandard(standardProductionItems[idx])}
                         href={`#${cat}`}
                         className="block hover:text-primary"
                       >
@@ -195,6 +284,15 @@ const Products = () => {
       >
         {modalContent}
       </Modal>
+      <Modal
+        centered
+        open={openModalStandard}
+        onCancel={() => setOpenModalStandard(false)}
+        footer={null}
+      >
+        {ContantProductStandard}
+      </Modal>
+
   </>  
   );
 };
