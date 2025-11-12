@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Index from "./pages/Index";
 import Blogs from "./components/Blogs";
+import BlogDetail from "./components/[id]/blogs/page";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -26,7 +27,7 @@ const App = () => (
           {/* Public routes */}
           <Route path="/" element={<Index />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:id" element={<Blogs />} />
+          <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/admin" element={<LoginPage />} />
 
           {/* Protected routes */}

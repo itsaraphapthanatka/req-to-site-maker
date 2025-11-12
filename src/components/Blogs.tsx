@@ -51,6 +51,12 @@ const Blog = () => {
     },
   ];
 
+  const handleReadMore = (id: number) => {
+    const url = `/blogs/${id}`;
+    window.location.href = url;
+    
+  }
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -94,7 +100,7 @@ const Blog = () => {
                   <p className="text-muted-foreground mb-4 line-clamp-2">
                     {post.excerpt}
                   </p>
-                  <Button variant="ghost" className="p-0 h-auto font-semibold text-primary hover:text-primary/80">
+                  <Button onClick={() => handleReadMore(post.id)} variant="ghost" className="p-0 h-auto font-semibold text-primary hover:text-primary/80">
                     อ่านต่อ
                     <ArrowRight className="ml-2" size={16} />
                   </Button>
