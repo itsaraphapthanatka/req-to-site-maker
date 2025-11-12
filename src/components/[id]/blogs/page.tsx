@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import oem from "@/assets/oemanodm.jpg";
 
 const BlogDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,7 +15,7 @@ const BlogDetail = () => {
       category: "บริการ",
       image: [
         {
-          src: "/src/assets/oemanodm.jpg",
+          src: oem,
           alt: "ODM ต่างจาก OEM อย่างไร?",
         },
       ],
