@@ -2,29 +2,89 @@ import { Card } from "@/components/ui/card";
 import founderImage from "@/assets/founder-portrait.jpg";
 import workshopImage from "@/assets/workshop.jpg";
 import workspaceImage from "@/assets/workspace.jpg";
+import cert1 from "@/assets/cert1.jpg";
+import cert2 from "@/assets/cert2.jpg";
+import team1 from "@/assets/team1.jpg";
+import team2 from "@/assets/team2.jpg";
+import fabric1 from "@/assets/fabric1.jpg";
+import fabric2 from "@/assets/fabric2.jpg";
+import fabric3 from "@/assets/fabric3.jpg";
+import qq1 from "@/assets/qq1.jpg";
+import award5 from "@/assets/award5.jpg";
 import { Award, Users, Heart, TrendingUp } from "lucide-react";
 import { useState } from "react";
-import { Collapse } from 'antd';
+import { Collapse, Modal, Carousel, Image, CollapseProps } from 'antd';
 
-
-const open = [
-  { icon: Award, title: "ประสบการณ์ 30+ ปี", desc: "ในวงการแฟชั่น" },
-  { icon: Users, title: "ทีมมืออาชีพ", desc: "เชี่ยวชาญทุกขั้นตอน" },
-  { icon: Heart, title: "เส้นใยธรรมชาติ", desc: "เป็นมิตรต่อสิ่งแวดล้อม" },
-  { icon: TrendingUp, title: "มาตรฐานสากล", desc: "คุณภาพระดับส่งออก", open: true },
-];
 
 const About = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedModal, setSelectedModal] = useState(null);
-  const highlights = [
-    { icon: Award, title: "ประสบการณ์", desc: "ในวงการแฟชั่น", open: false },
-    { icon: Users, title: "ทีมมืออาชีพ", desc: "เชี่ยวชาญทุกขั้นตอน", open: false },
-    { icon: Heart, title: "เส้นใยธรรมชาติ", desc: "เป็นมิตรต่อสิ่งแวดล้อม", open: false },
-    { icon: TrendingUp, title: "มาตรฐานสากล", desc: "คุณภาพระดับส่งออก", open: false },
+  const [selectedStep, setSelectedStep] = useState<any>(null);
+  const experience = [
+    { title: "ประสบการณ์", desc: "ในวงการแฟชั่น",
+      image: [
+        { src: cert1, alt: "คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING" },
+        { src: cert2, alt: "เวิร์คช็อปการผลิตเสื้อผ้าแฟชั่นคุณภาพสูง" },
+      ]
+    },
+    { title: "ทีมมืออาชีพ", desc: "เชี่ยวชาญทุกขั้นตอน",
+      image: [
+        { src: team1, alt: "ทีมงานมืออาชีพในการผลิตเสื้อผ้าแฟชั่น" },
+        { src: team2, alt: "ช่างตัดเย็บผู้ชำนาญการในโรงงาน SARANYA CLOTHING" },
+      ]
+    },
+    { title: "เส้นใยธรรมชาติ", desc: "เป็นมิตรต่อสิ่งแวดล้อม",
+      image: [
+        { src: fabric1, alt: "การเลือกใช้เส้นใยธรรมชาติในการผลิตเสื้อผ้า" },
+        { src: fabric2, alt: "เส้นใยธรรมชาติคุณภาพสูงที่ใช้ใน SARANYA CLOTHING" },
+        { src: fabric3, alt: "กระบวนการผลิตที่เป็นมิตรต่อสิ่งแวดล้อม" },
+      ]
+    },
+    { title: "มาตรฐานสากล", desc: "คุณภาพระดับส่งออก",
+      image: [
+        { src: qq1, alt: "การควบคุมคุณภาพตามมาตรฐานสากล" },
+        { src: award5, alt: "รางวัลและการรับรองคุณภาพจากองค์กรระดับสากล" },
+      ]
+    },
   ];
 
+  const items: CollapseProps["items"] = experience.map((item) => ({
+    key: item.title,
+    label: item.title,
+    children: <p>{item.desc}</p>,
+  }));
+
+const handleOpenModal = (item: any) => {
+    setSelectedStep(item);
+    setOpenModal(true);
+  }
+
+const modalContent = selectedStep?.image ? (
+    <Carousel autoplay autoplaySpeed={5000} slidesToShow={1} slidesToScroll={1} dots={true} arrows={true}>
+      {selectedStep.image.map((img: any, idx: number) => (
+        <div key={idx} className="flex justify-center items-center">
+          <Image.PreviewGroup
+            items={selectedStep.image.map((img: any) => ({
+              src: img.src,
+              alt: img.alt,
+            }))}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+            />
+          </Image.PreviewGroup>
+        </div>
+      ))}
+    </Carousel>
+  ) : (
+    <p className="text-center py-10 text-muted-foreground">
+      ไม่มีรูปภาพสำหรับขั้นตอนนี้
+    </p>
+  );
+
   return (
+    <>
     <section id="about" className="py-24 bg-secondary/30 relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
@@ -169,8 +229,8 @@ OEM (Original Equipment Manufacturing)
           <Collapse
           size="large"
           style={{ background: "transparent" }}
-          items={[{ key: '1', label: 'Experience', children: <p>{highlights.map((item, idx) => (
-            <a href={`#${item.title}`}><p key={idx} className="text-muted-foreground text-sm">{item.title}</p></a>
+          items={[{ key: '1', label: 'Experience', children: <p>{experience.map((item, idx) => (
+            <a key={idx} href={`#${item.title}`} onClick={() => handleOpenModal(item)}><p className="text-muted-foreground text-sm">{item.title}</p></a>
             // <Card key={idx} className="p-6 text-center hover:shadow-elegant transition-smooth bg-card" onClick={() => setOpenModal(true)}>
             //   <div className="flex justify-center mb-4">
             //     <div className="p-4 rounded-full bg-primary/10">
@@ -187,7 +247,15 @@ OEM (Original Equipment Manufacturing)
 
       </div>
     </section>
-    
+    <Modal
+      open={openModal}
+      onCancel={() => setOpenModal(false)}
+      footer={null}
+      width={800}
+    >
+      {modalContent}
+    </Modal>
+    </>
   );
 };
 
