@@ -12,6 +12,12 @@ const BlogDetail = () => {
       excerpt: "ทำความเข้าใจความแตกต่างระหว่าง ODM และ OEM เพื่อเลือกบริการที่เหมาะกับธุรกิจของคุณ",
       date: "15 มกราคม 2025",
       category: "บริการ",
+      image: [
+        {
+          src: "/src/assets/oemanodm.jpg",
+          alt: "ODM ต่างจาก OEM อย่างไร?",
+        },
+      ],
     },
     {
       id: 2,
@@ -64,6 +70,11 @@ const BlogDetail = () => {
                 <p className="text-sm text-muted-foreground mb-6">
                     Published on {post.date} | Category: {post.category}
                 </p>
+                {post.image && post.image.map((img, index) => (
+                  <div key={index} className="mb-6">
+                    <img src={img.src} alt={img.alt} className="mx-auto rounded-lg shadow-md" />
+                  </div>
+                ))}
                 <div key={post.id} className="mt-8 max-w-3xl mx-auto text-left">
                 <p className="text-base leading-relaxed">{post.excerpt}</p>
                 </div>
