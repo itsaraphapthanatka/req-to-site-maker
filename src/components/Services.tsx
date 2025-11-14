@@ -22,6 +22,12 @@ import RE_15 from "@/assets/RE_15.jpg";
 import RE_16 from "@/assets/RE_16.jpg";
 import styled from "styled-components";
 import workspace from "@/assets/workspace.jpg";
+import o0783 from "@/assets/o0783.jpg";
+import o0795 from "@/assets/o0795.jpg";
+import o0763 from "@/assets/o0763.jpg";
+import o0402 from "@/assets/o0402.jpg";
+import bgworkspace from "@/assets/img2.png";
+import oem66 from "@/assets/66.jpg";
 
 const StyledCollapse = styled(Collapse)`
   position: relative;
@@ -29,7 +35,7 @@ const StyledCollapse = styled(Collapse)`
 
   .ant-collapse-content {
     position: relative;
-    background-image: url(${workspace});
+    background-image: url(${bgworkspace});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -73,11 +79,15 @@ const Services = () => {
       description: "รับบรีฟความต้องการลูกค้า",
       image: [
         {
-          src: fac1,
+          src: o0783,
           alt: "รับบรีฟความต้องการลูกค้า",
         },
         {
-          src: fac2,
+          src: o0763,
+          alt: "รับบรีฟความต้องการลูกค้า",
+        },
+        {
+          src: o0402,
           alt: "รับบรีฟความต้องการลูกค้า",
         },
       ],
@@ -150,7 +160,7 @@ const Services = () => {
       description: "รับแบบจากลูกค้า",
       image: [
         {
-          src: "@/assets/RE_09.jpg",
+          src: oem66,
           alt: "รับแบบจากลูกค้า",
         },
       ],
@@ -237,7 +247,7 @@ const Services = () => {
   const items: CollapseProps["items"] = [
     {
       key: "1",
-      label: "ODM",
+      label: "Original Design Manufacturing (ODM)",
       children: (
         <p className="space-y-3 mb-8">
           {odmSteps.map((step, idx) => (
@@ -258,7 +268,7 @@ const Services = () => {
     },
     {
       key: "2",
-      label: "OEM",
+      label: "Original Equipment Manufacturing (OEM)",
       children: (
         <p className="space-y-3 mb-8">
           {oemSteps.map((step, idx) => (
