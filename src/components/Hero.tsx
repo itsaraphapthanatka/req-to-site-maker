@@ -6,6 +6,10 @@ import heroVideo from "@/assets/Saranya_1.mp4";
 import heroVideo2 from "@/assets/Saranya_2.mp4";
 import { Carousel } from "antd";
 import workshopImage from "@/assets/workshop.jpg";
+import img1 from "@/assets/img1.png";
+import img2 from "@/assets/img2.png";
+import img5 from "@/assets/img5.png";
+import img6 from "@/assets/img6.png";  
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,10 +41,13 @@ const Hero = () => {
               className="w-full h-screen object-cover"
               title="Saranya_2"
             /> */}
-            <img src={workshopImage} alt="Saranya_2" className="w-full h-screen object-cover" />
+            <img src={img2} alt="Saranya_2" className="w-full h-screen object-cover" />
           </div>
           <div>
-            <img src={heroImage} alt="Saranya_3" className="pt-20 w-full h-screen object-cover" />
+            <img src={img5} alt="Saranya_3" className="pt-20 w-full h-screen cover" />
+          </div>
+          <div>
+            <img src={img6} alt="Saranya_3" className="pt-20 w-full h-screen cover" />
           </div>
         </Carousel>
         <div className="absolute inset-0" />
@@ -55,11 +62,11 @@ const Hero = () => {
               </>
             ) : currentIndex === 1 ? (
               <>
-              Producing brand-level fashion with international standards.
+              {/* Producing brand-level fashion with international standards. */}
               </>
             ) : currentIndex === 2 ? (
               <>
-                Where simplicity becomes art.
+                {/* Where simplicity becomes art. */}
               </>
             ) : null
             }
@@ -67,12 +74,12 @@ const Hero = () => {
           <p className="text-xl md:text-2xl mb-4 text-background/90">
             {currentIndex === 0
               ? ""
-              : "From the expert team in fashion, from idea to design, production and delivery."}
+              : ""}
           </p>
           <p className="text-lg mb-8 text-background/80 max-w-2xl">
             {currentIndex === 0
               ? ""
-              : "Quality standard export, ready to advise new fashion brands."}
+              : ""}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             {currentIndex === 0 ? (

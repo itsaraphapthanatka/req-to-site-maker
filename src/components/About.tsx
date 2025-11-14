@@ -1,7 +1,9 @@
 import { Card } from "@/components/ui/card";
-import founderImage from "@/assets/founder-portrait.jpg";
-import workshopImage from "@/assets/workshop.jpg";
-import workspaceImage from "@/assets/workspace.jpg";
+import founderImage from "@/assets/1.jpg";
+import workshopImage from "@/assets/2.jpg";
+import workshopImage2 from "@/assets/workspace.jpg";
+import workspaceImage from "@/assets/3.jpg";
+import transportImage from "@/assets/transport.jpg";
 import cert1 from "@/assets/cert1.jpg";
 import cert2 from "@/assets/cert2.jpg";
 import team1 from "@/assets/team1.jpg";
@@ -9,6 +11,14 @@ import team2 from "@/assets/team2.jpg";
 import fabric1 from "@/assets/fabric1.jpg";
 import fabric2 from "@/assets/fabric2.jpg";
 import fabric3 from "@/assets/fabric3.jpg";
+import ex1 from "@/assets/ex1.jpg";
+import ex2 from "@/assets/ex2.jpg";
+import ex3 from "@/assets/ex3.jpg";
+import exc1 from "@/assets/exc1.jpg";
+import te from "@/assets/team.jpg";
+import fi1 from "@/assets/fi1.png";
+import fi2 from "@/assets/f2.png";
+import f3_1 from "@/assets/f3_1.png";
 import qq1 from "@/assets/qq1.jpg";
 import award5 from "@/assets/award5.jpg";
 import { Award, Users, Heart, TrendingUp } from "lucide-react";
@@ -23,27 +33,31 @@ const About = () => {
   const experience = [
     { title: "ประสบการณ์", desc: "ในวงการแฟชั่น",
       image: [
-        { src: cert1, alt: "คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING" },
-        { src: cert2, alt: "เวิร์คช็อปการผลิตเสื้อผ้าแฟชั่นคุณภาพสูง" },
+        { src: ex1, alt: "คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING" },
+        { src: ex2, alt: "เวิร์คช็อปการผลิตเสื้อผ้าแฟชั่นคุณภาพสูง" },
+        { src: ex3, alt: "เวิร์คช็อปการผลิตเสื้อผ้าแฟชั่นคุณภาพสูง" },
       ]
     },
     { title: "ทีมมืออาชีพ", desc: "เชี่ยวชาญทุกขั้นตอน",
       image: [
-        { src: team1, alt: "ทีมงานมืออาชีพในการผลิตเสื้อผ้าแฟชั่น" },
-        { src: team2, alt: "ช่างตัดเย็บผู้ชำนาญการในโรงงาน SARANYA CLOTHING" },
+        { src: te, alt: "ทีมงานมืออาชีพในการผลิตเสื้อผ้าแฟชั่น" },
+        // { src: team2, alt: "ช่างตัดเย็บผู้ชำนาญการในโรงงาน SARANYA CLOTHING" },
       ]
     },
     { title: "เส้นใยธรรมชาติ", desc: "เป็นมิตรต่อสิ่งแวดล้อม",
       image: [
-        { src: fabric1, alt: "การเลือกใช้เส้นใยธรรมชาติในการผลิตเสื้อผ้า" },
-        { src: fabric2, alt: "เส้นใยธรรมชาติคุณภาพสูงที่ใช้ใน SARANYA CLOTHING" },
-        { src: fabric3, alt: "กระบวนการผลิตที่เป็นมิตรต่อสิ่งแวดล้อม" },
+        { src: fi1, alt: "การเลือกใช้เส้นใยธรรมชาติในการผลิตเสื้อผ้า" },
+        { src: fi2, alt: "เส้นใยธรรมชาติคุณภาพสูงที่ใช้ใน SARANYA CLOTHING" },
+        { src: f3_1, alt: "กระบวนการผลิตที่เป็นมิตรต่อสิ่งแวดล้อม" },
+        // { src: fabric1, alt: "การเลือกใช้เส้นใยธรรมชาติในการผลิตเสื้อผ้า" },
+        // { src: fabric2, alt: "เส้นใยธรรมชาติคุณภาพสูงที่ใช้ใน SARANYA CLOTHING" },
+        // { src: fabric3, alt: "กระบวนการผลิตที่เป็นมิตรต่อสิ่งแวดล้อม" },
       ]
     },
     { title: "มาตรฐานสากล", desc: "คุณภาพระดับส่งออก",
       image: [
-        { src: qq1, alt: "การควบคุมคุณภาพตามมาตรฐานสากล" },
-        { src: award5, alt: "รางวัลและการรับรองคุณภาพจากองค์กรระดับสากล" },
+        { src: exc1, alt: "การควบคุมคุณภาพตามมาตรฐานสากล" },
+        // { src: award5, alt: "รางวัลและการรับรองคุณภาพจากองค์กรระดับสากล" },
       ]
     },
   ];
@@ -196,7 +210,7 @@ OEM (Original Equipment Manufacturing)
           <div className="order-2 md:order-1">
             <div className="relative">
               <img
-                src={workshopImage}
+                src={transportImage}
                 alt="คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING"
                 className="rounded-2xl shadow-elegant w-full"
               />
@@ -251,7 +265,6 @@ OEM (Original Equipment Manufacturing)
       open={openModal}
       onCancel={() => setOpenModal(false)}
       footer={null}
-      width={800}
     >
       {modalContent}
     </Modal>
