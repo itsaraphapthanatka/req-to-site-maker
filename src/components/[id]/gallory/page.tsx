@@ -139,6 +139,11 @@ if (!foundPost) {
 
   const {Meta} = Card;
 
+  const handleReadMore = (postId: number, itemId: number) => {
+    const url = `/gallorydetail/${postId}/${itemId}`;
+    window.location.href = url;
+  };
+
   return (
     <div>
       <Navbar />
@@ -156,6 +161,7 @@ if (!foundPost) {
                             <Card
                                 hoverable
                                 style={{ width: '100%' }}
+                                onClick={() => handleReadMore(post.id, img.id)}
                                 cover={
                                     <div style={{ position: 'relative', width: '100%', paddingBottom: '75%', overflow: 'hidden' }}>
                                         <img
