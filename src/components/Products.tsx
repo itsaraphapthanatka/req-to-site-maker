@@ -37,18 +37,18 @@ const Products = () => {
   }
 
   const portfolio =  [
-    { image: product1, desc: "New Collection", type: "new" },
-    { image: product2, desc: "New Collection", type: "new" },
-    { image: product3, desc: "Season Collection", type: "season" },
-    { image: product4, desc: "New Collection", type: "new" },
-    { image: product5, desc: "Original Collection", type: "original" },
-    { image: product6, desc: "New Collection", type: "new" },
-    { image: product7, desc: "New Collection", type: "new" },
-    { image: product8, desc: "Original Collection", type: "original" },
-    { image: product1, desc: "Season Collection", type: "season" },
-    { image: product2, desc: "New Collection", type: "new" },
-    { image: product3, desc: "Original Collection", type: "original" },
-    { image: product4, desc: "New Collection", type: "new" },
+    {id: "1", image: product1, desc: "New Collection", type: "new" },
+    {id: "2", image: product2, desc: "New Collection", type: "new" },
+    {id: "3", image: product3, desc: "Season Collection", type: "season" },
+    {id: "4", image: product4, desc: "New Collection", type: "new" },
+    {id: "5", image: product5, desc: "Original Collection", type: "original" },
+    {id: "6", image: product6, desc: "New Collection", type: "new" },
+    {id: "7", image: product7, desc: "New Collection", type: "new" },
+    {id: "8", image: product8, desc: "Original Collection", type: "original" },
+    {id: "9", image: product1, desc: "Season Collection", type: "season" },
+    {id: "10", image: product2, desc: "New Collection", type: "new" },
+    {id: "11", image: product3, desc: "Original Collection", type: "original" },
+    {id: "12", image: product4, desc: "New Collection", type: "new" },
   ];
   
 
@@ -64,8 +64,8 @@ const Products = () => {
   };
 
   const handleOpenModalStandard = (item) => {
-    setOpenModalStandard(true);
-    setSelectedStep(item);
+    const url = `/gallorys/${item.id}`;
+    window.location.href = url;
   };
 
   const ContantProductStandard = selectedStep?.image ? (
@@ -95,6 +95,7 @@ const Products = () => {
 
   const standardProductionItems = [
     {
+      id: 1,
       title: "TOPS",
       image: [
         { src: product1, alt: "TOPS - เสื้อยืดแฟชั่น" },
@@ -102,6 +103,7 @@ const Products = () => {
       ],
     },
     {
+      id: 2,
       title: "PANTS",
       image: [
         { src: product2, alt: "PANTS - กางเกงยีนส์" },
@@ -109,6 +111,7 @@ const Products = () => {
       ],
     },
     {
+      id: 3,
       title: "SKIRT",
       image: [
         { src: product3, alt: "SKIRT - กระโปรงสั้น" },
@@ -116,6 +119,7 @@ const Products = () => {
       ],
     },
     {
+      id: 4,
       title: "DRESSES",
       image: [
         { src: product7, alt: "DRESSES - เดรสลำลอง" },
@@ -135,7 +139,7 @@ const Products = () => {
             <a
               key={idx}
               onClick={() => handleOpenModalStandard(step)}
-              href={`#${step.title}`}
+              href={`${step.title}`}
               className="block hover:text-primary"
             >
               {step.title}
