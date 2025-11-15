@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Blogs from "./components/Blogs";
 import BlogDetail from "./components/[id]/blogs/page";
 import GalloryDetail from "./components/[id]/gallory/page";
+import GalloryDetailID from "./components/[id]/gallory/detail";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/gallorys/:id" element={<GalloryDetail /> } />
+          <Route path="/gallorydetail/:postId/:imgId" element={<GalloryDetailID />} />
           <Route path="/admin" element={<LoginPage />} />
 
           {/* Protected routes */}
