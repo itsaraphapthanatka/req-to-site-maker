@@ -36,7 +36,7 @@ const GalloryDetailID = () => {
       title: "PANTS",
       description: "This is the detail page for PANTS items.",
       items: [
-        { id: 1, image: [re02, re03, re04] },
+        { id: 1, image: [re01, re02, re03, re04, re05, re06] },
         { id: 2, image: [re03, re04, re05] },
         { id: 3, image: [re04, re05, re06] },
       ],
