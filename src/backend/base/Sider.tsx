@@ -19,9 +19,9 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
   const screens = useBreakpoint();
 
   const menuItems = [
-    { key: 'home', icon: <HomeOutlined />, label: 'Home', onClick: () => navigate('/dashboard') },
-    { key: 'hero', icon: <UserOutlined />, label: 'Hero Page', onClick: () => navigate('/hero') },
-    { key: 'settings', icon: <SettingOutlined />, label: 'Settings', onClick: () => navigate('/settings') },
+    { key: 'home', icon: <HomeOutlined />, label: 'Home', onClick: () => navigate('/admin/dashboard') },
+    { key: 'hero', icon: <UserOutlined />, label: 'Hero Page', onClick: () => navigate('/admin/hero') },
+    { key: 'about', icon: <UserOutlined />, label: 'About Page', onClick: () => navigate('/admin/about') },
   ];
 
   // Desktop Sider

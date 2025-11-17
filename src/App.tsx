@@ -16,6 +16,10 @@ import LoginPage from "./backend/Page";
 import BackendLayout from "./backend/base/Page";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import Dashboard from "./backend/Main/Dashboard";
+import HeroPage from "./backend/Main/HeroPage";
+import AboutPage from "./backend/Main/AboutPage";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -34,15 +38,22 @@ const App = () => (
           <Route path="/gallorydetail/:postId/:imgId" element={<GalloryDetailID />} />
           <Route path="/admin" element={<LoginPage />} />
 
+        
+          
+
           {/* Protected routes */}
           <Route
-            path="/admin/dashboard"
+            path="/admin"
             element={
               <ProtectedRoute>
                 <BackendLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="hero" element={<HeroPage />} />
+            <Route path="about" element={<AboutPage />} />
+          </Route>
 
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />

@@ -4,7 +4,7 @@ import { Layout, Menu } from 'antd';
 import Header from './Header';
 import Sider from './Sider';
 import Footer from './Footer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import Dashboard from '../Main/Dashboard';
 import HeroPage from '../Main/HeroPage';
 import { Grid } from "antd";
@@ -48,7 +48,7 @@ const App: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
         <Sider collapsed={collapsed} mobileVisible={mobileVisible} onClose={closeMobileSider} />
         <Layout>
           <Header collapsed={collapsed} onToggle={toggleSider} title="Dashboard" />
-          {children}
+            <Outlet />
           <Footer />
         </Layout>
       </Layout>

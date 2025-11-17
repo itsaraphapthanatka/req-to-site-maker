@@ -10,6 +10,7 @@ import re03 from "@/assets/RE_03.jpg";
 import re04 from "@/assets/RE_04.jpg";
 import re05 from "@/assets/RE_05.jpg";
 import re06 from "@/assets/RE_06.jpg";
+import size from "@/assets/sizechart.jpg";
 
 const GalloryDetailID = () => {
  const { postId, imgId } = useParams();
@@ -25,10 +26,10 @@ const GalloryDetailID = () => {
       title: "TOPS",
       description: "This is the detail page for TOP items.",
       items: [
-        { id: 1, image: [re01, re02, re03, re04, re05] },
-        { id: 2, image: [re02, re03, re04] },
-        { id: 3, image: [re03, re04, re05] },
-        { id: 4, image: [re04, re05, re06] },
+        { id: 1, image: [re01, re02, re03, re04, re05, size] },
+        { id: 2, image: [re02, re03, re04, size] },
+        { id: 3, image: [re03, re04, re05, size] },
+        { id: 4, image: [re04, re05, re06, size] },
       ],
     },
     {
