@@ -162,7 +162,8 @@ const GalloryDetailID = () => {
 
         {/* DESCRIPTION */}
         <div className="mt-10 max-w-3xl mx-auto text-left">
-          <p className="text-base leading-relaxed">{post.description}</p>
+             <h1 className="text-2xl font-bold mb-6">{post.headline}</h1>
+            <p className="text-base leading-relaxed">{post.description}</p>
         </div>
       </section>
 
