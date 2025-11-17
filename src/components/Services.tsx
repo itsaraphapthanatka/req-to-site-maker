@@ -75,7 +75,7 @@ const Services = () => {
   const odmSteps = [
     {
       id: 1,
-      title: "รับบรีฟความต้องการลูกค้า",
+      title: "Receive customer brief - Consults and understand brand vision",
       description: "รับบรีฟความต้องการลูกค้า",
       image: [
         {
@@ -94,7 +94,7 @@ const Services = () => {
     },
     {
       id: 2,
-      title: "โรงงานนำเสนอแบบสำเร็จ (Catalog ODM)",
+      title: "Factory presents finished designs - displays existing ODM catalogues",
       description: "โรงงานนำเสนอแบบสำเร็จ (Catalog ODM)",
       image: [
         {
@@ -105,12 +105,12 @@ const Services = () => {
     },
     {
       id: 3,
-      title: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+      title: "Customized designs - Modifies designs as needed",
       description: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
     },
     {
       id: 4,
-      title: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
+      title: "Sample production - Creates prototypes for review",
       description: "ปรับแบบให้เข้ากับแบรนด์ลูกค้า",
       image: [
         {
@@ -121,7 +121,7 @@ const Services = () => {
     },
     {
       id: 5,
-      title: "ผลิตจริง (Mass Production)",
+      title: "Customer confirms designs - Approves samples before actual production",
       description: "ผลิตจริง (Mass Production)",
       image: [
         {
@@ -132,7 +132,7 @@ const Services = () => {
     },
     {
       id: 6,
-      title: "ตรวจสอบคุณภาพ (QC)",
+      title: "Production planning - Prepares raw materials and set a timeline",
       description: "ตรวจสอบคุณภาพ (QC)",
       image: [
         {
@@ -143,7 +143,7 @@ const Services = () => {
     },
     {
       id: 7,
-      title: "ติดแบรนด์ / บรรจุภัณฑ์",
+      title: "Mass production - Starts mass production",
       description: "ติดแบรนด์ / บรรจุภัณฑ์",
       image: [
         {
@@ -152,11 +152,44 @@ const Services = () => {
         },
       ],
     },
+    {
+      id: 8,
+      title: "Quality control (QC) - Strict quality control on every piece of products",
+      description: "จัดส่งสินค้าให้ลูกค้า",
+      image: [
+        {
+          src: RE_09,
+          alt: "จัดส่งสินค้าให้ลูกค้า",
+        },
+      ],
+    },
+    {
+      id: 9,
+      title: "Branding/packaging - Packaging according to the customer's brand",
+      description: "จัดส่งสินค้าให้ลูกค้า",
+      image: [
+        {
+          src: RE_02,
+          alt: "จัดส่งสินค้าให้ลูกค้า",
+        },
+      ],
+    },
+    {
+      id: 10,
+      title: "Shipping to customers - Safely delivered to customers",
+      description: "จัดส่งสินค้าให้ลูกค้า",
+      image: [
+        {
+          src: RE_03,
+          alt: "จัดส่งสินค้าให้ลูกค้า",
+        },
+      ],
+    }
   ];
 
   const oemSteps = [
     {
-      title: "รับแบบจากลูกค้า",
+      title: "Customer Design - Receives customer patterns and specifications",
       description: "รับแบบจากลูกค้า",
       image: [
         {
@@ -166,7 +199,7 @@ const Services = () => {
       ],
     },
     {
-      title: "ผลิตตัวอย่าง (Sample)",
+      title: "Sample Production - Produces samples according to specifications",
       description: "ผลิตตัวอย่าง (Sample)",
       image: [
         {
@@ -176,7 +209,7 @@ const Services = () => {
       ],
     },
     {
-      title: "ลูกค้ายืนยันแบบ",
+      title: "Customer Confirms Design - Approves samples before actual production",
       description: "ลูกค้ายืนยันแบบ",
       image: [
         {
@@ -186,7 +219,7 @@ const Services = () => {
       ],
     },
     {
-      title: "วางแผนการผลิต",
+      title: "Production Planning - Prepares raw materials and set timeline",
       description: "วางแผนการผลิต",
       image: [
         {
@@ -196,7 +229,7 @@ const Services = () => {
       ],
     },
     {
-      title: "ผลิตจริง (Mass Production)",
+      title: "Mass Production - Starts mass production",
       description: "ผลิตจริง (Mass Production)",
       image: [
         {
@@ -206,7 +239,7 @@ const Services = () => {
       ],
     },
     {
-      title: "ตรวจสอบคุณภาพ (QC)",
+      title: "Quality Control (QC) - Strict quality control on every item",
       description: "ตรวจสอบคุณภาพ (QC)",
       image: [
         {
@@ -216,7 +249,7 @@ const Services = () => {
       ],
     },
     {
-      title: "ติดแบรนด์ / บรรจุภัณฑ์",
+      title: "Branding/Packaging - Packaging according to the customer's brand",
       description: "ติดแบรนด์ / บรรจุภัณฑ์",
       image: [
         {
@@ -226,7 +259,7 @@ const Services = () => {
       ],
     },
     {
-      title: "จัดส่งสินค้าให้ลูกค้า",
+      title: "Shipping to Customer – Delivers to customer safely.",
       description: "จัดส่งสินค้าให้ลูกค้า",
       image: [
         {
@@ -259,7 +292,7 @@ const Services = () => {
               <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
                 {idx + 1}
               </span>
-              <p className="pt-0">{step.description}</p>
+              <p className="pt-0">{step.title}</p>
             </a>
           ))}
         </p>
@@ -280,7 +313,7 @@ const Services = () => {
               <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
                 {idx + 1}
               </span>
-              <p className="pt-0">{step.description}</p>
+              <p className="pt-0">{step.title}</p>
             </a>
           ))}
         </p>
