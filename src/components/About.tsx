@@ -204,17 +204,11 @@ She also joined the Association of Manufacturers, Importers and Exporters (SMEs)
           <div className="order-2 md:order-1">
             <div className="text-center md:text-left">
               <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                มาตรฐานและความไว้วางใจระดับสากล
+                International Standards and Trust
               </h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
-              การบริหารงานของ "คุณศราลักษณ์ รัตนวัน"
-แห่งแบรนด์ SARANYA clothing
-
-	
-เรามุ่งมั่นยกระดับมาตรฐานการผลิตสู่ระดับสากล ด้วยกระบวนการผลิตที่ผ่านการตรวจสอบอย่างเข้มงวดในทุกขั้นตอน ตั้งแต่การคัดสรร วัตถุดิบจากเส้นใยธรรมชาติที่เป็นมิตรต่อสิ่งแวดล้อม ไปจนถึงการตัดเย็บที่ พิถีพิถันโดยช่างผู้ชำนาญเฉพาะด้าน ด้วยระบบ การควบคุมคุณภาพที่ได้มาตรฐานระดับสากล เราดำเนินการผลิตด้วยความละเอียดรอบคอบในทุกชิ้นงาน เพื่อให้แต่ละชุดสะท้อนถึงความงดงาม ความคงทน และคุณค่าของแฟชั่นที่เหนือกาลเวลา
-	
-ความไว้วางใจจากลูกค้าทั้งในประเทศและต่างประเทศ คือเครื่องยืนยันถึงความเป็นมืออาชีพ และความมุ่งมั่นของเราในการส่งมอบเสื้อผ้าที่มีคุณภาพและมาตรฐานระดับสากล
-
+We strive to elevate our manufacturing standards to international standards.  Our manufacturing process is rigorously inspected at every stage, from selecting environmentally friendly natural fibers to meticulous tailoring by skilled craftsmen. With a quality control system that meets international standards, we precisely produce every product to ensure each piece reflects the beauty, durability, and timeless value of fashion.
+The trust of both domestic and international customers is a testimony to our professionalism and commitment to delivering quality clothing that meets international standards.
               </p>
              
             </div>
