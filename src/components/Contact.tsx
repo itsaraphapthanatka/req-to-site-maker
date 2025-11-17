@@ -21,7 +21,7 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone Number",
-      details: ["02-XXX-XXXX", "089-XXX-XXXX"],
+      details: ["+66 806575654"],
     },
     {
       icon: Mail,
@@ -41,7 +41,7 @@ const Contact = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to answer any questions you have.
+            We offer free consultations and quotations. Contact us via any channel.
           </p>
         </div>
 
@@ -60,7 +60,7 @@ const Contact = () => {
               </div>
               <div>
                 <Label htmlFor="phone">Phone Number *</Label>
-                <Input id="phone" type="tel" placeholder="08X-XXX-XXXX" className="mt-2" />
+                <Input id="phone" type="tel" placeholder="+66 8X-XXX-XXXX" className="mt-2" />
               </div>
               <div>
                 <Label htmlFor="type">Product Type *</Label>
@@ -126,7 +126,7 @@ const Contact = () => {
                 <a href="https://www.instagram.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
                   <img src={instagram} alt="Instagram" className="w-8 h-8" />
                 </a>
-                <a href="https://line.me/R/ti/p/%40saranyaclothing" target="_blank" rel="noopener noreferrer">
+                <a href="https://line.me/R/ti/p/%40saranyaclothing " target="_blank" rel="noopener noreferrer">
                   <img src={line} alt="Line" className="w-8 h-8" />
                 </a>
                 <a href="https://www.youtube.com/saranyaclothing" target="_blank" rel="noopener noreferrer">

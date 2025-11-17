@@ -31,20 +31,20 @@ const About = () => {
   const [selectedModal, setSelectedModal] = useState(null);
   const [selectedStep, setSelectedStep] = useState<any>(null);
   const experience = [
-    { title: "ประสบการณ์", desc: "ในวงการแฟชั่น",
+    { title: "Experience", desc: "ในวงการแฟชั่น",
       image: [
         { src: ex1, alt: "คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING" },
         { src: ex2, alt: "เวิร์คช็อปการผลิตเสื้อผ้าแฟชั่นคุณภาพสูง" },
         { src: ex3, alt: "เวิร์คช็อปการผลิตเสื้อผ้าแฟชั่นคุณภาพสูง" },
       ]
     },
-    { title: "ทีมมืออาชีพ", desc: "เชี่ยวชาญทุกขั้นตอน",
+    { title: "Professional Team", desc: "เชี่ยวชาญทุกขั้นตอน",
       image: [
         { src: te, alt: "ทีมงานมืออาชีพในการผลิตเสื้อผ้าแฟชั่น" },
         // { src: team2, alt: "ช่างตัดเย็บผู้ชำนาญการในโรงงาน SARANYA CLOTHING" },
       ]
     },
-    { title: "เส้นใยธรรมชาติ", desc: "เป็นมิตรต่อสิ่งแวดล้อม",
+    { title: "Natural Fibers", desc: "เป็นมิตรต่อสิ่งแวดล้อม",
       image: [
         { src: fi1, alt: "การเลือกใช้เส้นใยธรรมชาติในการผลิตเสื้อผ้า" },
         { src: fi2, alt: "เส้นใยธรรมชาติคุณภาพสูงที่ใช้ใน SARANYA CLOTHING" },
@@ -54,7 +54,7 @@ const About = () => {
         // { src: fabric3, alt: "กระบวนการผลิตที่เป็นมิตรต่อสิ่งแวดล้อม" },
       ]
     },
-    { title: "มาตรฐานสากล", desc: "คุณภาพระดับส่งออก",
+    { title: "International Standards", desc: "คุณภาพระดับส่งออก",
       image: [
         { src: exc1, alt: "การควบคุมคุณภาพตามมาตรฐานสากล" },
         // { src: award5, alt: "รางวัลและการรับรองคุณภาพจากองค์กรระดับสากล" },
@@ -104,7 +104,7 @@ const modalContent = selectedStep?.image ? (
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">About Us</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            History and trustworthiness of the factory
+            A manufacturer of quality fashion clothing that combines beauty, refinement, and professionalism. We are ready to partner with your brands to create international-class fashion designs.
           </p>
         </div>
 
@@ -114,20 +114,13 @@ const modalContent = selectedStep?.image ? (
             <div className="order-2 md:order-1">
               <div className="text-center md:text-left">
                 <p className="text-sm uppercase tracking-wider text-primary mb-4">
-                  Founder & Director
+                  Founder & Director of SARANYA Clothing 
                 </p>
                 <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  คุณศราลักษณ์ รัตนวัน
+                  Ms. Saralak Ratanawan
                 </h3>
-                <blockquote className="text-xl italic text-muted-foreground mb-6 border-l-4 border-primary pl-6">
-                  "ผู้ผลิตเสื้อผ้าแฟชั่นคุณภาพ ที่ผสานความงาม ความประณีต และความเป็นมืออาชีพ พร้อมเป็นพันธมิตรทางแฟชั่น สร้างสรรค์ผลงานระดับสากลร่วมกับทุกแบรนด์"
-                </blockquote>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  ท่ามกลางโลกแฟชั่นทีเต็มไปด้วยเสียงและความเร่งรีบ "SARANYA clothing" เกิดขึ้นจากความตั้งใจจะสร้างพื้นที่เล็กๆ ให้ความงามได้หายใจ เราเชื่อในความหรูที่ไม่ต้องประกาศ หรูจากเนื้อผ้าที่พลิ้วเบา โครงเสื้อที่เรียบแต่ละเมียด และแสงธรรมชาติที่สะท้อนนิยามของผู้หญิงอย่างอ่อนโยนทุกชิ้นงานของ SARANYA clothing ไม่ได้ถูกออกแบบเพียงเพื่อสวมใส่ แต่เพื่อ "อยู่กับคุณ" ในจังหวะชีวิตจริง ในวันที่เรียบง่าย และในช่วงเวลาที่งดงามที่สุด โดยไม่ต้องจัดวาง แรงบันดาลใจของเรามาจากธรรมชาติ ศิลปะ และอารมณ์ของผู้หญิงที่รู้จักคุณค่าของความนิ่ง เราผสมความศิลป์และความร่วมสมัยเข้าด้วยกันจนเกิดเป็นสไตล์ที่อบอุ่น ละเมียด และมีชีวิต - ศราลักษณ์ รัตนวัน
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  แรงบันดาลใจของเธอเริ่มต้นจากความหลงใหลในเส้นใยธรรมชาติ และศิลปะแห่งการออกแบบและตัดเย็บ
-                  ที่ผสมผสานระหว่างความเรียบง่ายและความร่วมสมัยได้อย่างลงตัว
+                  In a world of hustle and bustle, "SARANYA Clothing" was born from the desire to create a small space for beauty to breathe.  We believe in understated luxury, the luxury of light, flowing fabrics, refined silhouettes, and natural light that gently reflects the definition of a woman.  Every piece of “SARANYA Clothing” is designed not just to be worn, but to "be with you" in the rhythm of real life, on simpler days and in the most beautiful moments, without having to arrange it.  Our inspiration comes from nature, art and the emotions of women who know the value of serenity.  We blend artistry and contemporary to create a style that is warm, refined and alive.
                 </p>
               </div>
             </div>
@@ -156,13 +149,13 @@ const modalContent = selectedStep?.image ? (
           <div className="order-2 md:order-1">
             <div className="text-center md:text-left">
               <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                เส้นทางแห่งแฟชั่นและความมุ่งมั่น
+                A Fashion Journey and Commitment
               </h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
-              ด้วยประสบการณ์กว่า 30 ปีในวงการแฟชั่น คุณศราลักษณ์ รันตะวัน คือผู้อยู่เบื้องหลังการสร้างสรรค์เสื้อผ้าคุณภาพ ที่สะท้อนทั้งความงาม ความประณีต และความใส่ใจในทุกขั้นตอนของการผลิต
-แรงบันดาลใจของเธอเริ่มต้นจาก ความหลงใหลในเส้นใยธรรมชาติ และ ศิลปะแห่งการออกแบบและตัดเย็บ ที่ผสมผสานระหว่างความเรียบง่ายและความร่วมสมัยได้อย่างลงตัว
-เส้นทางสู่โลกแฟชั่นของเธอเริ่มต้นที่ สถานบันตักศ์ศิลาแฟชั่น สถาบันสอนออกแบบเสื้อผ้า ดีไซน์เนอร์ สถาบันออกแบบแฟชั่นชั้นนำของประเทศไทย ซึ่งเป็นจุดเริ่มต้นในการวางรากฐานความรู้ด้านการออกแบบ และการผลิตเสื้อผ้าอย่างมืออาชีพ ต่อมาเธอได้ต่อยอดความรู้ผ่านการเข้าร่วม Workshop กับหลากหลายสถาบันแฟชั่นทั้งในและต่างประเทศ เพื่อเปิดมุมมองและเรียนรู้เทรนด์ระดับสากลอย่างต่อเนื่อง
-นอกจากนี้ เธอยังได้ร่วมเป็นส่วนหนึ่งของสมาคมส่งเสริมผู้ผลิต นำเข้า และส่งออก (SME) ซึ่งช่วยเติมเต็มประสบการณ์ และวิสัยทัศน์ระดับนานาชาติ ด้วยความมุ่งมั่นและความรักในงานแฟชั่น คุณศราลักษณ์ ได้ยกระดับการผลิตเสื้อผ้าไทยจากเส้นใยธรรมชาติ ให้ก้าวสู่มาตรฐานสากล ภายใต้ชื่อ SARANYA clothing - แบรนด์ที่ความเรียบง่ายกลายเป็นศิลปะ
+              With over 30 years of experience in the fashion industry, Ms. Saralak Ratanawan is behind the creation of quality clothing that reflects beauty, perfectionism, and attention to details at every stage of production.
+Saralak’s inspiration stems from a passion for natural fiber clothing and the art of design and tailoring, seamlessly blending simplicity and contemporary style.
+Her journey into the fashion world began at Taksila Fashion Institute, one of the Thailand's leading fashion design schools, where she laid the foundation for professional design and production.  She subsequently expanded her knowledge by participating in workshops with various fashion institutions both domestically and internationally, broadening her perspectives and continuously learning about international fashion trends.
+She also joined the Association of Manufacturers, Importers and Exporters (SMEs), which furthered her international experience and vision in fashion.  With her commitment and love for fashion, Saralak has elevated the production of Thai natural fiber clothing to international standards under the name “SARANYA Clothing” - a brand where simplicity becomes art.
 
               </p>
              
@@ -176,19 +169,11 @@ const modalContent = selectedStep?.image ? (
           <div className="order-1 md:order-2">
             <div className="text-center md:text-left">
               <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                ประสบการณ์ที่ต่อยอดสู่ความเป็นมืออาชีพ
+                Experiences that have led to her professional career
               </h3>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-            ประสบการณ์อันยาวนานและความทุ่มเทในเส้นทางแฟชั่น คุณศราลักษณ์ รัตนวัน ได้พัฒนาแนวคิดจากความหลงใหลในเส้นใยธรรมชาติ ผสมผสานเข้ากับศิลปะแห่งการออกแบบ และกระบวนการตัดเย็บที่พิถีพิถันในทุกรายละเอียดเธอได้นำประสบการณ์ทั้งหมดถ่ายทอดสู่การสร้างแบรนด์ "SARANYA clothing" โรงงานผู้ผลิตเสื้อผ้าสำเร็จรูปที่สะท้อนถึงความประณีต คุณภาพ และความเป็นมืออาชีพในทุกขั้นตอนของการผลิต ด้วยความเชี่ยวชาญทั้งในระบบ ODM (Original Design Manufacturer) และ OEM (Original Equipment Manufacturer)
-แบรนด์ SARANYA clothing จึงไม่เพียงเป็นผู้ผลิตเสื้อผ้า แต่ยังเป็น พันธมิตรทางแฟชั่น ที่พร้อมร่วมสร้างสรรค์ผลงานระดับสากลไปกับลูกค้าทุกแบรนด์
-
-ODM (Original Design Manufacturing)
-ออกแบบและผลิตครบวงจร — จากแนวคิดดีไซน์ การเลือกผ้า จนถึงสินค้าสำเร็จรูป พร้อมให้คำปรึกษาอย่างมืออาชีพ
-	
-OEM (Original Equipment Manufacturing)
-ผลิตตามแบบและมาตรฐานของลูกค้า — ใส่ใจทุกขั้นตอนเพื่อให้ได้ผลงานที่ตรงตามภาพลักษณ์ของแต่ละแบรนด์
-
+            With her extensive experience and dedication in fashion and design, Saralak Ratanawan has developed a concept based on her passion for natural fibers, combining it with the art of design.  She has applied her expertise in meticulous tailoring to every detail, and has applied this experience to the creation of the "SARANYA Clothing" brand, a ready-to-wear garment manufacturer that embodies the perfectionism, quality, and professionalism of every process of production.  With expertise in both ODM (Original Design Manufacturer) and OEM (Original Equipment Manufacturer) systems, SARANYA Clothing is not only a clothing manufacturer but also a fashion partner, ready to collaborate with clients of all brands to create world-class products.
             </p>
           </div>
           <div className="order-1 md:order-2">
@@ -200,7 +185,7 @@ OEM (Original Equipment Manufacturing)
               />
               <div className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-elegant hidden md:block">
                 <p className="text-4xl font-bold">30+</p>
-                <p className="text-sm">ปีประสบการณ์</p>
+                <p className="text-sm">Year Experiences</p>
               </div>
             </div>
           </div>
