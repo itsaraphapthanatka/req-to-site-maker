@@ -24,7 +24,8 @@ const GalloryDetailID = () => {
     {
       id: 1,
       title: "TOPS",
-      description: "This is the detail page for TOP items.",
+      headline: "Goddess Kimono",
+      description: `The Goddess Kimono is a true statement piece, featuring dramatic bell sleeves with raw edge trimming and an oversized hood for an ethereal, boho-chic vibe.With its three layers of detailed edge trimming, elastic back, and a handmade tasseled drawstring at the front, this kimono offers the perfect blend of style and comfort for the free-spirited woman.Please note our ONE SIZE fits most, from extra small - extra large.`,
       items: [
         { id: 1, image: [re01, re02, re03, re04, re05, size] },
         { id: 2, image: [re02, re03, re04, size] },
@@ -35,7 +36,8 @@ const GalloryDetailID = () => {
     {
       id: 2,
       title: "PANTS",
-      description: "This is the detail page for PANTS items.",
+      headline: "Goddess Kimono",
+      description: `The Goddess Kimono is a true statement piece, featuring dramatic bell sleeves with raw edge trimming and an oversized hood for an ethereal, boho-chic vibe.With its three layers of detailed edge trimming, elastic back, and a handmade tasseled drawstring at the front, this kimono offers the perfect blend of style and comfort for the free-spirited woman.Please note our ONE SIZE fits most, from extra small - extra large.`,
       items: [
         { id: 1, image: [re01, re02, re03, re04, re05, re06] },
         { id: 2, image: [re03, re04, re05] },
@@ -45,7 +47,8 @@ const GalloryDetailID = () => {
     {
       id: 3,
       title: "SKIRTS",
-      description: "Detail about SKIRTS.",
+      headline: "Goddess Kimono",
+      description: `The Goddess Kimono is a true statement piece, featuring dramatic bell sleeves with raw edge trimming and an oversized hood for an ethereal, boho-chic vibe.With its three layers of detailed edge trimming, elastic back, and a handmade tasseled drawstring at the front, this kimono offers the perfect blend of style and comfort for the free-spirited woman.Please note our ONE SIZE fits most, from extra small - extra large.`,
       items: [
         { id: 1, image: [re01, re02] },
         { id: 2, image: [re02, re03] },
@@ -54,7 +57,8 @@ const GalloryDetailID = () => {
     {
       id: 4,
       title: "DRESSES",
-      description: "Detail about DRESSES.",
+      headline: "Goddess Kimono",
+      description: `The Goddess Kimono is a true statement piece, featuring dramatic bell sleeves with raw edge trimming and an oversized hood for an ethereal, boho-chic vibe.With its three layers of detailed edge trimming, elastic back, and a handmade tasseled drawstring at the front, this kimono offers the perfect blend of style and comfort for the free-spirited woman.Please note our ONE SIZE fits most, from extra small - extra large.`,
       items: [
         { id: 1, image: [re04, re05, re06] },
         { id: 2, image: [re05, re06] },
