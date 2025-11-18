@@ -14,7 +14,7 @@ const { Title } = Typography;
 
 const Dashboard = () => {
     return (
-        <Content>
+        <Content className="site-layout-background" style={{ margin: '24px 16px', padding: 24, minHeight: 280 }}>
             <Row gutter={[16, 16]}>
                 <Col span={6}>
                     <Card>
