@@ -19,6 +19,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./backend/Main/Dashboard";
 import HeroPage from "./backend/Main/HeroPage";
 import AboutPage from "./backend/Main/AboutPage";
+import ServicePage from "./backend/Main/ServicePage";
+import ProductPage from "./backend/Main/ProductPage";
+import BlogPage from "./backend/Main/BlogPage";
+import ContactUsPage from "./backend/Main/ContactUsPage";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +57,10 @@ const App = () => (
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="hero" element={<HeroPage />} />
             <Route path="about" element={<AboutPage />} />
+            <Route path="service" element={<ServicePage />} />
+            <Route path="product" element={<ProductPage />} />
+            <Route path="blog" element={<BlogPage />} />
+            <Route path="contactus" element={<ContactUsPage />} />
           </Route>
 
           {/* Catch-all */}
