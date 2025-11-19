@@ -32,22 +32,14 @@ const Hero = () => {
               title="Saranya_1"
             />
           </div>
-          <div>
-            {/* <video
-              src={heroVideo2}
-              autoPlay
-              loop
-              muted
-              className="w-full h-screen object-cover"
-              title="Saranya_2"
-            /> */}
+          <div className="h-screen">
             <img src={img2} alt="Saranya_2" className="w-full h-screen object-cover" />
           </div>
-          <div>
-            <img src={img5} alt="Saranya_3" className="pt-20 w-full h-screen cover" />
+          <div className="h-screen">
+            <img src={img5} alt="Saranya_3" className="pt-20 w-full h-screen  object-cover" />
           </div>
-          <div>
-            <img src={img6} alt="Saranya_3" className="pt-20 w-full h-screen cover" />
+          <div className="h-screen">
+            <img src={img6} alt="Saranya_3" className="pt-20 w-full h-screen  object-cover" />
           </div>
         </Carousel>
         <div className="absolute inset-0" />
