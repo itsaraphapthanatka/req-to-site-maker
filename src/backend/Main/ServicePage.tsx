@@ -1,8 +1,25 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Tabs } from "antd";
+import { OdmTab } from "./Service/OdmTab";
+import { OemTab } from "./Service/OemTab";
+
+
 const { Content } = Layout;
 
 const ServicePage: React.FC = () => {
+
+  const tabItem = [
+    {
+      key: '1',
+      label: 'ODM',
+      children: <OdmTab />
+    },
+    {
+      key: '2',
+      label: 'OEM',
+      children: <OemTab />,
+    },
+  ]
   return (
     <Layout>
       <Content
@@ -12,8 +29,13 @@ const ServicePage: React.FC = () => {
           minHeight: 280,
         }}
       >
-        <h1>Welcome to the Service Page</h1>
-        <p>This is the main content area for the Service page.</p>
+      <Tabs
+        type="card"
+        defaultActiveKey="1"
+        items={tabItem}
+      />
+
+       
       </Content>
     </Layout>
   );
