@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { DetailTab } from "./experience/detailTab"
-import { ExperienceTab } from "./experience/experienceTab"
+import { DetailTab } from "./experience/DetailTab"
+import { ExperienceTab } from "./experience/ExperienceTab"
 import { Layout, Typography, Input, Tabs } from "antd";
 const { Title } = Typography;
 const { Content } = Layout;
