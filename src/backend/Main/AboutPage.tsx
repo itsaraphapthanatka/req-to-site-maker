@@ -32,6 +32,7 @@ const AboutPage: React.FC = () => {
       >
          <Title level={1}>Welcome to About</Title>
          <Tabs
+          type="card"
           defaultActiveKey="1"
           items={aboutTabItems}
         />
