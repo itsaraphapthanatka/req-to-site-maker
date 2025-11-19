@@ -1,8 +1,26 @@
-import React from "react";
-import { Layout, Menu } from "antd";
+import React, { useState } from "react";
+import { DetailTab } from "./experience/detailTab"
+import { ExperienceTab } from "./experience/experienceTab"
+import { Layout, Typography, Input, Tabs } from "antd";
+const { Title } = Typography;
 const { Content } = Layout;
 
 const AboutPage: React.FC = () => {
+  const [value, setValue] = useState('');
+
+  const aboutTabItems = [
+    {
+      key: '1',
+      label: 'Details',
+      children: <DetailTab />
+    },
+    {
+      key: '2',
+      label: 'Experience',
+      children: <ExperienceTab />,
+    },
+  ];
+
   return (
     <Layout>
       <Content
@@ -12,8 +30,12 @@ const AboutPage: React.FC = () => {
           minHeight: 280,
         }}
       >
-        <h1>Welcome to the About Page</h1>
-        <p>This is the main content area for the hero page.</p>
+         <Title level={1}>Welcome to About</Title>
+         <Tabs
+          defaultActiveKey="1"
+          items={aboutTabItems}
+        />
+          
       </Content>
     </Layout>
   );

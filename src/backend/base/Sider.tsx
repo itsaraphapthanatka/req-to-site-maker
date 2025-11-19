@@ -25,12 +25,12 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
 
   const menuItems = [
     { key: 'home', icon: <HomeOutlined />, label: 'Home', path: '/admin/dashboard' },
-    { key: 'hero', icon: <ContactsOutlined />, label: 'Hero Page', path: '/admin/hero' },
-    { key: 'about', icon: <SkinOutlined />, label: 'About Page', path: '/admin/about' },
-    { key: 'service', icon: <MacCommandOutlined />, label: 'Service Page', path: '/admin/service' },
-    { key: 'product', icon: <ProductOutlined />, label: 'Product Page', path: '/admin/product' },
-    { key: 'blog', icon: <BlockOutlined />, label: 'Blog Page', path: '/admin/blog' },
-    { key: 'contact', icon: <ScheduleOutlined />, label: 'Contact Page', path: '/admin/contactus' },
+    { key: 'hero', icon: <ContactsOutlined />, label: 'Slide', path: '/admin/hero' },
+    { key: 'about', icon: <SkinOutlined />, label: 'About', path: '/admin/about' },
+    { key: 'service', icon: <MacCommandOutlined />, label: 'Service', path: '/admin/service' },
+    { key: 'product', icon: <ProductOutlined />, label: 'Product', path: '/admin/product' },
+    { key: 'blog', icon: <BlockOutlined />, label: 'Blog', path: '/admin/blog' },
+    { key: 'contact', icon: <ScheduleOutlined />, label: 'Contact', path: '/admin/contactus' },
   ];
 
   // ให้ Menu เลือกตาม URL ปัจจุบัน
