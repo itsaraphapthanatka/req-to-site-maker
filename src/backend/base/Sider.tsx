@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu, Drawer } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  UserOutlined, HomeOutlined, SettingOutlined, ContactsOutlined, 
-  SkinOutlined, MacCommandOutlined, ProductOutlined, BlockOutlined, 
-  ScheduleOutlined 
+import {
+  UserOutlined, HomeOutlined, SettingOutlined, ContactsOutlined,
+  SkinOutlined, MacCommandOutlined, ProductOutlined, BlockOutlined,
+  ScheduleOutlined, UserSwitchOutlined, UsergroupAddOutlined
 } from '@ant-design/icons';
 import logo from '@/assets/logo.png';
 import { Grid } from 'antd';
@@ -24,13 +24,15 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
   const screens = useBreakpoint();
 
   const menuItems = [
-    { key: 'home', icon: <HomeOutlined />, label: 'Home', path: '/admin/dashboard' },
+    { key: 'home', icon: <HomeOutlined />, label: 'Home', path: '/admin/home' },
     { key: 'hero', icon: <ContactsOutlined />, label: 'Slide', path: '/admin/hero' },
     { key: 'about', icon: <SkinOutlined />, label: 'About', path: '/admin/about' },
     { key: 'service', icon: <MacCommandOutlined />, label: 'Service', path: '/admin/service' },
     { key: 'product', icon: <ProductOutlined />, label: 'Product', path: '/admin/product' },
     { key: 'blog', icon: <BlockOutlined />, label: 'Blog', path: '/admin/blog' },
     { key: 'contact', icon: <ScheduleOutlined />, label: 'Contact', path: '/admin/contactus' },
+    { key: 'quote', icon: <UserSwitchOutlined />, label: 'Quote Request', path: '/admin/quote' },
+    { key: 'users', icon: <UsergroupAddOutlined />, label: 'Setup Users', path: '/admin/users' },
   ];
 
   // ให้ Menu เลือกตาม URL ปัจจุบัน
@@ -50,11 +52,11 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
         <img src={logo} alt="Logo" style={{ width: '100%' }} />
       </div>
 
-      <Menu 
-        theme="dark" 
-        mode="inline" 
+      <Menu
+        theme="dark"
+        mode="inline"
         selectedKeys={[currentKey as string]}   // << สำคัญ
-        items={menuList} 
+        items={menuList}
       />
     </Sider>
   );
@@ -70,10 +72,10 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
       styles={{ body: { padding: 0 } }}
       width={240}
     >
-      <Menu 
-        mode="inline" 
-        selectedKeys={[currentKey as string]} 
-        items={menuList} 
+      <Menu
+        mode="inline"
+        selectedKeys={[currentKey as string]}
+        items={menuList}
       />
     </Drawer>
   );

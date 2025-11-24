@@ -16,6 +16,7 @@ import LoginPage from "./backend/Page";
 import BackendLayout from "./backend/base/Page";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import { HomePage } from "./backend/Main/HomePage";
 import Dashboard from "./backend/Main/Dashboard";
 import HeroPage from "./backend/Main/HeroPage";
 import AboutPage from "./backend/Main/AboutPage";
@@ -23,6 +24,9 @@ import ServicePage from "./backend/Main/ServicePage";
 import ProductPage from "./backend/Main/ProductPage";
 import BlogPage from "./backend/Main/BlogPage";
 import ContactUsPage from "./backend/Main/ContactUsPage";
+import QuotePage from "./backend/Main/QuotePage";
+import UsersPage from "./backend/Main/UsersPage"
+import UsersDetail from "./backend/Main/[id]/users/page"
 
 const queryClient = new QueryClient();
 
@@ -38,12 +42,12 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
-          <Route path="/gallorys/:id" element={<GalloryDetail /> } />
+          <Route path="/gallorys/:id" element={<GalloryDetail />} />
           <Route path="/gallorydetail/:postId/:imgId" element={<GalloryDetailID />} />
           <Route path="/admin" element={<LoginPage />} />
 
-        
-          
+
+
 
           {/* Protected routes */}
           <Route
@@ -54,6 +58,7 @@ const App = () => (
               </ProtectedRoute>
             }
           >
+            <Route path="home" element={<HomePage />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="hero" element={<HeroPage />} />
             <Route path="about" element={<AboutPage />} />
@@ -61,6 +66,9 @@ const App = () => (
             <Route path="product" element={<ProductPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="contactus" element={<ContactUsPage />} />
+            <Route path="quote" element={<QuotePage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="users/:id" element={<UsersDetail />} />
           </Route>
 
           {/* Catch-all */}
