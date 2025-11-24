@@ -1,23 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DetailTab } from "./experience/DetailTab"
 import { ExperienceTab } from "./experience/ExperienceTab"
-import { Layout, Typography, Input, Tabs } from "antd";
+import { Layout, Typography, Input, Tabs, Form } from "antd";
 const { Title } = Typography;
 const { Content } = Layout;
+import { getAbout } from "@/server/about";
+
+export interface About {
+  id: number;
+  desc: string;
+  founderName: string;
+  founderDesc: string;
+  founderImg: string;
+  sec2Desc: string;
+  sec2Img: string;
+  sec3Desc: string;
+  sec3img: string;
+  sec3Experience: string;
+  sec4Desc: string;
+  sec4img: string;
+}
 
 const AboutPage: React.FC = () => {
   const [value, setValue] = useState('');
+  const [about, setAbout] = useState<About[]>([]);
+  const [abouts, setAbouts] = useState<About[]>([]);
+
+  const [form] = Form.useForm();
+
+  const fetchAbout = async () => {
+    const response = await getAbout();
+    console.log(response);
+    const items = Array.isArray(response) ? response : [];
+    setAbout(items);
+    form.setFieldsValue(items);
+  };
+
+  useEffect(() => {
+    fetchAbout();
+  }, []);
 
   const aboutTabItems = [
     {
       key: '1',
       label: 'Details',
-      children: <DetailTab />
+      children: <DetailTab data={about} />
     },
     {
       key: '2',
       label: 'Experience',
-      children: <ExperienceTab />,
+      children: <ExperienceTab data={about} />,
     },
   ];
 
@@ -30,13 +62,13 @@ const AboutPage: React.FC = () => {
           minHeight: 280,
         }}
       >
-         <Title level={1}>Welcome to About</Title>
-         <Tabs
+        <Title level={1}>Welcome to About</Title>
+        <Tabs
           type="card"
           defaultActiveKey="1"
           items={aboutTabItems}
         />
-          
+
       </Content>
     </Layout>
   );

@@ -31,8 +31,8 @@ const Header: React.FC<HeaderProps> = ({ collapsed = false, onToggle, title = "A
   };
 
   const menuItems = [
-    { key: "profile", label: "Profile", icon: <UserOutlined /> },
-    { key: "settings", label: "Settings", icon: <SettingOutlined /> },
+    // { key: "profile", label: "Profile", icon: <UserOutlined /> },
+    // { key: "settings", label: "Settings", icon: <SettingOutlined /> },
     { key: "logout", label: "Logout", icon: <LogoutOutlined />, onClick: logout },
   ];
 
@@ -50,9 +50,9 @@ const Header: React.FC<HeaderProps> = ({ collapsed = false, onToggle, title = "A
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-        <Badge count={3}>
+        {/* <Badge count={3}>
           <Button type="text" icon={<BellOutlined style={{ fontSize: 18 }} />} />
-        </Badge>
+        </Badge> */}
 
         <Dropdown menu={{ items: menuItems }} placement="bottomRight">
           <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>

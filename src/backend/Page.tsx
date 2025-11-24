@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
+import { Image } from 'antd';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -30,14 +31,14 @@ const LoginPage = () => {
       localStorage.setItem('isAuthenticated', 'true');
       sessionStorage.setItem('userEmail', email);
       setLoading(false);
-      navigate('/admin/dashboard', { replace: true }); // redirect หลัง login
+      navigate('/admin/home', { replace: true }); // redirect หลัง login
     }, 1500);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
-        <img src="../src/assets/logo.png" alt="Logo" />
+        <Image src="../src/assets/logo.png" />
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
