@@ -281,7 +281,7 @@ const About = () => {
               <div className="order-1 md:order-2">
                 <div className="relative">
                   <Image
-                    src={about?.founderImg}
+                    src={API_URL + about?.founderImg}
                     alt="คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING"
                     className="rounded-2xl shadow-elegant w-full"
                   />
@@ -294,7 +294,7 @@ const About = () => {
             <div className="order-2 md:order-1">
               <div className="relative">
                 <img
-                  src={workshopImage}
+                  src={API_URL + about?.sec2Img}
                   alt="คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING"
                   className="rounded-2xl shadow-elegant w-full"
                 />
@@ -329,7 +329,7 @@ const About = () => {
             <div className="order-1 md:order-2">
               <div className="relative">
                 <img
-                  src={workspaceImage}
+                  src={API_URL + about?.sec3Img}
                   alt="คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING"
                   className="rounded-2xl shadow-elegant w-full"
                 />
@@ -345,7 +345,7 @@ const About = () => {
             <div className="order-2 md:order-1">
               <div className="relative">
                 <img
-                  src={transportImage}
+                  src={API_URL + about?.sec4Img}
                   alt="คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING"
                   className="rounded-2xl shadow-elegant w-full"
                 />
