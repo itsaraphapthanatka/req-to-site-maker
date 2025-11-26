@@ -215,7 +215,7 @@ const Services = () => {
                 alt: x.alt,
               }))}
             >
-              <Image src={API_URL + img.src} alt={img.alt} />
+              <Image src={img.src} alt={img.alt} />
             </Image.PreviewGroup>
           </div>
         ))}
