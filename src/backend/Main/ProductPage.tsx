@@ -1,52 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Typography, Table, Button } from "antd";
 import { FolderOpenOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
+import { getCollection } from '@/server/collection';
 const { Content } = Layout;
 const { Title } = Typography;
 const ProductPage: React.FC = () => {
   const navigate = useNavigate();
+  const [collectiondata, setcollectiondata] = useState<any[]>([]);
   const handleDelete = (id) => {
     console.log(id);
     alert(id)
   }
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: 'Category Name',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'collec_name',
+      key: 'collec_name',
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-    },
-    {
-      title: 'Action',
-      dataIndex: 'action',
-      key: 'action',
-      render: (_, record) => (
-        <>
-          <Button
-            type="text"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={(e) => {
-              e.stopPropagation(); // ✅ ป้องกันไม่ให้ trigger row click
-              handleDelete(record.key);
-            }}
-          />
-        </>
-      ),
-    }
+    // {
+    //   title: 'Action',
+    //   dataIndex: 'action',
+    //   key: 'action',
+    //   render: (_, record) => (
+    //     <>
+    //       <Button
+    //         type="text"
+    //         danger
+    //         icon={<DeleteOutlined />}
+    //         onClick={(e) => {
+    //           e.stopPropagation(); // ✅ ป้องกันไม่ให้ trigger row click
+    //           handleDelete(record.id);
+    //         }}
+    //       />
+    //     </>
+    //   ),
+    // }
   ];
-  const data = [
-    {
-      key: '1',
-      name: 'New Collection',
-      status: 'Active',
-    },
-  ];
+  const fetchCollectionData = async () => {
+    const response = await getCollection();
+    const items = Array.isArray(response) ? response : [];
+    items.sort((a: any, b: any) => (a.position ?? 0) - (b.position ?? 0));
+    setcollectiondata(items);
+  };
+  useEffect(() => {
+    fetchCollectionData();
+  }, []);
   return (
     <Layout>
       <Content
@@ -56,13 +60,13 @@ const ProductPage: React.FC = () => {
           minHeight: 280,
         }}
       >
-        <Title level={1}>Product</Title>
+        <Title level={1}>Collection</Title>
         <Table
-          rowKey="key"
+          rowKey={record => record.id}
           columns={columns}
-          dataSource={data}
+          dataSource={collectiondata}
           onRow={(record) => ({
-            onClick: () => navigate(`/product/${record.key}`)
+            onClick: () => navigate(`/admin/product/${record.id}`)
           })}
         />
       </Content>

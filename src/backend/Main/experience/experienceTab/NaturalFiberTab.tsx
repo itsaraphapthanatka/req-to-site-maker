@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
-import { HolderOutlined } from '@ant-design/icons';
+import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
+import { DeleteOutlined, HolderOutlined, UploadOutlined } from '@ant-design/icons';
 import type { DragEndEvent, DraggableAttributes } from '@dnd-kit/core';
 import { DndContext } from '@dnd-kit/core';
 import type { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
@@ -11,12 +11,13 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Button, List, Image, Flex, Upload, Divider } from 'antd';
-import type { GetProps } from 'antd';
-import { message } from 'antd'
-import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
+import { Button, List, Image, Upload, Divider, message, Space, Flex } from 'antd';
+import type { UploadFile, UploadChangeParam, UploadProps } from 'antd/es/upload';
 
+import { getNaturalFiber, uploadNaturalFiberImage, reorderNaturalFiber, deleteNaturalFiber } from '@/server/natural_fiber';
+
+
+// ========== Context for Sortable Item ==========
 interface SortableListItemContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;
   listeners?: SyntheticListenerMap;
@@ -25,24 +26,37 @@ interface SortableListItemContextProps {
 
 const SortableListItemContext = createContext<SortableListItemContextProps>({});
 
+
+// ========== Drag Handle ==========
 const DragHandle: React.FC = () => {
   const { setActivatorNodeRef, listeners, attributes } = useContext(SortableListItemContext);
+
   return (
     <Button
       type="text"
       size="small"
       icon={<HolderOutlined />}
-      style={{ cursor: 'move' }}
       ref={setActivatorNodeRef}
       {...attributes}
       {...listeners}
+      style={{ cursor: 'grab' }}
     />
   );
 };
 
-const SortableListItem: React.FC<GetProps<typeof List.Item> & { itemKey: number }> = (props) => {
-  const { itemKey, style, ...rest } = props;
 
+// ========== Sortable List Item ==========
+interface SortableListItemProps
+  extends React.PropsWithChildren<React.ComponentProps<typeof List.Item>> {
+  itemKey: number | string;
+}
+
+const SortableListItem: React.FC<SortableListItemProps> = ({
+  itemKey,
+  children,
+  style,
+  ...rest
+}) => {
   const {
     attributes,
     listeners,
@@ -60,94 +74,161 @@ const SortableListItem: React.FC<GetProps<typeof List.Item> & { itemKey: number 
     ...(isDragging ? { position: 'relative', zIndex: 9999 } : {}),
   };
 
-  const memoizedValue = useMemo<SortableListItemContextProps>(
+  const memoValue = useMemo(
     () => ({ setActivatorNodeRef, listeners, attributes }),
-    [setActivatorNodeRef, listeners, attributes],
+    [setActivatorNodeRef, listeners, attributes]
   );
 
   return (
-    <SortableListItemContext.Provider value={memoizedValue}>
-      <List.Item {...rest} ref={setNodeRef} style={listStyle} />
+    <SortableListItemContext.Provider value={memoValue}>
+      <List.Item ref={setNodeRef} style={listStyle} {...rest}>
+        {children}
+      </List.Item>
     </SortableListItemContext.Provider>
   );
 };
 
-const NaturalFiberTab: React.FC = () => {
-  const [messageApi, contextHolder] = message.useMessage();
 
-  const info = (e) => {
-    messageApi.info(`Move Image: ID ${e}`);
-  };
-
-  const [data, setData] = useState([
-    { key: 1,image: "https://saranya.appreview.asia/assets/fi1-BUEOrdEY.png", content: 'Racing car sprays burning fuel into crowd.' },
-    { key: 2,image: 'https://saranya.appreview.asia/assets/f2-BE89pR-_.png', content: 'Japanese princess to wed commoner.' },
-    { key: 3,image: 'https://saranya.appreview.asia/assets/f3_1-BpAZp1bQ.png', content: 'Australian walks 100km after outback crash.' },
-  ]);
-
-  const onDragEnd = ({ active, over }: DragEndEvent) => {
-    if (!active || !over) {
-      return;
-    }
-    if (active.id !== over.id) {
-      setData((prevState) => {
-        const activeIndex = prevState.findIndex((i) => i.key === active.id);
-        const overIndex = prevState.findIndex((i) => i.key === over.id);
-        return arrayMove(prevState, activeIndex, overIndex);
-      });
-      info(active.id);
-    //   alert(`${active.id}`);
-    }
-  };
-
-const props: UploadProps = {
-  name: 'file',
-  action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-
+// API call wrapper
+const handleReorderNaturalFiber = async (order: number[]) => {
+  await reorderNaturalFiber({ order });
 };
 
+
+
+// ========== MAIN COMPONENT ==========
+const NaturalFiberTab: React.FC = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const [data, setData] = useState<
+    Array<{ key: number | string; image?: string; position?: number }>
+  >([]);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+  // ===== FETCH PROFESSIONAL =====
+  const fetchNaturalFiber = async () => {
+    try {
+      const resp = await getNaturalFiber();
+      const items = Array.isArray(resp) ? resp : [];
+
+      setData(
+        items.map((it) => ({
+          key: it.id,
+          image: it.img,
+          position: it.position,
+        }))
+      );
+    } catch (err) {
+      console.error(err);
+      // messageApi.error('Failed to load experience list');
+    }
+  };
+
+  useEffect(() => {
+    fetchNaturalFiber();
+  }, []);
+
+
+  // ===== UPLOAD HANDLER =====
+  const handleUploadChange = ({ fileList: newFileList }: UploadChangeParam<UploadFile>) => {
+    setFileList(newFileList);
+  };
+
+  const handleUpload = async () => {
+    if (!fileList.length) return messageApi.error('Please select an image');
+
+    const fileObj = fileList[0].originFileObj;
+
+    if (!fileObj) return messageApi.error('Invalid file');
+
+    const formData = new FormData();
+    formData.append('file', fileObj);
+
+    try {
+      await uploadNaturalFiberImage(formData);
+      messageApi.success('Upload success');
+      setFileList([]);
+      fetchNaturalFiber();
+    } catch (err) {
+      console.error(err);
+      messageApi.error('Upload failed');
+    }
+  };
+
+
+  // ===== DRAG END =====
+  const onDragEnd = ({ active, over }: DragEndEvent) => {
+    if (!active || !over || active.id === over.id) return;
+
+    setData((prev) => {
+      const oldIndex = prev.findIndex((i) => i.key === active.id);
+      const newIndex = prev.findIndex((i) => i.key === over.id);
+      if (oldIndex === -1 || newIndex === -1) return prev;
+
+      const newArr = arrayMove(prev, oldIndex, newIndex);
+      handleReorderNaturalFiber(newArr.map((i) => Number(i.key)));
+
+      messageApi.info(`Moved item ${active.id}`);
+
+      return newArr;
+    });
+  };
+
+
+  const uploadProps: UploadProps = {
+    beforeUpload: () => false,
+    fileList,
+    onChange: handleUploadChange,
+    accept: '.png,.jpg,.jpeg',
+    maxCount: 1,
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteNaturalFiber(id);
+      messageApi.success('Delete success');
+      fetchNaturalFiber();
+    } catch (err) {
+      console.error(err);
+      messageApi.error('Delete failed');
+    }
+  };
 
 
   return (
     <>
-    {contextHolder}
-    <Flex justify='flex-start' align='flex-Start' className='mb-5'>
-        <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+      {contextHolder}
+
+      <Space style={{ marginBottom: 16 }}>
+        <Upload {...uploadProps}>
+          <Button icon={<UploadOutlined />}>Choose Image</Button>
         </Upload>
-    </Flex>
-    <Divider />
-    <DndContext
-      modifiers={[restrictToVerticalAxis]}
-      onDragEnd={onDragEnd}
-      id="list-drag-sorting-handler"
-    >
-      <SortableContext items={data.map((item) => item.key)} strategy={verticalListSortingStrategy}>
-        <List
-          dataSource={data}
-          renderItem={(item) => (
-            <SortableListItem key={item.key} itemKey={item.key}>
-              <DragHandle /> {item.key} <Image width={50} src={item.image}  />
-            </SortableListItem>
-          )}
-        />
-      </SortableContext>
-    </DndContext>
-  </>
+
+        <Button type="primary" disabled={!fileList.length} onClick={handleUpload}>
+          Upload
+        </Button>
+      </Space>
+
+      <Divider />
+
+      <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+        <SortableContext items={data.map((i) => i.key)} strategy={verticalListSortingStrategy}>
+          <List
+            dataSource={data}
+            renderItem={(item) => (
+              <SortableListItem key={item.key} itemKey={item.key}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <DragHandle />
+                  <div>{item.key}</div>
+                  {item.image && <Image width={60} src={item.image} />}
+                  <Button type="text" icon={<DeleteOutlined />} onClick={() => handleDelete(item.key as number)} />
+                </div>
+              </SortableListItem>
+            )}
+          />
+        </SortableContext>
+      </DndContext>
+    </>
   );
 };
 
-export { NaturalFiberTab};
+export { NaturalFiberTab };

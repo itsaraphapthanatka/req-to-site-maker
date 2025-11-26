@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-interface About {
+export interface About {
     id: number;
     desc: string;
     founderName: string;

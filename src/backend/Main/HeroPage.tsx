@@ -109,11 +109,12 @@ const HeroPage: React.FC = () => {
   const beforeUpload: UploadProps["beforeUpload"] = (file: RcFile) => {
     const isPNG = file.type === "image/png";
     const isJPG = file.type === "image/jpeg";
-    if (!isPNG && !isJPG) {
-      message.error(`${file.name} is not a PNG or JPG file`);
+    const isMP4 = file.type === "video/mp4";
+    if (!isPNG && !isJPG && !isMP4) {
+      message.error(`${file.name} is not a PNG, JPG, or MP4 file`);
       return Upload.LIST_IGNORE;
     }
-    return isPNG || isJPG;
+    return isPNG || isJPG || isMP4;
   };
 
   const handleAddSlide = async (values: any) => {
@@ -278,7 +279,7 @@ const HeroPage: React.FC = () => {
                 beforeUpload={beforeUpload}
                 onChange={handleUploadChange}
               >
-                <Button icon={<UploadOutlined />}>Upload PNG or JPG only</Button>
+                <Button icon={<UploadOutlined />}>Upload PNG, JPG, or MP4 only</Button>
               </Upload>
             </Form.Item>
 

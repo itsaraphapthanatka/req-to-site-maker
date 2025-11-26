@@ -2,14 +2,28 @@ import React from "react";
 import { Layout, Typography, Table, Button } from "antd";
 import { FolderOpenOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
+import { deleteQuote, getQuote } from "../../server/quote";
+
 const { Content } = Layout;
 const { Title } = Typography;
 
 const QuotePage: React.FC = () => {
     const navigate = useNavigate();
+    const [data, setData] = React.useState([]);
+
+    const fetchData = async () => {
+        const response = await getQuote();
+        const item = Array.isArray(response) ? response : [];
+        setData(item);
+    }
+
+    React.useEffect(() => {
+        fetchData();
+    }, []);
+
     const handleDelete = (id) => {
-        console.log(id);
-        alert(id)
+        deleteQuote(id);
+        fetchData();
     }
     const columns = [
         {
@@ -29,28 +43,18 @@ const QuotePage: React.FC = () => {
         },
         {
             title: 'Product Type',
-            dataIndex: 'productType',
-            key: 'productType',
+            dataIndex: 'product_type',
+            key: 'product_type',
         },
         {
             title: 'Quantity / Size',
-            dataIndex: 'quantity',
-            key: 'quantity',
-        },
-        {
-            title: 'Service Type',
-            dataIndex: 'serviceType',
-            key: 'serviceType',
+            dataIndex: 'qty_size',
+            key: 'qty_size',
         },
         {
             title: 'Additional Details',
-            dataIndex: 'additionalDetails',
-            key: 'additionalDetails',
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status'
+            dataIndex: 'addition_details',
+            key: 'addition_details',
         },
         {
             title: 'Action',
@@ -64,25 +68,12 @@ const QuotePage: React.FC = () => {
                         icon={<DeleteOutlined />}
                         onClick={(e) => {
                             e.stopPropagation(); // ✅ ป้องกันไม่ให้ trigger row click
-                            handleDelete(record.key);
+                            handleDelete(record.id);
                         }}
                     />
                 </>
             ),
         }
-    ];
-    const data = [
-        {
-            key: '1',
-            name: 'New Collection',
-            email: 'New Collection',
-            phone: 'New Collection',
-            productType: 'New Collection',
-            quantity: 'New Collection',
-            serviceType: 'New Collection',
-            additionalDetails: 'New Collection',
-            status: 'New',
-        },
     ];
     return (
         <Layout>
@@ -98,9 +89,9 @@ const QuotePage: React.FC = () => {
                     rowKey="key"
                     columns={columns}
                     dataSource={data}
-                    onRow={(record) => ({
-                        onClick: () => navigate(`/product/${record.key}`)
-                    })}
+                // onRow={(record) => ({
+                //     onClick: () => navigate(`/product/${record.key}`)
+                // })}
                 />
             </Content>
         </Layout>

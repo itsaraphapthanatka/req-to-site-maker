@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Collapse, Modal, Carousel, Image, CollapseProps} from "antd";
+import { Collapse, Modal, Carousel, Image, CollapseProps } from "antd";
 import workshopImage from "@/assets/workshop.jpg";
 
+// รูปสำหรับ Standard Production (ยังใช้ local)
 import product1 from "@/assets/RE_01.jpg";
 import product2 from "@/assets/RE_02.jpg";
 import product3 from "@/assets/RE_03.jpg";
@@ -12,50 +13,162 @@ import product5 from "@/assets/RE_05.jpg";
 import product6 from "@/assets/RE_06.jpg";
 import product7 from "@/assets/RE_07.jpg";
 import product8 from "@/assets/RE_08.jpg";
-import { title } from "process";
-import { set } from "date-fns";
+
+import {
+  getCollection,
+  getCollectionImage,
+  getStandard_product,
+} from "@/server/collection";
+import { useNavigate } from "react-router-dom";
+
+// ----------------- Types -----------------
+interface Collection {
+  id: number;
+  collec_name: string;
+}
+
+interface CollectionImage {
+  id: number;
+  collection_id: number;
+  collection_img: string;
+  position: number;
+}
+
+interface PortfolioItem {
+  id: number;
+  image: string;
+  desc: string;
+  collectionId: number;
+}
+
+interface StandardItem {
+  id: number;
+  title: string;
+  image: { src: string; alt: string }[];
+}
+
+interface StandardProductApi {
+  id: number;
+  standname: string;
+}
+
+const API_BASE_URL = ""; // ถ้า backend อยู่คนละโดเมน ให้ใส่เช่น "https://api.yourdomain.com"
 
 const Products = () => {
-  const [filter, setFilter] = useState<"all" | "new" | "season" | "original">("all");
-  const [visibleCount, setVisibleCount] = useState(8); // ✅ แสดงเริ่มต้น 8 ชิ้น (2 แถว)
+  // ✅ filter เป็น id ของ collection หรือ "all"
+  const [filter, setFilter] = useState<number | "all">("all");
+  const [visibleCount, setVisibleCount] = useState(8);
   const [openModal, setOpenModal] = useState(false);
-  const [openModalStandard, setOpenModalStandard] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
-  const [selectedStep, setSelectedStep] = useState<any>(null);
-  const itemsPerRow = 4; // สมมติว่าหน้าจอใหญ่สุดแสดง 4 ต่อแถว
-  const rowsPerLoad = 2; // โหลดเพิ่มทีละ 2 แถว
+  const navigate = useNavigate();
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [collectionImages, setCollectionImages] = useState<
+    Record<number, CollectionImage[]>
+  >({});
+  const [loadingCollections, setLoadingCollections] = useState(false);
+
+  // --------- Standard Product (from API) ----------
+  const [standardProducts, setStandardProducts] = useState<
+    StandardProductApi[]
+  >([]);
+
+  const [openModalStandard, setOpenModalStandard] = useState(false);
+  const [selectedStandard, setSelectedStandard] = useState<StandardItem | null>(
+    null
+  );
+
+  const itemsPerRow = 4;
+  const rowsPerLoad = 2;
   const itemsPerLoad = itemsPerRow * rowsPerLoad;
 
-  const handleCardClick = (item: { image: string; desc: string; type: string }) => {
-    setModalContent(
-      <div>
-        <img src={item.image} alt={item.desc} className="w-full h-auto mb-4" />
-        <p className="text-center">{item.desc}</p>
-      </div>
-    );
-    setOpenModal(true);
-  }
+  const normalizeImageUrl = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+  };
 
-  const portfolio =  [
-    {id: "1", image: product1, desc: "New Collection", type: "new" },
-    {id: "2", image: product2, desc: "New Collection", type: "new" },
-    {id: "3", image: product3, desc: "Season Collection", type: "season" },
-    {id: "4", image: product4, desc: "New Collection", type: "new" },
-    {id: "5", image: product5, desc: "Original Collection", type: "original" },
-    {id: "6", image: product6, desc: "New Collection", type: "new" },
-    {id: "7", image: product7, desc: "New Collection", type: "new" },
-    {id: "8", image: product8, desc: "Original Collection", type: "original" },
-    {id: "9", image: product1, desc: "Season Collection", type: "season" },
-    {id: "10", image: product2, desc: "New Collection", type: "new" },
-    {id: "11", image: product3, desc: "Original Collection", type: "original" },
-    {id: "12", image: product4, desc: "New Collection", type: "new" },
-  ];
-  
+  // ---------- Fetch Collections + Images ----------
+  const fetchCollectionsWithImages = async () => {
+    try {
+      setLoadingCollections(true);
 
-  const filteredPortfolio =
+      const collectionRes = await getCollection();
+      const collectionList: Collection[] = Array.isArray(collectionRes)
+        ? collectionRes
+        : [collectionRes];
+
+      setCollections(collectionList);
+      console.log("collections", collectionList);
+
+      const imagesMap: Record<number, CollectionImage[]> = {};
+
+      await Promise.all(
+        collectionList.map(async (col) => {
+          try {
+            const imgRes = await getCollectionImage(col.id);
+            const imgArr: CollectionImage[] = Array.isArray(imgRes)
+              ? imgRes
+              : [imgRes];
+            imagesMap[col.id] = imgArr;
+            console.log(`images for collection ${col.id}`, imgArr);
+          } catch (err) {
+            console.error(`Error fetching images for collection ${col.id}`, err);
+            imagesMap[col.id] = [];
+          }
+        })
+      );
+
+      setCollectionImages(imagesMap);
+    } catch (err) {
+      console.error("Error fetching collections:", err);
+    } finally {
+      setLoadingCollections(false);
+    }
+  };
+
+  // ---------- Fetch Standard Product ----------
+  const fetchStandardProducts = async () => {
+    try {
+      const res = await getStandard_product();
+      const list: StandardProductApi[] = Array.isArray(res) ? res : [res];
+      setStandardProducts(list);
+      console.log("standard products", list);
+    } catch (err) {
+      console.error("Error fetching standard products:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCollectionsWithImages();
+    fetchStandardProducts();
+  }, []);
+
+  // ---------- Build portfolio from API ----------
+  const buildPortfolioFromApi = (): PortfolioItem[] => {
+    const result: PortfolioItem[] = [];
+
+    collections.forEach((col) => {
+      const imgs = collectionImages[col.id] || [];
+
+      imgs.forEach((img) => {
+        result.push({
+          id: img.id,
+          image: normalizeImageUrl(img.collection_img),
+          desc: col.collec_name,
+          collectionId: col.id,
+        });
+      });
+    });
+
+    return result;
+  };
+
+  const fullPortfolio = buildPortfolioFromApi();
+
+  const filteredPortfolio: PortfolioItem[] =
     filter === "all"
-      ? portfolio
-      : portfolio.filter((item) => item.type === filter);
+      ? fullPortfolio
+      : fullPortfolio.filter((item) => item.collectionId === filter);
 
   const visiblePortfolio = filteredPortfolio.slice(0, visibleCount);
 
@@ -63,224 +176,227 @@ const Products = () => {
     setVisibleCount((prev) => prev + itemsPerLoad);
   };
 
-  const handleOpenModalStandard = (item) => {
-    const url = `/gallorys/${item.id}`;
-    window.location.href = url;
+  const handleCardClick = (item: PortfolioItem) => {
+    setModalContent(
+      <div>
+        <img
+          src={item.image}
+          alt={item.desc}
+          className="w-full h-auto mb-4"
+        />
+        <p className="text-center">{item.desc}</p>
+      </div>
+    );
+    setOpenModal(true);
   };
 
-  const ContantProductStandard = selectedStep?.image ? (
-    <Carousel autoplay autoplaySpeed={5000} slidesToShow={1} slidesToScroll={1} dots={true} arrows={true}>
-      {selectedStep.image.map((img: any, idx: number) => (
+  // ------------------- Standard Production (ใช้ API + local image map) -------------------
+
+  // map ชื่อจาก backend → กลุ่มรูป local
+  const standardImageMap: Record<string, { src: string; alt: string }[]> = {
+    TOP: [
+      { src: product1, alt: "TOPS - เสื้อยืดแฟชั่น" },
+      { src: product4, alt: "TOPS - เสื้อเชิ้ตลำลอง" },
+    ],
+    PANTS: [
+      { src: product2, alt: "PANTS - กางเกงยีนส์" },
+      { src: product5, alt: "PANTS - กางเกงชิโน่" },
+    ],
+    SKIRT: [
+      { src: product3, alt: "SKIRT - กระโปรงสั้น" },
+      { src: product6, alt: "SKIRT - กระโปรงยาว" },
+    ],
+    DRESSES: [
+      { src: product7, alt: "DRESSES - เดรสลำลอง" },
+      { src: product8, alt: "DRESSES - เดรสงานเลี้ยง" },
+    ],
+  };
+
+  // แปลงจาก API → StandardItem ที่ UI ใช้
+  const standardProductionItems: StandardItem[] = standardProducts.map(
+    (prod) => {
+      const key = prod.standname.toUpperCase(); // "TOP", "PANTS", "SKIRT", "DERESSES"
+      // ถ้า backend พิมพ์ผิด "DERESSES" แต่เราอยาก map ไป DRESSES:
+      const normalizedKey =
+        key === "DERESSES" ? "DRESSES" : key;
+
+      return {
+        id: prod.id,
+        title: prod.standname, // แสดงชื่อตาม backend
+        image: standardImageMap[normalizedKey] ?? [],
+      };
+    }
+  );
+
+  const handleOpenModalStandard = (step: StandardItem) => {
+    setSelectedStandard(step);
+    setOpenModalStandard(true);
+  };
+
+  const ContentProductStandard = selectedStandard?.image ? (
+    <Carousel
+      autoplay
+      autoplaySpeed={5000}
+      slidesToShow={1}
+      slidesToScroll={1}
+      dots
+      arrows
+    >
+      {selectedStandard.image.map((img, idx) => (
         <div key={idx} className="flex justify-center items-center">
           <Image.PreviewGroup
-            items={selectedStep.image.map((img: any) => ({
-              src: img.src,
-              alt: img.alt,
+            items={selectedStandard.image.map((x) => ({
+              src: x.src,
+              alt: x.alt,
             }))}
           >
-            <Image
-              src={img.src}
-              alt={img.alt}
-            />
+            <Image src={img.src} alt={img.alt} />
           </Image.PreviewGroup>
-          {img.alt && <p className="text-center mt-2 text-muted-foreground">{img.alt}</p>}
+          {img.alt && (
+            <p className="text-center mt-2 text-muted-foreground">
+              {img.alt}
+            </p>
+          )}
         </div>
       ))}
     </Carousel>
   ) : (
     <p className="text-center py-10 text-muted-foreground">
-      ไม่มีรูปภาพสำหรับขั้นตอนนี้
+      ไม่มีรูปภาพสำหรับหมวดนี้
     </p>
   );
 
-  const standardProductionItems = [
-    {
-      id: 1,
-      title: "TOPS",
-      image: [
-        { src: product1, alt: "TOPS - เสื้อยืดแฟชั่น" },
-        { src: product4, alt: "TOPS - เสื้อเชิ้ตลำลอง" },
-      ],
-    },
-    {
-      id: 2,
-      title: "PANTS",
-      image: [
-        { src: product2, alt: "PANTS - กางเกงยีนส์" },
-        { src: product5, alt: "PANTS - กางเกงชิโน่" },
-      ],
-    },
-    {
-      id: 3,
-      title: "SKIRT",
-      image: [
-        { src: product3, alt: "SKIRT - กระโปรงสั้น" },
-        { src: product6, alt: "SKIRT - กระโปรงยาว" },
-      ],
-    },
-    {
-      id: 4,
-      title: "DRESSES",
-      image: [
-        { src: product7, alt: "DRESSES - เดรสลำลอง" },
-        { src: product8, alt: "DRESSES - เดรสงานเลี้ยง" },
-      ],
-    },
-  ];
-
-
-  const item: CollapseProps["items"] = [
+  const standardCollapseItems: CollapseProps["items"] = [
     {
       key: "1",
       label: "Standard Production",
       children: (
         <div className="space-y-2">
-          {standardProductionItems.map((step, idx) => (
-            <a
-              key={idx}
-              onClick={() => handleOpenModalStandard(step)}
-              href={`${step.title}`}
+          {standardProductionItems.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => navigate(`/gallorys/${cat.id}`)}
               className="block hover:text-primary"
             >
-              {step.title}
-            </a>
+              {cat.title}
+            </button>
           ))}
         </div>
       ),
     },
   ];
 
-  
   return (
     <>
-    <section id="products" className="gradient-sunset relative py-24">
-      {/* BG */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={workshopImage}
-          alt="โรงงานผลิตเสื้อผ้า SARANYA CLOTHING"
-          className="w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-background/40 backdrop-blur-[1px]" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
-          Collection
-        </h3>
-
-        {/* ปุ่ม Filter */}
-        <div className="flex justify-center gap-3 mb-12 flex-wrap">
-          <Button
-            variant={filter === "new" ? "default" : "outline"}
-            onClick={() => {
-              setFilter("new");
-              setVisibleCount(8); // reset เมื่อเปลี่ยนหมวด
-            }}
-          >
-            New Collection
-          </Button>
-          <Button
-            variant={filter === "season" ? "default" : "outline"}
-            onClick={() => {
-              setFilter("season");
-              setVisibleCount(8);
-            }}
-          >
-            Season Collection
-          </Button>
-          <Button
-            variant={filter === "original" ? "default" : "outline"}
-            onClick={() => {
-              setFilter("original");
-              setVisibleCount(8);
-            }}
-          >
-            Original Collection
-          </Button>
-          <Button
-            variant={filter === "all" ? "default" : "outline"}
-            onClick={() => {
-              setFilter("all");
-              setVisibleCount(8);
-            }}
-          >
-            All
-          </Button>
-        </div>
-
-        {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {visiblePortfolio.map((item, idx) => (
-            <Card
-              key={idx}
-              onClick={() => handleCardClick(item)}
-              className="group relative overflow-hidden aspect-[3/4] cursor-pointer hover:shadow-warm transition-smooth border hover:border-primary/50"
-            >
-              <img
-                src={item.image}
-                alt={item.desc}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-              {/* <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 to-muted/70" /> */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth">
-              {/* <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/20 transition-smooth" /> */}
-                <div className="text-center bg-background/90 px-6 py-3 rounded-lg shadow-warm">
-                  <p className="text-foreground text-sm font-semibold">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* ปุ่ม Load More */}
-        {visibleCount < filteredPortfolio.length && (
-          <div className="text-center py-8">
-            <Button size="lg" variant="default" onClick={handleLoadMore}>
-              More
-            </Button>
-          </div>
-        )}
-
-        {/* ถ้าโหลดหมดแล้ว */}
-        {visibleCount >= filteredPortfolio.length && (
-          <div className="text-center py-8 text-muted-foreground text-sm italic">
-            You've reached the end
-          </div>
-        )}
-
-        {/* Collapse Section */}
-        <div className="text-center mt-6 mb-6">
-          <Collapse
-            size="large"
-            items={[
-              {
-                key: "1",
-                label: "Standard Production",
-                children: (
-                  <div className="space-y-2">
-                    {["TOPS", "PANTS", "SKIRT", "DRESSES"].map((cat, idx) => (
-                      <a
-                        key={idx}
-                        onClick={() => handleOpenModalStandard(standardProductionItems[idx])}
-                        href={`#${cat}`}
-                        className="block hover:text-primary"
-                      >
-                        {cat}
-                      </a>
-                    ))}
-                  </div>
-                ),
-              },
-            ]}
+      <section id="products" className="gradient-sunset relative py-24">
+        {/* BG */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={workshopImage}
+            alt="โรงงานผลิตเสื้อผ้า SARANYA CLOTHING"
+            className="w-full h-full object-cover opacity-20"
           />
+          <div className="absolute inset-0 bg-background/40 backdrop-blur-[1px]" />
         </div>
-      </div>
-    </section>
-    <Modal
+
+        <div className="container mx-auto px-4 relative z-10">
+          <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
+            Collection
+          </h3>
+
+          {/* Filter Buttons */}
+          <div className="flex justify-center gap-3 mb-12 flex-wrap">
+            <Button
+              variant={filter === "all" ? "default" : "outline"}
+              onClick={() => {
+                setFilter("all");
+                setVisibleCount(8);
+              }}
+            >
+              All
+            </Button>
+
+            {collections.map((collection) => (
+              <Button
+                key={collection.id}
+                variant={filter === collection.id ? "default" : "outline"}
+                onClick={() => {
+                  setFilter(collection.id);
+                  setVisibleCount(8);
+                }}
+              >
+                {collection.collec_name}
+              </Button>
+            ))}
+          </div>
+
+          {/* Loading text */}
+          {loadingCollections && (
+            <p className="text-center text-muted-foreground mb-6">
+              กำลังโหลด Collection...
+            </p>
+          )}
+
+          {/* Portfolio Grid */}
+          {visiblePortfolio.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {visiblePortfolio.map((item) => (
+                <Card
+                  key={item.id}
+                  onClick={() => handleCardClick(item)}
+                  className="group relative overflow-hidden aspect-[3/4] cursor-pointer hover:shadow-warm transition-smooth border hover:border-primary/50"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.desc}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth">
+                    <div className="text-center bg-background/90 px-6 py-3 rounded-lg shadow-warm">
+                      <p className="text-foreground text-sm font-semibold">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            !loadingCollections && (
+              <p className="text-center text-muted-foreground mb-6">
+                ไม่พบสินค้าในหมวดนี้
+              </p>
+            )
+          )}
+
+          {/* Load More */}
+          {!loadingCollections && visibleCount < filteredPortfolio.length && (
+            <div className="text-center py-8">
+              <Button size="lg" variant="default" onClick={handleLoadMore}>
+                More
+              </Button>
+            </div>
+          )}
+
+          {!loadingCollections &&
+            visiblePortfolio.length > 0 &&
+            visibleCount >= filteredPortfolio.length && (
+              <div className="text-center py-8 text-muted-foreground text-sm italic">
+                You've reached the end
+              </div>
+            )}
+
+          {/* Collapse Section - Standard Production */}
+          <div className="text-center mt-6 mb-6">
+            <Collapse size="large" items={standardCollapseItems} />
+          </div>
+        </div>
+      </section>
+
+      {/* Modal Collection */}
+      <Modal
         centered
         open={openModal}
         onCancel={() => setOpenModal(false)}
@@ -288,16 +404,17 @@ const Products = () => {
       >
         {modalContent}
       </Modal>
+
+      {/* Modal Standard Production */}
       <Modal
         centered
         open={openModalStandard}
         onCancel={() => setOpenModalStandard(false)}
         footer={null}
       >
-        {ContantProductStandard}
+        {ContentProductStandard}
       </Modal>
-
-  </>  
+    </>
   );
 };
 
