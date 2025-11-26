@@ -86,7 +86,7 @@ const Products = () => {
   const normalizeImageUrl = (path: string) => {
     if (!path) return "";
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
-    return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+    return API_URL ? `${API_URL}${path}` : path;
   };
 
   // ---------- Fetch Collections + Images ----------

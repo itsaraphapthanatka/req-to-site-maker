@@ -8,6 +8,7 @@ import {
   getStandard_product_set_by_id,
 } from "@/server/collection";
 
+const API_URL = import.meta.env.VITE_API_URL;
 interface StandardProductSet {
   id: number;
   standid: number;
@@ -41,7 +42,7 @@ const GalloryDetailID = () => {
   const normalizeImageUrl = (path: string) => {
     if (!path) return "";
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
-    return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+    return API_URL ? `${API_URL}${path}` : path;
   };
 
   useEffect(() => {
