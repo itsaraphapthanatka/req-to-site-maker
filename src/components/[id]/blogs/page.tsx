@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getBlogById } from "@/server/blog";
 import React, { useEffect, useState } from "react";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const BlogDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<any>(null);
@@ -37,7 +37,7 @@ const BlogDetail = () => {
         {post.img && (
           <div className="mb-6">
             <img
-              src={post.img}
+              src={API_URL + post.img}
               alt={post.title}
               className="mx-auto rounded-lg shadow-md"
             />
