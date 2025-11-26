@@ -68,7 +68,7 @@ const Services = () => {
     return arr
       .filter((d) => d && typeof d.img === "string")
       .map((d) => ({
-        src: API_BASE_URL ? `${API_BASE_URL}${d.img}` : d.img,
+        src: API_URL ? `${API_URL}${d.img}` : d.img,
         alt: title,
       }));
   };
