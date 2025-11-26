@@ -329,7 +329,7 @@ const About = () => {
             <div className="order-1 md:order-2">
               <div className="relative">
                 <img
-                  src={API_URL + about?.sec3Img}
+                  src={API_URL + about?.sec3img}
                   alt="คุณศราลักษณ์ รัตนวัน - ผู้ก่อตั้ง SARANYA CLOTHING"
                   className="rounded-2xl shadow-elegant w-full"
                 />
