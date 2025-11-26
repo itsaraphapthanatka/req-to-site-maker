@@ -49,13 +49,14 @@ const Blog = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
+              console.log("ssss", post.img),
               <article
                 key={post.id}
                 className="bg-card rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
               >
                 <div
                   className="h-48 bg-cover bg-center group-hover:brightness-90 transition-all duration-300"
-                  style={{ backgroundImage: `url(${post.img})` }}
+                  style={{ backgroundImage: `url(${API_URL + post.img})` }}
                 >
                 </div>
 
