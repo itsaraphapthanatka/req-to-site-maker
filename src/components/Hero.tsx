@@ -11,7 +11,7 @@ import img2 from "@/assets/img2.png";
 import img5 from "@/assets/img5.png";
 import img6 from "@/assets/img6.png";
 import { getSlide } from "@/server/slide";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slides, setSlides] = useState<any>([]);
@@ -43,7 +43,7 @@ const Hero = () => {
             <div key={index} className="h-screen">
               {slide.slide_image.endsWith(".mp4") ? (
                 <video
-                  src={slide.slide_image}
+                  src={API_URL + slide.slide_image}
                   autoPlay
                   loop
                   muted
@@ -52,7 +52,7 @@ const Hero = () => {
                 />
               ) : (
                 <img
-                  src={slide.slide_image}
+                  src={API_URL + slide.slide_image}
                   alt={slide.title}
                   className="w-full h-screen object-cover"
                 />

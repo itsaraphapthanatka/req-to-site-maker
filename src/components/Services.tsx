@@ -9,6 +9,8 @@ import {
   getOemServiceDetail,
 } from "@/server/service";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const StyledCollapse = styled(Collapse)`
   position: relative;
   overflow: hidden;
@@ -213,7 +215,7 @@ const Services = () => {
                 alt: x.alt,
               }))}
             >
-              <Image src={img.src} alt={img.alt} />
+              <Image src={API_URL + img.src} alt={img.alt} />
             </Image.PreviewGroup>
           </div>
         ))}

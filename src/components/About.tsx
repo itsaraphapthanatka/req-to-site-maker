@@ -30,6 +30,7 @@ import { getProfessional } from "@/server/professional";
 import { getNaturalFiber } from "@/server/natural_fiber";
 import { getInternationalStandard } from "@/server/internationnal_standards";
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface ExperienceItem {
   title: string;
@@ -238,7 +239,7 @@ const About = () => {
         {selectedStep.image.map((src, idx) => (
           <div key={idx} className="flex justify-center items-center">
             <Image.PreviewGroup>
-              <Image src={src} alt={`${selectedStep.title} ${idx + 1}`} />
+              <Image src={API_URL + src} alt={`${selectedStep.title} ${idx + 1}`} />
             </Image.PreviewGroup>
           </div>
         ))}

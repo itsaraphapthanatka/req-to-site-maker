@@ -221,7 +221,7 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             {/* SHOW history current image */}
             {d.sec2Img && (
                 <Form.Item label="Current Image" name="sec2_image_current">
-                    <Image width={200} src={d.sec2Img} />
+                    <Image width={200} src={API_URL + d.sec2Img} />
                 </Form.Item>
             )}
 
@@ -256,7 +256,7 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             {/* SHOW experience current image */}
             {d.sec3img && (
                 <Form.Item label="Current Image" name="experience_image_current">
-                    <Image width={200} src={d.sec3img} />
+                    <Image width={200} src={API_URL + d.sec3img} />
                 </Form.Item>
             )}
 
@@ -287,7 +287,7 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             {/* SHOW standard current image */}
             {d.sec4img && (
                 <Form.Item label="Current Image" name="standard_image_current">
-                    <Image width={200} src={d.sec4img} />
+                    <Image width={200} src={API_URL + d.sec4img} />
                 </Form.Item>
             )}
 
