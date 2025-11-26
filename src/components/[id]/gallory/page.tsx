@@ -11,7 +11,7 @@ import skirts from "@/assets/product-skirts.jpg";
 import dresses from "@/assets/product-dresses.jpg";
 
 import { getStandard_product_set } from "@/server/collection";
-
+const API_URL = import.meta.env.VITE_API_URL;
 interface StandardProductSet {
     id: number;
     standid: number;          // 👈 แก้เป็น number ให้ตรงกับ response จริง
@@ -34,7 +34,7 @@ const GalloryDetail = () => {
     const normalizeImageUrl = (path: string | null) => {
         if (!path) return "";
         if (path.startsWith("http://") || path.startsWith("https://")) return path;
-        return API_BASE_URL ? `${API_BASE_URL}${path}` : path;
+        return API_URL ? `${API_URL}${path}` : path;
     };
 
     const defaultImageByStandId: Record<number, string> = {
