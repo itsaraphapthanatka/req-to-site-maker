@@ -190,7 +190,7 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
 
             {d.founderImg && (
                 <Form.Item label="Current Image">
-                    <Image width={200} src={d.founderImg} />
+                    <Image width={200} src={API_URL + d.founderImg} />
                 </Form.Item>
             )}
 
