@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Table, Button, Flex, Modal, Tooltip, Input, Form } from "antd";
+import { Layout, Typography, Table, Button, Flex, Modal, Tooltip, Input, Form, message } from "antd";
 const { Content } = Layout;
 const { Title } = Typography;
 import { DeleteOutlined } from '@ant-design/icons';
@@ -7,11 +7,14 @@ import {
     getStandard_product_by_standard_id,
     getStandard_product_set_by_standard_id,
     createStandard_product_set,
-    deleteStandard_product_set
+    deleteStandard_product_set,
+    updateStandard_product_set
 } from '@/server/collection';
 import { useNavigate, useParams } from "react-router-dom";
 import { text } from "stream/consumers";
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import Quill from 'quill';
 interface Standard {
     id: number;
     standname: string;
@@ -23,6 +26,8 @@ interface StandardResponse {
 }
 
 const StandardSetPage = () => {
+    const Delta = Quill.import('delta');
+
     const { id } = useParams();
     const navigate = useNavigate();
     const [data, setData] = useState<any[]>([]);
@@ -32,6 +37,9 @@ const StandardSetPage = () => {
     const [isModalOpenAdd, setIsModalOpenAdd] = useState(false);
     const [text, setText] = useState('');
     const [form] = Form.useForm();
+    const [editId, setEditId] = useState<number | null>(null);
+    const [description, setDescription] = useState("");
+
     const onFinish = async (values: any) => {
         // console.log(values);
         setIsModalOpenAdd(false);
@@ -73,17 +81,37 @@ const StandardSetPage = () => {
         console.log(res);
         fetchData();
     };
-    const handleOk = () => {
-        setIsModalOpen(false);
+
+    const handleOk = async () => {
+        if (!editId) return;
+        try {
+            const data = {
+                standid: Number(id),
+                standsetdesc: description,
+                standsetname: standard?.standname,
+                standsetimg: ""
+            };
+            console.log("sending data:", data);
+            await updateStandard_product_set(editId, data);
+
+            message.success("Description updated successfully");
+            fetchData();
+            setIsModalOpen(false);
+        } catch (error) {
+            message.error("Update failed");
+            console.error(error);
+        }
     };
+
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
-    const handleShow = (text) => {
-        console.log(text);
+    const handleShow = (text, id) => {
         setIsModalOpen(true);
-        setText(text);
+        setDescription(text);
+        setEditId(id);
     };
 
     const columns = [
@@ -101,12 +129,12 @@ const StandardSetPage = () => {
             title: 'Description',
             dataIndex: 'standsetdesc',
             key: 'standsetdesc',
-            render: (text) => (
+            render: (text, record) => (
                 <div style={{ whiteSpace: 'pre-wrap' }}>
                     <Button type="link"
                         onClick={(e) => {
                             e.stopPropagation();
-                            handleShow(text);
+                            handleShow(text, record.id);
                         }}
                     >Show</Button>
                 </div>
@@ -155,10 +183,22 @@ const StandardSetPage = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <>
-                    <p>{text}</p>
-                </>
+                <ReactQuill
+                    theme="snow"
+                    value={description} // <-- bind กับ state
+                    onChange={setDescription} // <-- อัพเดต state เวลาแก้ไข
+                    modules={{
+                        toolbar: [
+                            ["bold", "italic", "underline", "strike", "blockquote"],
+                            [{ list: "ordered" }, { list: "bullet" }],
+                            ["link", "image"],
+                            ["clean"],
+                        ],
+                    }}
+                    style={{ height: "300px" }}
+                />
             </Modal>
+
             <Modal
                 title="Add Standard Set"
                 open={isModalOpenAdd}
