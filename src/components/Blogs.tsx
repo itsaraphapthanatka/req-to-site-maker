@@ -56,7 +56,7 @@ const Blog = () => {
               >
                 <div
                   className="h-48 bg-cover bg-center group-hover:brightness-90 transition-all duration-300"
-                  style={{ backgroundImage: `url(${API_URL + post.img})` }}
+                  style={{ backgroundImage: `url(${encodeURI(API_URL + post.img)})` }}
                 >
                 </div>
 
