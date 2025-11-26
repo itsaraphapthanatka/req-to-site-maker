@@ -219,7 +219,8 @@ export const createStandard_product_set = async (standard_product_set: any) => {
 }
 
 export const updateStandard_product_set = async (id: number, standard_product_set: any) => {
-    const response = await axios.put(`${API_URL}/standardset/${id}`, standard_product_set, {
+    console.log("standard_product_set", standard_product_set);
+    const response = await axios.put<StandardSetResponse>(`${API_URL}/standardset/${id}`, standard_product_set, {
         headers: {
             "accept": "application/json",
         },

@@ -14,7 +14,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Layout, Typography, Table, Button, Flex, Modal, Form, Input, Upload, message } from "antd";
 const { TextArea } = Input;
 import type { TableColumnsType, UploadFile, UploadProps } from "antd";
-import { getSlide, uploadSlideImage, reorderSlide, deleteSlide } from "../../server/slide";
+import { getSlide, uploadSlideImage, reorderSlide, deleteSlide, updateSlide, getSlideById } from "../../server/slide";
 import { RcFile } from "antd/es/upload";
 const API_URL = import.meta.env.VITE_API_URL;
 const { Content } = Layout;
@@ -100,6 +100,8 @@ const HeroPage: React.FC = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [fileList, setFileList] = React.useState<UploadFile[]>([]);
+  const [editModalVisible, setEditModalVisible] = React.useState(false);
+  const [editId, setEditId] = React.useState<number | null>(null);
 
   // ไม่ upload ตอนเลือก file — แค่เก็บไว้ก่อน
   const handleUploadChange: UploadProps["onChange"] = ({ fileList: newList }) => {
@@ -114,7 +116,7 @@ const HeroPage: React.FC = () => {
       message.error(`${file.name} is not a PNG, JPG, or MP4 file`);
       return Upload.LIST_IGNORE;
     }
-    return isPNG || isJPG || isMP4;
+    return false;
   };
 
   const handleAddSlide = async (values: any) => {
@@ -188,7 +190,15 @@ const HeroPage: React.FC = () => {
   };
 
   const ActionButtons: React.FC<{ record: DataType }> = ({ record }) => {
-    const handleEdit = () => console.log("Edit", record.id);
+    const handleEdit = async (id: number) => {
+      const res = await getSlideById(id);
+      if (res) {
+        form.setFieldsValue(res);
+        setEditId(id);
+        setEditModalVisible(true);
+
+      }
+    };
 
     const handleDelete = async (id: number) => {
       const res = await deleteSlide(id);
@@ -200,7 +210,7 @@ const HeroPage: React.FC = () => {
 
     return (
       <>
-        <Button type="text" icon={<EditOutlined />} onClick={handleEdit} />
+        <Button type="text" icon={<EditOutlined />} onClick={() => handleEdit(record.id)} />
         <Button
           type="text"
           danger
@@ -209,6 +219,23 @@ const HeroPage: React.FC = () => {
         />
       </>
     );
+  };
+
+  const handleEditSlide = async (values: any) => {
+    if (editId) {
+      const formData = new FormData();
+      formData.append("slide_desc", values.slide_desc);
+      if (fileList.length > 0) {
+        formData.append("slide_image", fileList[0].originFileObj as File); // <-- ต้องตรงกับ FastAPI
+      }
+      const res = await updateSlide(editId, formData);
+      if (res) {
+        message.success("Edit slide successfully!");
+        fetchData();
+        setEditModalVisible(false);
+        setEditId(null);
+      }
+    }
   };
 
   const columns: TableColumnsType<DataType> = [
@@ -286,7 +313,41 @@ const HeroPage: React.FC = () => {
             <Form.Item
               name="slide_desc"
               label="Description"
-              rules={[{ required: true, message: "Please input description" }]}
+            >
+              <TextArea rows={4} />
+            </Form.Item>
+          </Form>
+        </Modal>
+        <Modal
+          title="Edit Slide"
+          open={editModalVisible}
+          onOk={() => form.submit()}
+          onCancel={() => {
+            form.resetFields();
+            setFileList([]);
+            setEditModalVisible(false);
+          }}
+          okText="Edit"
+          cancelText="Cancel"
+        >
+          <Form form={form} layout="vertical" onFinish={handleEditSlide}>
+            <Form.Item name="uploadPicture">
+              <Upload
+                fileList={fileList}
+                maxCount={1}
+                beforeUpload={beforeUpload}
+                onChange={handleUploadChange}
+
+              >
+                <Button icon={<UploadOutlined />}>Upload PNG, JPG, or MP4 only</Button>
+              </Upload>
+            </Form.Item>
+
+            <Form.Item
+              name="slide_desc"
+              label="Description"
+              initialValue={editId ? slideData.find((item) => item.id === editId)?.slide_desc : ""}
+
             >
               <TextArea rows={4} />
             </Form.Item>

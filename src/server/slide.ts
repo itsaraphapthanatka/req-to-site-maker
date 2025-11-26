@@ -35,10 +35,10 @@ export const createSlide = async (slide: Slide) => {
     return response.data;
 }
 
-export const updateSlide = async (id: number, slide: Slide) => {
-    const response = await axios.put(`${API_URL}/slides/${id}`, slide, {
+export const updateSlide = async (id: number, slide: FormData) => {
+    const response = await axios.put<Slide>(`${API_URL}/slides/${id}`, slide, {
         headers: {
-            "accept": "application/json",
+            "Content-Type": "multipart/form-data",
         },
     });
     return response.data;
