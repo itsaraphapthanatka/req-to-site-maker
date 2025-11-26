@@ -208,6 +208,7 @@ const Services = () => {
         arrows
       >
         {modalImages.map((img, idx) => (
+          console.log("imgkkkk", img),
           <div key={idx} className="flex justify-center items-center">
             <Image.PreviewGroup
               items={modalImages.map((x) => ({
@@ -215,7 +216,7 @@ const Services = () => {
                 alt: x.alt,
               }))}
             >
-              <Image src={API_URL + img.src} alt={img.alt} />
+              <Image src={img.src} alt={img.alt} />
             </Image.PreviewGroup>
           </div>
         ))}
