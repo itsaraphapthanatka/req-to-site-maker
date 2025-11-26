@@ -7,6 +7,7 @@ import { HashLink } from "react-router-hash-link";
 import { getBlog } from "../server/blog";
 import { useEffect, useState } from "react";
 import { Image } from "antd"
+const API_URL = import.meta.env.VITE_API_URL;
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
@@ -54,7 +55,7 @@ const Blog = () => {
               >
                 <div
                   className="h-48 bg-cover bg-center group-hover:brightness-90 transition-all duration-300"
-                  style={{ backgroundImage: `url(${post.img})` }}
+                  style={{ backgroundImage: `url(${API_URL + post.img})` }}
                 >
                 </div>
 
