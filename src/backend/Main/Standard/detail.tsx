@@ -15,6 +15,8 @@ import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { DraggableTable } from "@/components/DraggableTable";
+
+const API_URL = import.meta.env.VITE_API_URL;
 interface Standard {
     id: number;
     standname: string;
@@ -121,7 +123,7 @@ const StandardSetDetailPage = () => {
             key: 'image',
             render: (text: string, record: StandardSetDetail) => (
                 <Image
-                    src={record.s_set_img}
+                    src={API_URL + record.s_set_img}
                     alt={record.s_set_title}
                     style={{ width: 100, height: 100 }}
                 />
