@@ -37,6 +37,8 @@ import {
     updateCollectionImageOrder,
 } from "@/server/collection";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -250,7 +252,7 @@ const ProductImgPage: React.FC = () => {
             dataIndex: "img",
             render: (img: string) => (
                 <Image
-                    src={img}
+                    src={API_URL + img}
                     width={120}
                     style={{ borderRadius: 6, objectFit: "cover" }}
                 />
