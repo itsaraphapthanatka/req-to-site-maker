@@ -15,7 +15,7 @@ import { Button, List, Image, Upload, Divider, message, Space, Flex } from 'antd
 import type { UploadFile, UploadChangeParam, UploadProps } from 'antd/es/upload';
 
 import { getInternationalStandard, uploadInternationalStandardImage, reorderInternationalStandard, deleteInternationalStandard } from '@/server/internationnal_standards';
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 // ========== Context for Sortable Item ==========
 interface SortableListItemContextProps {
@@ -219,7 +219,7 @@ const InternationalStandardTab: React.FC = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <DragHandle />
                   <div>{item.key}</div>
-                  {item.image && <Image width={60} src={item.image} />}
+                  {item.image && <Image width={60} src={API_URL + item.image} />}
                   <Button type="text" icon={<DeleteOutlined />} onClick={() => handleDelete(item.key as number)} />
                 </div>
               </SortableListItem>

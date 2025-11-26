@@ -21,6 +21,8 @@ import {
 } from "@/server/collection";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // ----------------- Types -----------------
 interface Collection {
   id: number;
@@ -250,7 +252,7 @@ const Products = () => {
               alt: x.alt,
             }))}
           >
-            <Image src={img.src} alt={img.alt} />
+            <Image src={API_URL + img.src} alt={img.alt} />
           </Image.PreviewGroup>
           {img.alt && (
             <p className="text-center mt-2 text-muted-foreground">

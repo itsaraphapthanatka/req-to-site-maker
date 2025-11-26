@@ -16,7 +16,7 @@ const { TextArea } = Input;
 import type { TableColumnsType, UploadFile, UploadProps } from "antd";
 import { getSlide, uploadSlideImage, reorderSlide, deleteSlide } from "../../server/slide";
 import { RcFile } from "antd/es/upload";
-
+const API_URL = import.meta.env.VITE_API_URL;
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -223,9 +223,9 @@ const HeroPage: React.FC = () => {
       dataIndex: "slide_image",
       render: (_, record) =>
         record.slide_image.includes(".mp4") ? (
-          <video width={200} height={200} src={record.slide_image} autoPlay loop muted />
+          <video width={200} height={200} src={API_URL + record.slide_image} autoPlay loop muted />
         ) : (
-          <img width={200} height={200} src={record.slide_image} alt="slide_image" />
+          <img width={200} height={200} src={API_URL + record.slide_image} alt="slide_image" />
         ),
     },
     { title: "description", dataIndex: "slide_desc" },
