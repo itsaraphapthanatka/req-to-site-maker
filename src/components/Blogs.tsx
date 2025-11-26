@@ -49,7 +49,7 @@ const Blog = () => {
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
-              console.log("ssss", post.img),
+              console.log("ssss", API_URL + post.img),
               <article
                 key={post.id}
                 className="bg-card rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
