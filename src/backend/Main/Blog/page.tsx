@@ -79,7 +79,7 @@ const AddBlog = () => {
             >
                 <Form.Item label="Parent Image">
                     {previewImage && (
-                        <Image width={200} src={previewImage} />
+                        <Image width={200} src={API_URL + previewImage} />
                     )}
                 </Form.Item>
 

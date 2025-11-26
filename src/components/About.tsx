@@ -131,12 +131,12 @@ const About = () => {
           {
             title: "Natural Fibers",
             desc: "",
-            image: collectImages(nat[0], "image"),       // ดูตามโครงสร้างจริงของ naturalFiberRes
+            image: collectImages(nat, "image"),       // ดูตามโครงสร้างจริงของ naturalFiberRes
           },
           {
             title: "International Standards",
             desc: "",
-            image: collectImages(intl[0], "image"),
+            image: collectImages(intl, "image"),
           },
         ];
 
