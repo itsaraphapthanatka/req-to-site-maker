@@ -8,6 +8,7 @@ const { Title } = Typography;
 import { createBlog } from '@/server/blog';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 const API_URL = import.meta.env.VITE_API_URL;
 const AddBlog = () => {
     const navigate = useNavigate();
@@ -121,7 +122,7 @@ const AddBlog = () => {
                             toolbar: [
                                 ["bold", "italic", "underline", "strike", "blockquote"],
                                 [{ list: "ordered" }, { list: "bullet" }],
-                                ["link"],
+                                ["link", "image"],
                                 ["clean"],
                             ],
                         }}
