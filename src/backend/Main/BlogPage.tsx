@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteBlog, getBlog } from "../../server/blog";
 const { Content } = Layout;
 const { Title } = Typography;
-
+const API_URL = import.meta.env.VITE_API_URL;
 interface Blog {
   id: number;
   title: string;
@@ -40,7 +40,7 @@ const BlogPage: React.FC = () => {
       render: (text, record) => (
         <Image
           width={100}
-          src={record.img}
+          src={API_URL + record.img}
         />
       ),
     },
