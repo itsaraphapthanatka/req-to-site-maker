@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/2.png";
@@ -9,10 +9,27 @@ import workshopImage from "@/assets/workshop.jpg";
 import img1 from "@/assets/img1.png";
 import img2 from "@/assets/img2.png";
 import img5 from "@/assets/img5.png";
-import img6 from "@/assets/img6.png";  
+import img6 from "@/assets/img6.png";
+import { getSlide } from "@/server/slide";
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [slides, setSlides] = useState<any>([]);
+  useEffect(() => {
+    const fetchSlides = async () => {
+      try {
+        const data = await getSlide();  // ⭐ ต้อง await
+        const items = Array.isArray(data) ? data : [];
+        setSlides(items);
+        setCurrentIndex(0);
+      } catch (error) {
+        console.error("Failed to load slides:", error);
+        setSlides([]);
+      }
+    };
+
+    fetchSlides();
+  }, []);
 
   const handleCarouselChange = (current: number) => {
     setCurrentIndex(current);
@@ -22,25 +39,29 @@ const Hero = () => {
     <section id="home" className="relative h-screen flex items-center">
       <div className="absolute inset-0 z-0">
         <Carousel autoplay={true} autoplaySpeed={10000} afterChange={handleCarouselChange}>
-          <div className="h-screen">
-            <video 
-              src={heroVideo}
-              autoPlay
-              loop
-              muted
-              className="w-full h-screen object-cover"
-              title="Saranya_1"
-            />
-          </div>
-          <div className="h-screen">
-            <img src={img2} alt="Saranya_2" className="w-full h-screen object-cover" />
-          </div>
-          <div className="h-screen">
-            <img src={img5} alt="Saranya_3" className="pt-20 w-full h-screen  object-cover" />
-          </div>
-          <div className="h-screen">
-            <img src={img6} alt="Saranya_3" className="pt-20 w-full h-screen  object-cover" />
-          </div>
+          {slides.map((slide: any, index: number) => (
+            <div key={index} className="h-screen">
+              {slide.slide_image.endsWith(".mp4") ? (
+                <video
+                  src={slide.slide_image}
+                  autoPlay
+                  loop
+                  muted
+                  className="w-full h-screen object-cover"
+                  title="Saranya_1"
+                />
+              ) : (
+                <img
+                  src={slide.slide_image}
+                  alt={slide.title}
+                  className="w-full h-screen object-cover"
+                />
+              )}
+            </div>
+          ))}
+
+
+
         </Carousel>
         <div className="absolute inset-0" />
       </div>
@@ -50,11 +71,11 @@ const Hero = () => {
           <h4 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 leading-tight text-background">
             {currentIndex === 0 ? (
               <>
-               
+
               </>
             ) : currentIndex === 1 ? (
               <>
-              {/* Producing brand-level fashion with international standards. */}
+                {/* Producing brand-level fashion with international standards. */}
               </>
             ) : currentIndex === 2 ? (
               <>
@@ -76,11 +97,11 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             {currentIndex === 0 ? (
               <>
-               
+
               </>
             ) : (
               <>
-              
+
               </>
             )}
           </div>

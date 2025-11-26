@@ -3,37 +3,96 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import facebook from "@/assets/social/facebook.png";
 import instagram from "@/assets/social/instagram.png";
 import line from "@/assets/social/line.png";
 import youtube from "@/assets/social/youtube.png";
 import tiktok from "@/assets/social/tiktok.png";
 import twitter from "@/assets/social/twitter.png";
+import { createQuote, CreateQuoteInput } from "@/server/quote";
+import { getContact } from "@/server/contact";
+import { useState } from "react";
+import { useEffect } from "react";
+
+interface Contact {
+  id: number;
+  phone: string;
+  email: string;
+  factoryAddress: string;
+  workinghour: string;
+  googlemap: string;
+  facebook: string;
+  instagram: string;
+  line: string;
+  youtube: string;
+  tiktok: string;
+  x_twitter: string;
+}
 
 const Contact = () => {
+  const [contact, setContact] = useState<Contact | null>(null);
+
+  const fetchContact = async () => {
+    const contact = await getContact();
+    const item = Array.isArray(contact) ? contact[0] : contact;
+    console.log(item);
+    setContact(item);
+  };
+
+  useEffect(() => {
+    fetchContact();
+  }, []);
+
   const contactInfo = [
     {
       icon: MapPin,
       title: "Factory Address",
-      details: ["SARANYA CLOTHING SINCE 1974 CO., LTD.", "Bangkok, Thailand"],
+      details: [contact?.factoryAddress],
     },
     {
       icon: Phone,
       title: "Phone Number",
-      details: ["+66 806575654"],
+      details: [contact?.phone],
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["info@saranyaclothing.com", "sales@saranyaclothing.com"],
+      details: [contact?.email],
     },
     {
       icon: Clock,
       title: "Working Hours",
-      details: ["Monday - Friday: 8:00 - 17:00", "Saturday: 8:00 - 12:00"],
+      details: [contact?.workinghour],
     },
   ];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formElement = e.target as HTMLFormElement | null;
+    if (!formElement) {
+      console.warn("Form element is null - cannot reset");
+      return;
+    }
+
+    const formData = new FormData(formElement);
+
+    const quote: CreateQuoteInput = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      product_type: formData.get("type") as string,
+      qty_size: formData.get("quantity") as string,
+      addition_details: `${formData.get("service")}\n${formData.get("message")}`,
+    };
+
+    await createQuote(quote);
+    alert("Quote request sent successfully!");
+
+    formElement.reset(); // <-- ปลอดภัยแน่นอน
+  };
+
 
   return (
     <section id="contact" className="py-24 bg-background">
@@ -49,45 +108,38 @@ const Contact = () => {
           {/* Contact Form */}
           <Card className="p-8 shadow-elegant">
             <h3 className="text-2xl font-bold mb-6">Quote Request</h3>
-            <form className="space-y-6">
-              <div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="flex flex-col">
                 <Label htmlFor="name">Name-Surname *</Label>
-                <Input id="name" placeholder="Enter your name" className="mt-2" />
+                <Input id="name" name="name" placeholder="Enter your name" className="mt-2" required />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" placeholder="example@email.com" className="mt-2" />
+                <Input id="email" name="email" type="email" placeholder="example@email.com" className="mt-2" required />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Label htmlFor="phone">Phone Number *</Label>
-                <Input id="phone" type="tel" placeholder="+66 8X-XXX-XXXX" className="mt-2" />
+                <Input id="phone" name="phone" type="tel" placeholder="+66 8X-XXX-XXXX" className="mt-2" required />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Label htmlFor="type">Product Type *</Label>
-                <Input id="type" placeholder="T-shirt, pants, dress, etc." className="mt-2" />
+                <Input id="type" name="type" placeholder="T-shirt, pants, dress, etc." className="mt-2" required />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Label htmlFor="quantity">Quantity / Size *</Label>
-                <Input id="quantity" placeholder="e.g. 100-500 pieces" className="mt-2" />
+                <Input id="quantity" name="quantity" placeholder="e.g. 100-500 pieces" className="mt-2" required />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Label htmlFor="service">Service Type *</Label>
-                <select
-                  id="service"
-                  className="w-full mt-2 px-3 py-2 border border-input rounded-lg bg-background"
-                >
+                <select id="service" name="service" className="w-full mt-2 px-3 py-2 border border-input rounded-lg bg-background">
                   <option value="">Select Service</option>
                   <option value="odm">ODM - Design and produce full cycle</option>
                   <option value="oem">OEM - Produce according to the customer's model</option>
                 </select>
               </div>
-              <div>
+              <div className="flex flex-col">
                 <Label htmlFor="message">Additional Details</Label>
-                <Textarea
-                  id="message"
-                  placeholder="Tell us about your project..."
-                  className="mt-2 min-h-32"
-                />
+                <Textarea id="message" name="message" placeholder="Tell us about your project..." className="mt-2 min-h-32" />
               </div>
               <Button type="submit" size="lg" className="w-full">
                 Send Quote Request
@@ -106,9 +158,7 @@ const Contact = () => {
                   <div>
                     <h4 className="font-bold text-lg mb-2">{info.title}</h4>
                     {info.details.map((detail, i) => (
-                      <p key={i} className="text-muted-foreground">
-                        {detail}
-                      </p>
+                      <p key={i} className="text-muted-foreground">{detail}</p>
                     ))}
                   </div>
                 </div>
@@ -118,47 +168,55 @@ const Contact = () => {
             {/* Social Links */}
             <Card className="p-6">
               <h4 className="font-bold text-lg mb-4">Contact via other channels</h4>
-              <div className="mt-4 flex space-x-2">
-              <div className="flex flex-wrap gap-3">
-                <a href="https://www.facebook.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
-                  <img src={facebook} alt="Facebook" className="w-8 h-8" />
-                </a>
-                <a href="https://www.instagram.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
-                  <img src={instagram} alt="Instagram" className="w-8 h-8" />
-                </a>
-                <a href="https://line.me/R/ti/p/%40saranyaclothing " target="_blank" rel="noopener noreferrer">
-                  <img src={line} alt="Line" className="w-8 h-8" />
-                </a>
-                <a href="https://www.youtube.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
-                  <img src={youtube} alt="YouTube" className="w-8 h-8" />
-                </a>
-                <a href="https://www.tiktok.com/@saranyaclothing" target="_blank" rel="noopener noreferrer">
-                  <img src={tiktok} alt="TikTok" className="w-8 h-8" />
-                </a>
-                <a href="https://twitter.com/saranyaclothing" target="_blank" rel="noopener noreferrer">
-                  <img src={twitter} alt="Twitter" className="w-8 h-8" />
-                </a>
-              </div>
-               
+              <div className="mt-4 flex flex-wrap gap-3">
+                {contact?.facebook && (
+                  <a href={contact?.facebook} target="_blank" rel="noopener noreferrer">
+                    <img src={facebook} alt="Facebook" className="w-8 h-8" />
+                  </a>
+                )}
+                {contact?.instagram && (
+                  <a href={contact?.instagram} target="_blank" rel="noopener noreferrer">
+                    <img src={instagram} alt="Instagram" className="w-8 h-8" />
+                  </a>
+                )}
+                {contact?.line && (
+                  <a href={contact?.line} target="_blank" rel="noopener noreferrer">
+                    <img src={line} alt="Line" className="w-8 h-8" />
+                  </a>
+                )}
+                {contact?.youtube && (
+                  <a href={contact?.youtube} target="_blank" rel="noopener noreferrer">
+                    <img src={youtube} alt="YouTube" className="w-8 h-8" />
+                  </a>
+                )}
+                {contact?.tiktok && (
+                  <a href={contact?.tiktok} target="_blank" rel="noopener noreferrer">
+                    <img src={tiktok} alt="TikTok" className="w-8 h-8" />
+                  </a>
+                )}
+                {contact?.x_twitter && (
+                  <a href={contact?.x_twitter} target="_blank" rel="noopener noreferrer">
+                    <img src={twitter} alt="Twitter" className="w-8 h-8" />
+                  </a>
+                )}
               </div>
             </Card>
 
             {/* Map Placeholder */}
-           <Card className="p-6">
+            <Card className="p-6">
               <h4 className="font-bold text-lg mb-4">Map</h4>
               <div className="w-full h-64 rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3875.730107369797!2d100.50729357601814!3d13.692384787361086!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e2990022e3c029%3A0x770bf520b233dc07!2sSARANYA%20CLOTHING%20SINCE%201974%20CO.%2C%20LTD.!5e0!3m2!1sen!2sth!4v1730784000000!5m2!1sen!2sth"
+                  src={contact?.googlemap}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
-                  allowFullScreen={true}
+                  allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
             </Card>
-
           </div>
         </div>
       </div>

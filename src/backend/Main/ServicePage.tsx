@@ -29,13 +29,13 @@ const ServicePage: React.FC = () => {
           minHeight: 280,
         }}
       >
-      <Tabs
-        type="card"
-        defaultActiveKey="1"
-        items={tabItem}
-      />
+        <Tabs
+          type="card"
+          defaultActiveKey="1"
+          items={tabItem}
+        />
 
-       
+
       </Content>
     </Layout>
   );

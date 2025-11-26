@@ -2,13 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
 import { Image } from 'antd';
-
+import { login } from "../server/auth";
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+  const handleLogin = async () => {
+    try {
+      const response = await login({ email, password });
+      console.log(response);
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
@@ -20,19 +29,29 @@ const LoginPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1) validate กรอกข้อมูล
     if (!validateForm()) return;
 
     setLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      localStorage.setItem('isAuthenticated', 'true');
-      sessionStorage.setItem('userEmail', email);
+    // 2) call API login
+    try {
+      const response = await login({ email, password });
+
+      // 3) ถ้า login สำเร็จ
+      localStorage.setItem("isAuthenticated", "true");
+      sessionStorage.setItem("userEmail", email);
+
+      navigate('/admin/home', { replace: true });
+    } catch (error) {
+      console.error("Login failed:", error);
+      setErrors({ password: "Invalid email or password!" });
+    } finally {
       setLoading(false);
-      navigate('/admin/home', { replace: true }); // redirect หลัง login
-    }, 1500);
+    }
   };
 
   return (

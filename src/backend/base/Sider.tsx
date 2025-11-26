@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import {
   UserOutlined, HomeOutlined, SettingOutlined, ContactsOutlined,
   SkinOutlined, MacCommandOutlined, ProductOutlined, BlockOutlined,
-  ScheduleOutlined, UserSwitchOutlined, UsergroupAddOutlined
+  ScheduleOutlined, UserSwitchOutlined, UsergroupAddOutlined, FileTextOutlined
 } from '@ant-design/icons';
 import logo from '@/assets/logo.png';
 import { Grid } from 'antd';
@@ -29,6 +29,7 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
     { key: 'about', icon: <SkinOutlined />, label: 'About', path: '/admin/about' },
     { key: 'service', icon: <MacCommandOutlined />, label: 'Service', path: '/admin/service' },
     { key: 'product', icon: <ProductOutlined />, label: 'Product', path: '/admin/product' },
+    { key: 'standard', icon: <FileTextOutlined />, label: 'Standard', path: '/admin/standard' },
     { key: 'blog', icon: <BlockOutlined />, label: 'Blog', path: '/admin/blog' },
     { key: 'contact', icon: <ScheduleOutlined />, label: 'Contact', path: '/admin/contactus' },
     { key: 'quote', icon: <UserSwitchOutlined />, label: 'Quote Request', path: '/admin/quote' },

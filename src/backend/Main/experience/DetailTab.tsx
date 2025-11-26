@@ -160,6 +160,7 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             }
 
             console.log("Update success");
+            window.location.reload();
         } catch (err) {
             console.error("Update failed", err);
         }

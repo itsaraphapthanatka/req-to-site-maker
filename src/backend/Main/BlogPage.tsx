@@ -1,25 +1,58 @@
-import React from "react";
-import { Layout, Typography, Table, Button } from "antd";
-import { FolderOpenOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from "react";
+import { Layout, Typography, Table, Button, Flex, Image } from "antd";
+import { FolderOpenOutlined, DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
+import { deleteBlog, getBlog } from "../../server/blog";
 const { Content } = Layout;
 const { Title } = Typography;
+
+interface Blog {
+  id: number;
+  title: string;
+  content: string;
+  img: string;
+  blogsType: string;
+  blogsStatus: string;
+}
+
 const BlogPage: React.FC = () => {
   const navigate = useNavigate();
-  const handleDelete = (id) => {
-    console.log(id);
-    alert(id)
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const fetchBlog = async () => {
+    const response = await getBlog();
+    const item = Array.isArray(response) ? response : [];
+    console.log(item);
+    setBlogs(item);
+  }
+  useEffect(() => {
+    fetchBlog();
+  }, []);
+
+  const handleDelete = async (id: number) => {
+    await deleteBlog(id);
+    fetchBlog();
   }
   const columns = [
     {
-      title: 'Category Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Image',
+      dataIndex: 'img',
+      key: 'img',
+      render: (text, record) => (
+        <Image
+          width={100}
+          src={record.img}
+        />
+      ),
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
     },
     {
       title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'blogsStatus',
+      key: 'blogsStatus',
     },
     {
       title: 'Action',
@@ -33,20 +66,14 @@ const BlogPage: React.FC = () => {
             icon={<DeleteOutlined />}
             onClick={(e) => {
               e.stopPropagation(); // ✅ ป้องกันไม่ให้ trigger row click
-              handleDelete(record.key);
+              handleDelete(record.id);
             }}
           />
         </>
       ),
     }
   ];
-  const data = [
-    {
-      key: '1',
-      name: 'New Collection',
-      status: 'Active',
-    },
-  ];
+
   return (
     <Layout>
       <Content
@@ -57,12 +84,17 @@ const BlogPage: React.FC = () => {
         }}
       >
         <Title level={1}>Blog</Title>
+        <Flex justify="end" align="center">
+          <Button type="primary" icon={<PlusOutlined />} onClick={() => navigate('/admin/blog/Add')}>
+            Add Blog
+          </Button>
+        </Flex>
         <Table
           columns={columns}
-          dataSource={data}
-          onRow={(record) => ({
-            onClick: () => navigate(`/EditBlog/${record.key}`)
-          })}
+          dataSource={blogs}
+        // onRow={(record) => ({
+        //   onClick: () => navigate(`/admin/blog/Edit/${record.key}`)
+        // })}
         />
       </Content>
     </Layout>

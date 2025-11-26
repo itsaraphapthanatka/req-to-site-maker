@@ -9,7 +9,8 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Saranya Clothing Warm Bohemian Color Palette */
-    --background: 30 40% 96%; /* Warm Cream #FAF7F2 */
+    --background: 30 40% 96%;
+    /* Warm Cream #FAF7F2 */
     --foreground: 25 15% 25%;
 
     --card: 30 40% 96%;
@@ -18,16 +19,20 @@ All colors MUST be HSL.
     --popover: 30 40% 96%;
     --popover-foreground: 25 15% 25%;
 
-    --primary: 25 55% 55%; /* Terracotta #C8845E */
+    --primary: 25 55% 55%;
+    /* Terracotta #C8845E */
     --primary-foreground: 30 40% 96%;
 
-    --secondary: 35 45% 75%; /* Warm Sand #DDBFA0 */
+    --secondary: 35 45% 75%;
+    /* Warm Sand #DDBFA0 */
     --secondary-foreground: 25 15% 25%;
 
-    --muted: 30 25% 70%; /* Dusty Rose Tan #C4AA95 */
+    --muted: 30 25% 70%;
+    /* Dusty Rose Tan #C4AA95 */
     --muted-foreground: 25 15% 40%;
 
-    --accent: 20 60% 50%; /* Burnt Sienna #CC6633 */
+    --accent: 20 60% 50%;
+    /* Burnt Sienna #CC6633 */
     --accent-foreground: 30 40% 96%;
 
     --destructive: 0 84.2% 60.2%;
@@ -38,7 +43,7 @@ All colors MUST be HSL.
     --ring: 25 55% 55%;
 
     --radius: 0.75rem;
-    
+
     /* Custom design tokens - Warm Bohemian */
     --gradient-warm: linear-gradient(135deg, hsl(25 55% 55%), hsl(35 50% 65%));
     --gradient-sunset: linear-gradient(180deg, hsl(30 40% 96%), hsl(35 35% 90%));
@@ -111,8 +116,13 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
 }
@@ -121,24 +131,37 @@ All colors MUST be HSL.
   .gradient-warm {
     background: var(--gradient-warm);
   }
-  
+
   .gradient-sunset {
     background: var(--gradient-sunset);
   }
-  
+
   .gradient-hero {
     background: var(--gradient-hero);
   }
-  
+
   .shadow-warm {
     box-shadow: var(--shadow-warm);
   }
-  
+
   .shadow-soft {
     box-shadow: var(--shadow-soft);
   }
-  
+
   .transition-smooth {
     transition: var(--transition-smooth);
   }
+}
+
+/* แก้ ReactQuill ทับ dropdown */
+.ql-container {
+  z-index: 0 !important;
+}
+
+.ql-toolbar {
+  z-index: 1 !important;
+}
+
+.ant-select-dropdown {
+  z-index: 9999 !important;
 }

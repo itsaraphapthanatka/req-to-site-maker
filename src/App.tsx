@@ -27,6 +27,14 @@ import ContactUsPage from "./backend/Main/ContactUsPage";
 import QuotePage from "./backend/Main/QuotePage";
 import UsersPage from "./backend/Main/UsersPage"
 import UsersDetail from "./backend/Main/[id]/users/page"
+import ServiceOdmPage from "./backend/Main/[id]/service/Odmpage"
+import ServiceOemPage from "./backend/Main/[id]/service/Oempage"
+import ProductImgPage from "./backend/Main/[id]/product/page"
+import AddBlog from "./backend/Main/Blog/page"
+import { login } from "./server/auth";
+import StandardPage from "./backend/Main/StandardPage";
+import StandardSet from "./backend/Main/Standard/page";
+import StandardSetDetail from "./backend/Main/Standard/detail";
 
 const queryClient = new QueryClient();
 
@@ -63,12 +71,21 @@ const App = () => (
             <Route path="hero" element={<HeroPage />} />
             <Route path="about" element={<AboutPage />} />
             <Route path="service" element={<ServicePage />} />
+            <Route path="odm/:id" element={<ServiceOdmPage />} />
+            <Route path="oem/:id" element={<ServiceOemPage />} />
             <Route path="product" element={<ProductPage />} />
+            <Route path="product/:id" element={<ProductImgPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="contactus" element={<ContactUsPage />} />
             <Route path="quote" element={<QuotePage />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="users/:id" element={<UsersDetail />} />
+            <Route path="blog/add" element={<AddBlog />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="standard" element={<StandardPage />} />
+
+            <Route path="standardset/:id" element={<StandardSet />} />
+            <Route path="standardsetdetail/:id/:standard_id" element={<StandardSetDetail />} />
           </Route>
 
           {/* Catch-all */}
