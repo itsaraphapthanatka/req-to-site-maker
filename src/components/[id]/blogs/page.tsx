@@ -40,6 +40,8 @@ const BlogDetail = () => {
               src={API_URL + post.img}
               alt={post.title}
               className="mx-auto rounded-lg shadow-md"
+              width={500}
+              height={500}
             />
           </div>
         )}
