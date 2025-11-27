@@ -10,7 +10,7 @@ import pants from "@/assets/product-pants.jpg";
 import skirts from "@/assets/product-skirts.jpg";
 import dresses from "@/assets/product-dresses.jpg";
 
-import { getStandard_product_set } from "@/server/collection";
+import { getStandard_product_set, getStandard_product_set_detail } from "@/server/collection";
 const API_URL = import.meta.env.VITE_API_URL;
 interface StandardProductSet {
     id: number;
@@ -28,7 +28,7 @@ const GalloryDetail = () => {
 
     const [standardProductSet, setStandardProductSet] = useState<StandardProductSet[]>([]);
     const [loading, setLoading] = useState(false);
-
+    const [detailImages, setDetailImages] = useState<Record<number, string>>({});
     const standId = id ? parseInt(id, 10) : NaN;
 
     const normalizeImageUrl = (path: string | null) => {
@@ -51,6 +51,28 @@ const GalloryDetail = () => {
         4: "DERESSES",
     };
 
+    const fetchDetailImages = async (sets: StandardProductSet[]) => {
+        const results: Record<number, string> = {};
+
+        for (const set of sets) {
+            try {
+                const res = await getStandard_product_set_detail(set.standid, set.id);
+
+                // หา record ที่ s_set_chk_main == 1
+                const main = (res as any).find((item: any) => item.s_set_chk_main === 1);
+
+                if (main?.s_set_img) {
+                    results[set.id] = API_URL + main.s_set_img;
+                }
+            } catch (e) {
+                console.error("detail error:", e);
+            }
+        }
+
+        setDetailImages(results);
+    };
+
+
     const fetchStandardProductSet = async () => {
         try {
             setLoading(true);
@@ -58,17 +80,26 @@ const GalloryDetail = () => {
             const arr: StandardProductSet[] = Array.isArray(response)
                 ? response
                 : [response];
+
             setStandardProductSet(arr);
+            return arr; // 👈 เพิ่ม return
         } catch (err) {
             console.error("Error fetching standard product set:", err);
+            return [];
         } finally {
             setLoading(false);
         }
     };
 
+
     useEffect(() => {
-        fetchStandardProductSet();
+        fetchStandardProductSet().then((arr) => {
+            // filter เฉพาะ set ที่เป็น standId เดียวกับหน้า
+            const filtered = arr.filter((item) => item.standid === standId);
+            fetchDetailImages(filtered);
+        });
     }, []);
+
 
     // filter ตาม standid (id จาก url)
     const filteredSets = standardProductSet.filter(
@@ -120,8 +151,9 @@ const GalloryDetail = () => {
                 >
                     {filteredSets.map((set) => {
                         const fallbackImg = defaultImageByStandId[set.standid];
-                        const imgSrc =
-                            normalizeImageUrl(set.standsetimg) || fallbackImg;
+                        const mainImg = detailImages[set.id]
+                            ? detailImages[set.id]                    // รูปหลักจาก detail
+                            : API_URL + set.standsetimg || fallbackImg;
 
                         return (
                             <Col key={set.id} xs={24} sm={12} md={8} lg={6} xl={6}>
@@ -135,25 +167,14 @@ const GalloryDetail = () => {
                                                 style={{
                                                     position: "relative",
                                                     width: "100%",
-                                                    paddingBottom: "75%",
+                                                    // paddingBottom: "75%",
                                                     overflow: "hidden",
                                                 }}
                                             >
                                                 <img
                                                     draggable={false}
                                                     alt={set.standsetname}
-                                                    src={
-                                                        imgSrc ||
-                                                        "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                                                    }
-                                                    style={{
-                                                        position: "absolute",
-                                                        top: 0,
-                                                        left: 0,
-                                                        width: "100%",
-                                                        height: "100%",
-                                                        objectFit: "cover",
-                                                    }}
+                                                    src={mainImg}
                                                 />
                                             </div>
                                         }
