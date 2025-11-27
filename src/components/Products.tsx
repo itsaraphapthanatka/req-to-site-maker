@@ -351,7 +351,7 @@ const Products = () => {
                   className="group relative overflow-hidden aspect-[3/4] cursor-pointer hover:shadow-warm transition-smooth border hover:border-primary/50"
                 >
                   <img
-                    src={item.image}
+                    src={API_URL + item.image}
                     alt={item.desc}
                     className="w-full h-full object-cover"
                     loading="lazy"
