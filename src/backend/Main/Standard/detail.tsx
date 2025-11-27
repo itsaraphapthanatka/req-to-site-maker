@@ -158,7 +158,11 @@ const StandardSetDetailPage = () => {
         formData.append("s_set_id", String(standard_id));
         formData.append("s_set_title", standard?.standname || "");
         formData.append("s_set_desc", "");
-        formData.append("s_set_chk_main", "0");
+        if (selectedMainId) {
+            formData.append("s_set_chk_main", "1");
+        } else {
+            formData.append("s_set_chk_main", "0");
+        }
         formData.append("file", fileList[0].originFileObj as File);
         try {
             setLoading(true);
