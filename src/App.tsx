@@ -35,6 +35,7 @@ import { login } from "./server/auth";
 import StandardPage from "./backend/Main/StandardPage";
 import StandardSet from "./backend/Main/Standard/page";
 import StandardSetDetail from "./backend/Main/Standard/detail";
+import EditBlog from "./backend/Main/Blog/edit";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +82,7 @@ const App = () => (
             <Route path="users" element={<UsersPage />} />
             <Route path="users/:id" element={<UsersDetail />} />
             <Route path="blog/add" element={<AddBlog />} />
+            <Route path="blog/edit/:id" element={<EditBlog />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="standard" element={<StandardPage />} />
 

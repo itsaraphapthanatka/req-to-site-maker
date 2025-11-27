@@ -62,6 +62,14 @@ const BlogPage: React.FC = () => {
         <>
           <Button
             type="text"
+            icon={<EditOutlined />}
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/admin/blog/edit/${record.id}`);
+            }}
+          />
+          <Button
+            type="text"
             danger
             icon={<DeleteOutlined />}
             onClick={(e) => {
