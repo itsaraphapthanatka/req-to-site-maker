@@ -23,6 +23,8 @@ const Footer = () => {
       odm: "ODM",
       oem: "OEM",
       brand: "Brand",
+      title: "SARANYA CLOTHING",
+      desc: "ODM & OEM Full Process with Export Quality",
     },
     th: {
       menu: "เมนู",
@@ -34,6 +36,8 @@ const Footer = () => {
       odm: "ODM",
       oem: "OEM",
       brand: "แบรนด์",
+      title: "SARANYA CLOTHING",
+      desc: "ผลิตเสื้อผ้า ODM & OEM ครบวงจร ด้วยคุณภาพมาตรฐานส่งออก",
     },
   };
 
@@ -53,9 +57,9 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 text-primary">SARANYA CLOTHING</h3>
+            <h3 className="text-xl font-bold mb-4 text-primary">{translations[lang].title}</h3>
             <p className="text-sm opacity-80">
-              ผลิตเสื้อผ้า ODM & OEM ครบวงจร ด้วยคุณภาพมาตรฐานส่งออก
+              {translations[lang].desc}
             </p>
           </div>
 
