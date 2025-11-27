@@ -7,9 +7,21 @@ import { HashLink } from "react-router-hash-link";
 import { getBlog } from "../server/blog";
 import { useEffect, useState } from "react";
 import { Image } from "antd"
+import { useLang } from "@/context/LanguageContext";
 const API_URL = import.meta.env.VITE_API_URL;
 const Blog = () => {
   const [posts, setPosts] = useState([]);
+  const { lang } = useLang();
+
+  const translations = {
+    en: {
+      more: "More ",
+    },
+    th: {
+      more: "อ่านต่อ",
+    },
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -74,7 +86,7 @@ const Blog = () => {
                     {post.excerpt}
                   </p>
                   <Button onClick={() => handleReadMore(post.id)} variant="ghost" className="p-0 h-auto font-semibold text-primary hover:text-primary/80">
-                    อ่านต่อ
+                    {translations[lang].more}
                     <ArrowRight className="ml-2" size={16} />
                   </Button>
                 </div>
