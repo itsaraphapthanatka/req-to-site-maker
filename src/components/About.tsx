@@ -1,27 +1,3 @@
-import { Card } from "@/components/ui/card";
-import founderImage from "@/assets/1.jpg";
-import workshopImage from "@/assets/2.jpg";
-import workshopImage2 from "@/assets/workspace.jpg";
-import workspaceImage from "@/assets/3.jpg";
-import transportImage from "@/assets/transport.jpg";
-import cert1 from "@/assets/cert1.jpg";
-import cert2 from "@/assets/cert2.jpg";
-import team1 from "@/assets/team1.jpg";
-import team2 from "@/assets/team2.jpg";
-import fabric1 from "@/assets/fabric1.jpg";
-import fabric2 from "@/assets/fabric2.jpg";
-import fabric3 from "@/assets/fabric3.jpg";
-import ex1 from "@/assets/ex1.jpg";
-import ex2 from "@/assets/ex2.jpg";
-import ex3 from "@/assets/ex3.jpg";
-import exc1 from "@/assets/exc1.jpg";
-import te from "@/assets/team.jpg";
-import fi1 from "@/assets/fi1.png";
-import fi2 from "@/assets/f2.png";
-import f3_1 from "@/assets/f3_1.png";
-import qq1 from "@/assets/qq1.jpg";
-import award5 from "@/assets/award5.jpg";
-import { Award, Users, Heart, TrendingUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Collapse, Modal, Carousel, Image, CollapseProps } from 'antd';
 import { getAbout } from "@/server/about";
@@ -29,6 +5,7 @@ import { getExperience } from "@/server/experience";
 import { getProfessional } from "@/server/professional";
 import { getNaturalFiber } from "@/server/natural_fiber";
 import { getInternationalStandard } from "@/server/internationnal_standards";
+import { useLang } from "@/context/LanguageContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -37,6 +14,34 @@ interface ExperienceItem {
   desc: string;
   image: string[];   // เก็บ ['/static/...1.jpg', '/static/...2.jpg']
 }
+
+const translations = {
+  en: {
+    about: "About Us",
+    experience: "Experience",
+    professional: "Professional Team",
+    naturalFiber: "Natural Fibers",
+    internationalStandard: "International Standards",
+    desc1: "Founder & Director of SARANYA Clothing",
+    desc2: "A Fashion Journey and Commitment",
+    desc3: "Experiences that have led to her professional career",
+    desc4: "International Standards and Trust",
+    experiencelang: "Experience",
+
+  },
+  th: {
+    about: "เกี่ยวกับเรา",
+    experience: "ประสบการณ์",
+    professional: "ทีมงานเชี่ยวชาญ",
+    naturalFiber: "เส้นใยธรรมชาติ",
+    internationalStandard: "มาตรฐานสากล",
+    desc1: "ผู้ก่อตั้งและผู้อำนวยการ SARANYA Clothing",
+    desc2: "เส้นทางแฟชั่นและความมุ่งมั่น",
+    desc3: "ประสบการณ์ที่นำไปสู่อาชีพ",
+    desc4: "มาตรฐานสากลและความไว้วางใจ",
+    experiencelang: "ประสบการณ์",
+  },
+};
 
 
 const About = () => {
@@ -49,6 +54,7 @@ const About = () => {
   const [naturalFiberData, setNaturalFiber] = useState<any>(null);
   const [internationalStandardData, setInternationalStandard] = useState<any>(null);
   const [collapseData, setCollapseData] = useState<ExperienceItem[]>([]);
+  const { lang } = useLang();
   const fetchExperience = async () => {
     try {
       const response = await getExperience();
@@ -256,7 +262,7 @@ const About = () => {
       <section id="about" className="py-24 bg-secondary/30 relative">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">About Us</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">{translations[lang].about}</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               {about?.description}
             </p>
@@ -268,7 +274,7 @@ const About = () => {
               <div className="order-2 md:order-1">
                 <div className="text-center md:text-left">
                   <p className="text-sm uppercase tracking-wider text-primary mb-4">
-                    Founder & Director of SARANYA Clothing
+                    {translations[lang].desc1}
                   </p>
                   <h3 className="text-3xl md:text-4xl font-bold mb-4">
                     {about?.founderName}
@@ -303,7 +309,7 @@ const About = () => {
             <div className="order-2 md:order-1">
               <div className="text-center md:text-left">
                 <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  A Fashion Journey and Commitment
+                  {translations[lang].desc2}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   {about?.sec2Desc}
@@ -319,7 +325,7 @@ const About = () => {
             <div className="order-1 md:order-2">
               <div className="text-center md:text-left">
                 <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  Experiences that have led to her professional career
+                  {translations[lang].desc3}
                 </h3>
               </div>
               <p className="text-muted-foreground leading-relaxed mb-4">
@@ -354,7 +360,7 @@ const About = () => {
             <div className="order-2 md:order-1">
               <div className="text-center md:text-left">
                 <h3 className="text-3xl md:text-4xl font-bold mb-4">
-                  International Standards and Trust
+                  {translations[lang].internationalStandard}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   {about?.sec4Desc}
@@ -374,7 +380,7 @@ const About = () => {
                 items={[
                   {
                     key: "1",
-                    label: "Experiences",
+                    label: translations[lang].experience,
                     children: (
                       <div className="flex flex-col justify-center items-center gap-2">
                         {collapseData.map((item, idx) => (
