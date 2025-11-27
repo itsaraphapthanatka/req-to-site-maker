@@ -217,18 +217,17 @@ const Products = () => {
   // แปลงจาก API → StandardItem ที่ UI ใช้
   const standardProductionItems: StandardItem[] = standardProducts.map(
     (prod) => {
-      const key = prod.standname.toUpperCase(); // "TOP", "PANTS", "SKIRT", "DERESSES"
-      // ถ้า backend พิมพ์ผิด "DERESSES" แต่เราอยาก map ไป DRESSES:
-      const normalizedKey =
-        key === "DERESSES" ? "DRESSES" : key;
+      const key = (prod.standname ?? "").toUpperCase(); // <-- ป้องกัน null
+      const normalizedKey = key === "DERESSES" ? "DRESSES" : key;
 
       return {
         id: prod.id,
-        title: prod.standname, // แสดงชื่อตาม backend
+        title: prod.standname ?? "Unnamed",
         image: standardImageMap[normalizedKey] ?? [],
       };
     }
   );
+
 
   const handleOpenModalStandard = (step: StandardItem) => {
     setSelectedStandard(step);
