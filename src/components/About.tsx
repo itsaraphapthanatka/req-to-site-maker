@@ -27,6 +27,7 @@ const translations = {
     desc3: "Experiences that have led to her professional career",
     desc4: "International Standards and Trust",
     experiencelang: "Experience",
+    year: "Year Experience",
 
   },
   th: {
@@ -40,6 +41,7 @@ const translations = {
     desc3: "ประสบการณ์ที่นำไปสู่อาชีพ",
     desc4: "มาตรฐานสากลและความไว้วางใจ",
     experiencelang: "ประสบการณ์",
+    year: "ปี ประสบการณ์",
   },
 };
 
@@ -341,7 +343,7 @@ const About = () => {
                 />
                 <div className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-elegant hidden md:block">
                   <p className="text-4xl font-bold">{about?.sec3Experience}</p>
-                  <p className="text-sm">Year Experiences</p>
+                  <p className="text-sm">{translations[lang].year}</p>
                 </div>
               </div>
             </div>
