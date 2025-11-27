@@ -141,9 +141,7 @@ const Services = () => {
               onClick={() => handleOpenModal("odm", step)}
               className="flex items-start cursor-pointer text-left w-full"
             >
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
-                {idx + 1}
-              </span>
+              <span className="flex-shrink-0 mr-3 text-lg font-bold text-primary">•</span>
               <p className="pt-0">{step.name}</p>
             </button>
           ))}
@@ -166,9 +164,10 @@ const Services = () => {
               onClick={() => handleOpenModal("oem", step)}
               className="flex items-start cursor-pointer text-left w-full"
             >
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
+              {/* <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold mr-3">
                 {idx + 1}
-              </span>
+              </span> */}
+              <span className="flex-shrink-0 mr-3 text-lg font-bold text-primary">•</span>
               <p className="pt-0">{step.name}</p>
             </button>
           ))}
