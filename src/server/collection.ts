@@ -27,6 +27,15 @@ interface StandardSetResponse {
 
 }
 
+interface StandardSetDetailResponse {
+    id: number;
+    s_set_id: number;
+    s_set_title: string;
+    s_set_desc: string;
+    s_set_chk_main: number;
+    s_set_img: string;
+}
+
 export const getCollection = async () => {
     const response = await axios.get(`${API_URL}/collection`, {
         headers: {
@@ -270,6 +279,19 @@ export const deleteStandard_product_set_detail = async (id: number) => {
     });
     return response.data;
 }
+
+export const updateStandard_product_set_main = async (id: number) => {
+    const response = await axios.put(
+        `${API_URL}/standard_set_detail/${id}`,
+        { s_set_chk_main: 1 },   // ส่งค่าที่ backend ต้องการ
+        {
+            headers: {
+                "accept": "application/json",
+            },
+        }
+    );
+    return response.data;
+};
 
 
 

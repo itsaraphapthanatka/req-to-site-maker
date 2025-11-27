@@ -8,7 +8,8 @@ import {
     getStandard_product_set_by_id,
     getStandard_product_set_detail,
     createStandard_product_set_detail,
-    deleteStandard_product_set_detail
+    deleteStandard_product_set_detail,
+    updateStandard_product_set_main,
 } from '@/server/collection';
 import { useNavigate, useParams } from "react-router-dom";
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
@@ -94,8 +95,9 @@ const StandardSetDetailPage = () => {
         setLoading(false);
     };
 
-    const handleCheckboxChange = (id: number) => {
+    const handleCheckboxChange = async (id: number) => {
         setSelectedMainId(id);
+        await updateMain(id);
     };
 
     const handleDragEnd = (newData: StandardSetDetail[]) => {
@@ -104,19 +106,20 @@ const StandardSetDetailPage = () => {
     };
 
     const columns: ColumnsType<StandardSetDetail> = [
-        {
-            title: 'Parent',
-            dataIndex: 's_set_chk_main',
-            key: 's_set_chk_main',
-            align: 'center',
-            width: '10%',
-            render: (text, record) => (
-                <Radio
-                    checked={selectedMainId === record.id}
-                    onChange={(e) => handleCheckboxChange(record.id)}
-                />
-            ),
-        },
+        // {
+        //     title: 'Parent',
+        //     key: 's_set_chk_main',
+        //     align: 'center',
+        //     width: '10%',
+
+        //     render: (_, record) => (
+        //         <Radio
+        //             checked={selectedMainId === record.id}
+        //             onClick={(e) => e.stopPropagation()}  // สำคัญมาก
+        //             onChange={() => handleCheckboxChange(record.id)}
+        //         />
+        //     ),
+        // },
         {
             title: 'Image',
             dataIndex: 'image',
@@ -176,6 +179,22 @@ const StandardSetDetailPage = () => {
         } catch (error) {
             console.log("Error creating standard product set detail:", error);
             console.log("error", error);
+            setLoading(false);
+        }
+    };
+
+    const updateMain = async (detailId: number) => {
+        try {
+            setLoading(true);
+
+            await updateStandard_product_set_main(detailId);
+
+            await fetchData();
+            message.success("Updated main item");
+        } catch (error) {
+            console.log(error);
+            message.error("Failed to update main item");
+        } finally {
             setLoading(false);
         }
     };
@@ -241,6 +260,18 @@ const StandardSetDetailPage = () => {
                 columns={columns}
                 dataSource={data}
                 rowKey={record => record.id}
+                loading={loading}
+                onRow={() => ({
+                    onClick: (e) => e.stopPropagation()
+                })}
+                pagination={{
+                    pageSize: 10,
+                    total: data.length,
+                    showSizeChanger: true,
+                    showQuickJumper: true,
+                    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                }}
+
 
             />
             <Modal
