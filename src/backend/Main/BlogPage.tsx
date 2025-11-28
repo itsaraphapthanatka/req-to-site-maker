@@ -9,7 +9,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface Blog {
   id: number;
   title: string;
+  title_th: string;
   content: string;
+  content_th: string;
   img: string;
   blogsType: string;
   blogsStatus: string;
@@ -48,6 +50,12 @@ const BlogPage: React.FC = () => {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
+      render: (text, record) => (
+        <div>
+          <p>{record.title}</p>
+          <p>{record.title_th}</p>
+        </div>
+      ),
     },
     {
       title: 'Status',

@@ -16,9 +16,13 @@ const Blog = () => {
   const translations = {
     en: {
       more: "More ",
+      title: "Articles and news",
+      description: "Techniques, knowledge and fashion trends for entrepreneurs",
     },
     th: {
       more: "อ่านต่อ",
+      title: "บทความและข่าวสาร",
+      description: "เทคนิค, ความรู้และเทรนด์แฟชั่นสำหรับผู้ประกอบการ",
     },
   };
 
@@ -48,9 +52,9 @@ const Blog = () => {
       <section className="pt-32 pb-16 bg-gradient-to-b from-secondary/20 to-background">
         <div className="container-custom px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Articles and news</h1>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">{translations[lang].title}</h1>
             <p className="text-xl text-muted-foreground">
-              Techniques, knowledge and fashion trends for entrepreneurs
+              {translations[lang].description}
             </p>
           </div>
         </div>

@@ -46,6 +46,7 @@ const { Title } = Typography;
 interface DataType {
     id: number;
     name: string;
+    name_th: string;
     img: string;
 }
 
@@ -138,6 +139,7 @@ const ProductImgPage: React.FC = () => {
                 .map((item: any) => ({
                     id: item.id,
                     name: item.name,
+                    name_th: item.name_th,
                     img: item.collection_img,
                     position: item.position, // Assuming 'position' exists on the item
                 }))

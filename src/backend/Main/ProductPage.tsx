@@ -22,6 +22,12 @@ const ProductPage: React.FC = () => {
       title: 'Category Name',
       dataIndex: 'collec_name',
       key: 'collec_name',
+      render: (_, record) => (
+        <>
+          <p>{record.collec_name}</p>
+          <p>{record.collec_name_th}</p>
+        </>
+      ),
     },
     // {
     //   title: 'Action',

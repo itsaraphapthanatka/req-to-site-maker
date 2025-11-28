@@ -18,6 +18,7 @@ import { getOemService, addOemService, deleteOemService, updateOemServiceOrderTa
 interface DataType {
   id: number;
   name: string;
+  name_th: string;
   position?: number;
 }
 
@@ -188,7 +189,14 @@ const OemTab: React.FC = () => {
         <span>{record.id}</span>
       ),
     },
-    { title: 'Name', dataIndex: 'name' },
+    {
+      title: 'Name', dataIndex: 'name', render: (_, record) => (
+        <>
+          <p>{record.name}</p>
+          <p>{record.name_th}</p>
+        </>
+      )
+    },
     {
       title: 'Action',
       key: 'action',
@@ -227,6 +235,9 @@ const OemTab: React.FC = () => {
       <Modal title="Add OEM" open={isModalOpen} onOk={() => form.submit()} onCancel={() => setIsModalOpen(false)} okText="Add">
         <Form form={form} layout="vertical" onFinish={handleAddOemData}>
           <Form.Item name="name" label="OEM Title" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="name_th" label="OEM Title (Thai)">
             <Input />
           </Form.Item>
         </Form>

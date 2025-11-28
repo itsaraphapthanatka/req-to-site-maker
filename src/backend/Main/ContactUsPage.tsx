@@ -8,9 +8,11 @@ const { Title } = Typography;
 interface Contact {
   id: number;
   factoryAddress: string;
+  factoryAddress_th: string;
   phone: string;
   email: string;
   workinghour: string;
+  workinghour_th: string;
   facebook: string;
   instagram: string;
   x_twitter: string;
@@ -72,6 +74,10 @@ const ContactUsPage: React.FC = () => {
             <Input placeholder="Factory Address" />
           </Form.Item>
 
+          <Form.Item label="Factory Address (TH)" name="factoryAddress_th">
+            <Input placeholder="Factory Address (TH)" />
+          </Form.Item>
+
           <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>Phone Number</div>
           <Form.Item label="Phone Number" name="phone">
             <Input placeholder="Phone Number" />
@@ -85,6 +91,10 @@ const ContactUsPage: React.FC = () => {
           <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>Working Hours</div>
           <Form.Item label="Working Hours" name="workinghour">
             <Input placeholder="Working Hours" />
+          </Form.Item>
+
+          <Form.Item label="Working Hours (TH)" name="workinghour_th">
+            <Input placeholder="Working Hours (TH)" />
           </Form.Item>
 
           <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>Contact via other channels</div>
@@ -108,6 +118,9 @@ const ContactUsPage: React.FC = () => {
           </Form.Item>
           <Form.Item label="Youtube" name="youtube">
             <Input placeholder="Youtube" />
+          </Form.Item>
+          <Form.Item label="Wechat" name="wechat">
+            <Input placeholder="Wechat" />
           </Form.Item>
 
           <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>Google Map (iframe)</div>

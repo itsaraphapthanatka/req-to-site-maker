@@ -8,12 +8,16 @@ import {
   getStandard_product_set_by_id,
 } from "@/server/collection";
 
+import { useLang } from "@/context/LanguageContext";
+
 const API_URL = import.meta.env.VITE_API_URL;
 interface StandardProductSet {
   id: number;
   standid: number;
   standsetname: string;
+  standsetname_th: string;
   standsetdesc: string; // HTML
+  standsetdesc_th: string; // HTML
   standsetimg: string | null;
 }
 
@@ -22,7 +26,9 @@ interface StandardProductSetDetail {
   s_id: number;
   s_set_id: number;
   s_set_title: string;
+  s_set_title_th: string;
   s_set_desc: string;
+  s_set_desc_th: string;
   s_set_img: string;
   s_set_chk_main: number;
   position: number;
@@ -33,6 +39,8 @@ const API_BASE_URL = ""; // ถ้า backend คนละโดเมน ให
 const GalloryDetailID = () => {
   const { postId, imgId } = useParams<{ postId: string; imgId: string }>();
   // postId = standid (1–4), imgId = s_set_id (id ของเซ็ต)
+
+  const { lang } = useLang();
 
   const [details, setDetails] = useState<StandardProductSetDetail[]>([]);
   const [productSet, setProductSet] = useState<StandardProductSet[]>([]);
@@ -88,8 +96,8 @@ const GalloryDetailID = () => {
   }));
 
   // ✅ title และ description จาก getStandard_product_set_by_id
-  const title = productSet[0]?.standsetname ?? `Set ${imgId ?? ""}`;
-  const descriptionHtml = productSet[0]?.standsetdesc ?? "";
+  const title = lang === "en" ? productSet[0]?.standsetname : productSet[0]?.standsetname_th ?? `Set ${imgId ?? ""}`;
+  const descriptionHtml = lang === "en" ? productSet[0]?.standsetdesc : productSet[0]?.standsetdesc_th ?? "";
 
   const prevImage = () => {
     setIndex((prev) =>

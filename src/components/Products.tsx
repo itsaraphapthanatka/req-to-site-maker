@@ -20,6 +20,7 @@ import {
   getStandard_product,
 } from "@/server/collection";
 import { useNavigate } from "react-router-dom";
+import { useLang } from "@/context/LanguageContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -27,6 +28,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface Collection {
   id: number;
   collec_name: string;
+  collec_name_th: string;
 }
 
 interface CollectionImage {
@@ -46,18 +48,41 @@ interface PortfolioItem {
 interface StandardItem {
   id: number;
   title: string;
+  title_th: string;
   image: { src: string; alt: string }[];
 }
 
 interface StandardProductApi {
   id: number;
   standname: string;
+  standname_th: string;
 }
 
 const API_BASE_URL = ""; // ถ้า backend อยู่คนละโดเมน ให้ใส่เช่น "https://api.yourdomain.com"
 
+const translations = {
+  en: {
+    collection: "Collection",
+    standard: "Standard Production",
+    endload: "You've reached the end",
+    notFound: "No products found in this category",
+    loading: "Loading Collection...",
+    all: "All",
+    more: "More",
+  },
+  th: {
+    collection: "สินค้า",
+    standard: "สินค้ามาตรฐาน",
+    endload: "คุณได้ถึงจุดสุดท้ายแล้ว",
+    notFound: "ไม่พบสินค้าในหมวดนี้",
+    loading: "กำลังโหลดสินค้า...",
+    all: "ทั้งหมด",
+    more: "เพิ่มเติม",
+  },
+};
 const Products = () => {
   // ✅ filter เป็น id ของ collection หรือ "all"
+  const { lang } = useLang();
   const [filter, setFilter] = useState<number | "all">("all");
   const [visibleCount, setVisibleCount] = useState(8);
   const [openModal, setOpenModal] = useState(false);
@@ -223,6 +248,7 @@ const Products = () => {
       return {
         id: prod.id,
         title: prod.standname ?? "Unnamed",
+        title_th: prod.standname_th ?? "Unnamed",
         image: standardImageMap[normalizedKey] ?? [],
       };
     }
@@ -263,14 +289,14 @@ const Products = () => {
     </Carousel>
   ) : (
     <p className="text-center py-10 text-muted-foreground">
-      ไม่มีรูปภาพสำหรับหมวดนี้
+      {translations[lang].notFound}
     </p>
   );
 
   const standardCollapseItems: CollapseProps["items"] = [
     {
       key: "1",
-      label: "Standard Production",
+      label: translations[lang].standard,
 
       children: (
         <div className="space-y-2">
@@ -281,7 +307,7 @@ const Products = () => {
               onClick={() => navigate(`/gallorys/${cat.id}`)}
               className="block hover:text-primary"
             >
-              {cat.title}
+              {lang === "en" ? cat.title : cat.title_th}
             </button>
           ))}
         </div>
@@ -304,7 +330,7 @@ const Products = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Collection
+            {translations[lang].collection}
           </h3>
 
           {/* Filter Buttons */}
@@ -316,7 +342,7 @@ const Products = () => {
                 setVisibleCount(8);
               }}
             >
-              All
+              {translations[lang].all}
             </Button>
 
             {collections.map((collection) => (
@@ -336,7 +362,7 @@ const Products = () => {
           {/* Loading text */}
           {loadingCollections && (
             <p className="text-center text-muted-foreground mb-6">
-              กำลังโหลด Collection...
+              {translations[lang].loading}
             </p>
           )}
 
@@ -368,7 +394,7 @@ const Products = () => {
           ) : (
             !loadingCollections && (
               <p className="text-center text-muted-foreground mb-6">
-                ไม่พบสินค้าในหมวดนี้
+                {translations[lang].notFound}
               </p>
             )
           )}
@@ -377,7 +403,7 @@ const Products = () => {
           {!loadingCollections && visibleCount < filteredPortfolio.length && (
             <div className="text-center py-8">
               <Button size="lg" variant="default" onClick={handleLoadMore}>
-                More
+                {translations[lang].more}
               </Button>
             </div>
           )}
@@ -386,7 +412,7 @@ const Products = () => {
             visiblePortfolio.length > 0 &&
             visibleCount >= filteredPortfolio.length && (
               <div className="text-center py-8 text-muted-foreground text-sm italic">
-                You've reached the end
+                {translations[lang].endload}
               </div>
             )}
 

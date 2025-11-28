@@ -5,16 +5,19 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface Collection {
     id: number;
     collection_name: string;
+    collection_name_th: string;
 }
 
 interface StandardResponse {
     id: number;
     standname: string;
+    standname_th: string;
 }
 
 interface StandardSetResponse {
     id: number;
     standsetname: string;
+    standsetname_th: string;
 
 }
 
@@ -22,16 +25,30 @@ interface StandardSetResponse {
     id: number;
     standid: number;
     standsetname: string;
+    standsetname_th: string;
     standsetdesc: string;
     standsetimg: string;
 
+}
+
+interface StandardSetResponse {
+    id: number;
+    standid: number;
+    standsetname: string;
+    standsetname_th: string;
+    standsetdesc: string;
+    standsetdesc_th: string;
+    standsetimg: string;
+    position: number;
 }
 
 interface StandardSetDetailResponse {
     id: number;
     s_set_id: number;
     s_set_title: string;
+    s_set_title_th: string;
     s_set_desc: string;
+    s_set_desc_th: string;
     s_set_chk_main: number;
     s_set_img: string;
 }
