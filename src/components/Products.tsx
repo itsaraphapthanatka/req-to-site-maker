@@ -335,16 +335,6 @@ const Products = () => {
 
           {/* Filter Buttons */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
-            <Button
-              variant={filter === "all" ? "default" : "outline"}
-              onClick={() => {
-                setFilter("all");
-                setVisibleCount(8);
-              }}
-            >
-              {translations[lang].all}
-            </Button>
-
             {collections.map((collection) => (
               <Button
                 key={collection.id}
@@ -357,6 +347,17 @@ const Products = () => {
                 {collection.collec_name}
               </Button>
             ))}
+            <Button
+              variant={filter === "all" ? "default" : "outline"}
+              onClick={() => {
+                setFilter("all");
+                setVisibleCount(8);
+              }}
+            >
+              {translations[lang].all}
+            </Button>
+
+
           </div>
 
           {/* Loading text */}
