@@ -8,6 +8,7 @@ import {
   getOemService,
   getOemServiceDetail,
 } from "@/server/service";
+import { useLang } from "@/context/LanguageContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -42,6 +43,7 @@ const StyledCollapse = styled(Collapse)`
 interface ServiceStep {
   id: number;
   name: string;
+  name_th: string;
   position: number;
 }
 
@@ -49,6 +51,23 @@ interface ModalImage {
   src: string;
   alt: string;
 }
+
+const translations = {
+  en: {
+    odm: "Original Design Manufacturing (ODM)",
+    oem: "Original Equipment Manufacturing (OEM)",
+    loading: "Loading images...",
+    noImages: "No images available.",
+    ourServices: "Our Services",
+  },
+  th: {
+    odm: "โรงงานผลิตแบบออกแบบ",
+    oem: "โรงงานผลิตแบบอุปกรณ์",
+    loading: "กำลังโหลดรูปภาพ...",
+    noImages: "ไม่มีรูปภาพสำหรับขั้นตอนนี้",
+    ourServices: "บริการของเรา",
+  },
+};
 
 const Services = () => {
   const [odmSteps, setOdmSteps] = useState<ServiceStep[]>([]);
@@ -58,6 +77,8 @@ const Services = () => {
   const [selectedStep, setSelectedStep] = useState<ServiceStep | null>(null);
   const [modalImages, setModalImages] = useState<ModalImage[]>([]);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const { lang } = useLang();
+
 
   // ถ้าต้องต่อ BASE_URL ให้แก้ตรงนี้
   const API_BASE_URL = "";
@@ -131,7 +152,7 @@ const Services = () => {
   const items: CollapseProps["items"] = [
     {
       key: "odm",
-      label: "Original Design Manufacturing (ODM)",
+      label: translations[lang].odm,
       children: (
         <div className="space-y-3 mb-8">
           {odmSteps.map((step, idx) => (
@@ -142,7 +163,7 @@ const Services = () => {
               className="flex items-start cursor-pointer text-left w-full"
             >
               <span className="flex-shrink-0 mr-3 text-lg font-bold text-primary">•</span>
-              <p className="pt-0">{step.name}</p>
+              <p className="pt-0">{lang === "en" ? step.name : step.name_th}</p>
             </button>
           ))}
           {odmSteps.length === 0 && (
@@ -154,7 +175,7 @@ const Services = () => {
     },
     {
       key: "oem",
-      label: "Original Equipment Manufacturing (OEM)",
+      label: translations[lang].oem,
       children: (
         <div className="space-y-3 mb-8">
           {oemSteps.map((step, idx) => (
@@ -168,7 +189,7 @@ const Services = () => {
                 {idx + 1}
               </span> */}
               <span className="flex-shrink-0 mr-3 text-lg font-bold text-primary">•</span>
-              <p className="pt-0">{step.name}</p>
+              <p className="pt-0">{lang === "en" ? step.name : step.name_th}</p>
             </button>
           ))}
           {oemSteps.length === 0 && (
@@ -184,7 +205,7 @@ const Services = () => {
     if (loadingDetail) {
       return (
         <p className="text-center py-10 text-muted-foreground">
-          กำลังโหลดรูปภาพ...
+          {translations[lang].loading}
         </p>
       );
     }
@@ -192,7 +213,7 @@ const Services = () => {
     if (modalImages.length === 0) {
       return (
         <p className="text-center py-10 text-muted-foreground">
-          ไม่มีรูปภาพสำหรับขั้นตอนนี้
+          {translations[lang].noImages}
         </p>
       );
     }
@@ -228,7 +249,7 @@ const Services = () => {
       <section id="services" className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Services</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">{translations[lang].ourServices}</h2>
           </div>
           <div className="text-center">
             <StyledCollapse

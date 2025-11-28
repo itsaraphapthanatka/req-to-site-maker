@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Typography, Layout, Image, message, Select, Flex, Upload } from 'antd'
+import { Form, Input, Button, Typography, Layout, Image, message, Select, Flex, Upload, Divider } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -14,13 +14,16 @@ const AddBlog = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [description, setDescription] = useState(""); // <-- state สำหรับ ReactQuill
+    const [description_th, setDescription_th] = useState(""); // <-- state สำหรับ ReactQuill
     const [fileList, setFileList] = useState<any[]>([]);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const onFinish = async (values: any) => {
         try {
             const formData = new FormData();
             formData.append("title", values.title);
+            formData.append("title_th", values.title_th);
             formData.append("content", description); // จาก ReactQuill
+            formData.append("content_th", description_th); // จาก ReactQuill
             formData.append("blogsType", values.blogType || "");
             formData.append("blogsStatus", values.status || "");
             if (fileList.length > 0) {
@@ -103,7 +106,6 @@ const AddBlog = () => {
 
                 </Form.Item>
 
-
                 <Form.Item
                     label="Title"
                     name="title"
@@ -112,12 +114,42 @@ const AddBlog = () => {
                     <Input />
                 </Form.Item>
 
+
+
                 {/* ✔ ReactQuill เก็บค่าใน state และ sync กลับเข้า Form manual */}
                 <Form.Item label="Description" name="description" required>
                     <ReactQuill
                         theme="snow"
                         value={description}
                         onChange={setDescription}
+                        modules={{
+                            toolbar: [
+                                ["bold", "italic", "underline", "strike", "blockquote"],
+                                [{ list: "ordered" }, { list: "bullet" }],
+                                ["link", "image"],
+                                ["clean"],
+                            ],
+                        }}
+                        style={{ height: "300px", zIndex: 0 }}
+                    />
+                </Form.Item>
+
+                <Divider style={{ marginTop: "100px" }}>Blog (TH)</Divider>
+
+
+                <Form.Item
+                    label="Title (TH)"
+                    name="title_th"
+
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item label="Description (TH)" name="description_th" required>
+                    <ReactQuill
+                        theme="snow"
+                        value={description_th}
+                        onChange={setDescription_th}
                         modules={{
                             toolbar: [
                                 ["bold", "italic", "underline", "strike", "blockquote"],

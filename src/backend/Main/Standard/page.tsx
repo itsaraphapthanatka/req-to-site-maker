@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Table, Button, Flex, Modal, Tooltip, Input, Form, message } from "antd";
+import { Layout, Typography, Table, Button, Flex, Modal, Tooltip, Input, Form, message, Divider } from "antd";
 const { Content } = Layout;
 const { Title } = Typography;
 import { DeleteOutlined } from '@ant-design/icons';
@@ -18,11 +18,13 @@ import Quill from 'quill';
 interface Standard {
     id: number;
     standname: string;
+    standname_th: string;
 }
 
 interface StandardResponse {
     id: number;
     standname: string;
+    standname_th: string;
 }
 
 const StandardSetPage = () => {
@@ -39,14 +41,22 @@ const StandardSetPage = () => {
     const [form] = Form.useForm();
     const [editId, setEditId] = useState<number | null>(null);
     const [description, setDescription] = useState("");
-
+    const [description_th, setDescription_th] = useState("");
+    const [standsetName, setStandsetName] = useState("");
+    const [standsetNameTh, setStandsetNameTh] = useState("");
+    const [editForm] = Form.useForm();
     const onFinish = async (values: any) => {
         // console.log(values);
         setIsModalOpenAdd(false);
         const newData = {
             standid: Number(id),
             standsetname: values.standsetname,
+            standsetname_th: values.standsetname_th,
             standsetdesc: values.standsetdesc,
+            standsetdesc_th: values.standsetdesc_th,
+            standsetimg: "",
+            position: 0,
+
         };
         console.log(newData);
         // setData([...data, newData]);
@@ -60,6 +70,7 @@ const StandardSetPage = () => {
     const fetchData = async () => {
         setLoading(true);
         const res = await getStandard_product_set_by_standard_id(Number(id));
+        console.log(res);
         setData(Array.isArray(res) ? res : []);
         setLoading(false);
     };
@@ -82,37 +93,49 @@ const StandardSetPage = () => {
         fetchData();
     };
 
-    const handleOk = async () => {
+    const handleOk = async (values) => {
         if (!editId) return;
+
         try {
             const data = {
                 standid: Number(id),
+                standsetname: values.standsetname_en_edit,
+                standsetname_th: values.standsetname_th_edit,
                 standsetdesc: description,
-                standsetname: standard?.standname,
-                standsetimg: ""
+                standsetdesc_th: description_th,
             };
+
             console.log("sending data:", data);
             await updateStandard_product_set(editId, data);
 
-            message.success("Description updated successfully");
+            message.success("Updated successfully");
             fetchData();
             setIsModalOpen(false);
         } catch (error) {
             message.error("Update failed");
-            console.error(error);
         }
     };
+
 
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
-    const handleShow = (text, id) => {
+    const handleShow = (text, text_th, id, name, name_th) => {
         setIsModalOpen(true);
         setDescription(text);
+        setDescription_th(text_th);
         setEditId(id);
+        setStandsetName(name);
+        setStandsetNameTh(name_th);
+
+        editForm.setFieldsValue({
+            standsetname_en_edit: name,
+            standsetname_th_edit: name_th,
+        });
     };
+
 
     const columns = [
         {
@@ -124,17 +147,29 @@ const StandardSetPage = () => {
             title: 'Standard Set',
             dataIndex: 'standsetname',
             key: 'standsetname',
+            render: (_, record) => (
+                <>
+                    <p>{record.standsetname}</p>
+                    <p>{record.standsetname_th}</p>
+                </>
+            )
         },
         {
             title: 'Description',
             dataIndex: 'standsetdesc',
             key: 'standsetdesc',
-            render: (text, record) => (
+            render: (_, record) => (
                 <div style={{ whiteSpace: 'pre-wrap' }}>
                     <Button type="link"
                         onClick={(e) => {
                             e.stopPropagation();
-                            handleShow(text, record.id);
+                            handleShow(
+                                record.standsetdesc,
+                                record.standsetdesc_th,
+                                record.id,
+                                record.standsetname,
+                                record.standsetname_th
+                            );
                         }}
                     >Show</Button>
                 </div>
@@ -178,26 +213,42 @@ const StandardSetPage = () => {
                 })}
             />
             <Modal
-                title="Description"
+                title="Edit Standard Set"
                 open={isModalOpen}
-                onOk={handleOk}
+                onOk={() => editForm.submit()}
                 onCancel={handleCancel}
             >
-                <ReactQuill
-                    theme="snow"
-                    value={description} // <-- bind กับ state
-                    onChange={setDescription} // <-- อัพเดต state เวลาแก้ไข
-                    modules={{
-                        toolbar: [
-                            ["bold", "italic", "underline", "strike", "blockquote"],
-                            [{ list: "ordered" }, { list: "bullet" }],
-                            ["link", "image"],
-                            ["clean"],
-                        ],
-                    }}
-                    style={{ height: "300px" }}
-                />
+                <Form
+                    form={editForm}
+                    layout="vertical"
+                    onFinish={handleOk}
+                >
+                    <Form.Item name="standsetname_en_edit" label="Standard Set Name">
+                        <Input />
+                    </Form.Item>
+
+                    <ReactQuill
+                        theme="snow"
+                        value={description}
+                        onChange={setDescription}
+                        style={{ height: "200px" }}
+                    />
+
+                    <Divider>TH</Divider>
+
+                    <Form.Item name="standsetname_th_edit" label="Standard Set Name (Thai)">
+                        <Input />
+                    </Form.Item>
+
+                    <ReactQuill
+                        theme="snow"
+                        value={description_th}
+                        onChange={setDescription_th}
+                        style={{ height: "200px" }}
+                    />
+                </Form>
             </Modal>
+
 
             <Modal
                 title="Add Standard Set"
@@ -218,6 +269,14 @@ const StandardSetPage = () => {
                             <Input />
                         </Form.Item>
                         <Form.Item name="standsetdesc" label="Standard Set Description">
+                            <Input.TextArea />
+                        </Form.Item>
+
+                        <Divider>Th</Divider>
+                        <Form.Item name="standsetname_th" label="Standard Set Name (Thai)">
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name="standsetdesc_th" label="Standard Set Description (Thai)">
                             <Input.TextArea />
                         </Form.Item>
                     </Form>

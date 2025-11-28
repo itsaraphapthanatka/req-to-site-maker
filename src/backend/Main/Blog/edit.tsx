@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Input, Button, Typography, Layout, Image, message, Select, Flex, Upload } from 'antd'
+import { Form, Input, Button, Typography, Layout, Image, message, Select, Flex, Upload, Divider } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -16,6 +16,7 @@ const EditBlog = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const [description, setDescription] = useState(""); // <-- state สำหรับ ReactQuill
+    const [description_th, setDescription_th] = useState(""); // <-- state สำหรับ ReactQuill
     const [fileList, setFileList] = useState<any[]>([]);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [blog, setBlog] = useState<any>(null);
@@ -25,13 +26,16 @@ const EditBlog = () => {
         setBlog(response);
         form.setFieldsValue({
             title: response.title,
+            title_th: response.title_th || "",
             blogType: response.blogsType,
             status: response.blogsStatus,
             img: response.img,
             description: response.content, // optional
+            description_th: response.content_th, // optional
         });
 
         setDescription(response.content);   // <------ สำคัญ
+        setDescription_th(response.content_th);   // <------ สำคัญ
         setFileList([
             {
                 uid: response.id.toString(),
@@ -55,7 +59,9 @@ const EditBlog = () => {
         try {
             const formData = new FormData();
             formData.append("title", values.title);
+            formData.append("title_th", values.title_th);
             formData.append("content", description);
+            formData.append("content_th", description_th);
             formData.append("blogsType", values.blogType || "");
             formData.append("blogsStatus", values.status || "");
 
@@ -165,6 +171,32 @@ const EditBlog = () => {
                     />
                 </Form.Item>
 
+                <Divider style={{ marginTop: "100px" }}>Blog (TH)</Divider>
+
+
+                <Form.Item
+                    label="Title (TH)"
+                    name="title_th"
+                >
+                    <Input />
+                </Form.Item>
+
+                <Form.Item label="Description (TH)" name="description_th" required>
+                    <ReactQuill
+                        theme="snow"
+                        value={description_th}
+                        onChange={setDescription_th}
+                        modules={{
+                            toolbar: [
+                                ["bold", "italic", "underline", "strike", "blockquote"],
+                                [{ list: "ordered" }, { list: "bullet" }],
+                                ["link", "image"],
+                                ["clean"],
+                            ],
+                        }}
+                        style={{ height: "300px", zIndex: 0 }}
+                    />
+                </Form.Item>
 
                 <Form.Item label="Blog Type" name="blogType" style={{ marginTop: "50px" }}>
                     <Select

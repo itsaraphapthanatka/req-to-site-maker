@@ -35,6 +35,12 @@ const StandardPage = () => {
             title: 'Standard',
             dataIndex: 'standname',
             key: 'standname',
+            render: (_, record) => (
+                <>
+                    <p>{record.standname}</p>
+                    <p>{record.standname_th}</p>
+                </>
+            )
         },
         {
             title: 'Action',

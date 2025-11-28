@@ -24,6 +24,7 @@ interface DataType {
   id: number;
   slide_image: string;
   slide_desc: string;
+  slide_desc_th: string;
 }
 
 interface RowContextProps {
@@ -127,6 +128,7 @@ const HeroPage: React.FC = () => {
 
     const formData = new FormData();
     formData.append("slide_desc", values.slide_desc);
+    formData.append("slide_desc_th", values.slide_desc_th);
     formData.append("file", fileList[0].originFileObj as File);
 
     try {
@@ -151,6 +153,7 @@ const HeroPage: React.FC = () => {
         id: item.id,
         slide_image: item.slide_image,
         slide_desc: item.slide_desc,
+        slide_desc_th: item.slide_desc_th,
       }));
       setSlideData(items);
     } catch (error) {
@@ -193,12 +196,17 @@ const HeroPage: React.FC = () => {
     const handleEdit = async (id: number) => {
       const res = await getSlideById(id);
       if (res) {
-        form.setFieldsValue(res);
+        form.setFieldsValue({
+          slide_desc_ed: res.slide_desc,
+          slide_desc_th_ed: res.slide_desc_th
+        });
         setEditId(id);
         setEditModalVisible(true);
-
       }
     };
+
+
+
 
     const handleDelete = async (id: number) => {
       const res = await deleteSlide(id);
@@ -224,16 +232,20 @@ const HeroPage: React.FC = () => {
   const handleEditSlide = async (values: any) => {
     if (editId) {
       const formData = new FormData();
-      formData.append("slide_desc", values.slide_desc);
+      formData.append("slide_desc", values.slide_desc_ed || "");
+      formData.append("slide_desc_th", values.slide_desc_th_ed || "");
+
       if (fileList.length > 0) {
-        formData.append("slide_image", fileList[0].originFileObj as File); // <-- ต้องตรงกับ FastAPI
+        formData.append("slide_image", fileList[0].originFileObj as File);
       }
+
       const res = await updateSlide(editId, formData);
       if (res) {
         message.success("Edit slide successfully!");
         fetchData();
         setEditModalVisible(false);
         setEditId(null);
+        form.resetFields();
       }
     }
   };
@@ -255,7 +267,16 @@ const HeroPage: React.FC = () => {
           <img width={200} height={200} src={API_URL + record.slide_image} alt="slide_image" />
         ),
     },
-    { title: "description", dataIndex: "slide_desc" },
+    {
+      title: "description",
+      dataIndex: "slide_desc",
+      render: (_, record) => (
+        <>
+          <p>{record.slide_desc}</p>
+          <p>{record.slide_desc_th}</p>
+        </>
+      ),
+    },
     {
       title: "Action",
       key: "action",
@@ -316,6 +337,12 @@ const HeroPage: React.FC = () => {
             >
               <TextArea rows={4} />
             </Form.Item>
+            <Form.Item
+              name="slide_desc_th"
+              label="Description (Thai)"
+            >
+              <TextArea rows={4} />
+            </Form.Item>
           </Form>
         </Modal>
         <Modal
@@ -344,9 +371,16 @@ const HeroPage: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-              name="slide_desc"
+              name="slide_desc_ed"
               label="Description"
-              initialValue={editId ? slideData.find((item) => item.id === editId)?.slide_desc : ""}
+
+
+            >
+              <TextArea rows={4} />
+            </Form.Item>
+            <Form.Item
+              name="slide_desc_th_ed"
+              label="Description (Thai)"
 
             >
               <TextArea rows={4} />

@@ -43,12 +43,18 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             // set form initial values (note: file inputs are separate controlled states)
             form.setFieldsValue({
                 desc: d.desc,
+                desc_th: d.desc_th,
                 founder_name: d.founderName,
+                founder_name_th: d.founderName_th,
                 mission: d.founderDesc,
+                mission_th: d.founderDesc_th,
                 history: d.sec2Desc,
+                history_th: d.sec2Desc_th,
                 experience_desc: d.sec3Desc,
+                experience_desc_th: d.sec3Desc_th,
                 experience_years: d.sec3Experience,
                 standard_desc: d.sec4Desc,
+                standard_desc_th: d.sec4Desc_th,
                 // don't set fileList here — keep current images shown via <Image>
             });
 
@@ -95,12 +101,18 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
         try {
             const about = {
                 desc: values.desc,
+                desc_th: values.desc_th,
                 founderName: values.founder_name,
+                founderName_th: values.founder_name_th,
                 founderDesc: values.mission,
+                founderDesc_th: values.mission_th,
                 sec2Desc: values.history,
+                sec2Desc_th: values.history_th,
                 sec3Desc: values.experience_desc,
+                sec3Desc_th: values.experience_desc_th,
                 sec3Experience: values.experience_years,
                 sec4Desc: values.standard_desc,
+                sec4Desc_th: values.standard_desc_th,
             };
 
             const id = d.id;
@@ -177,6 +189,9 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             <Form.Item label="Description" name="desc">
                 <TextArea placeholder="Description" autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
+            <Form.Item label="Description (TH)" name="desc_th">
+                <TextArea placeholder="Description (TH)" autoSize={{ minRows: 3, maxRows: 5 }} />
+            </Form.Item>
 
             <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>Founder & Director of SARANYA Clothing</div>
 
@@ -184,8 +199,16 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
                 <Input placeholder="Founder Name" />
             </Form.Item>
 
+            <Form.Item label="Founder Name (TH)" name="founder_name_th">
+                <Input placeholder="Founder Name (TH)" />
+            </Form.Item>
+
             <Form.Item label="Mission" name="mission">
                 <TextArea placeholder="Mission" autoSize={{ minRows: 3, maxRows: 5 }} />
+            </Form.Item>
+
+            <Form.Item label="Mission (TH)" name="mission_th">
+                <TextArea placeholder="Mission (TH)" autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 
             {d.founderImg && (
@@ -218,6 +241,10 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
                 <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 
+            <Form.Item label="history (TH)" name="history_th">
+                <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
+            </Form.Item>
+
             {/* SHOW history current image */}
             {d.sec2Img && (
                 <Form.Item label="Current Image" name="sec2_image_current">
@@ -246,6 +273,10 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>Experiences that have led to her professional career</div>
 
             <Form.Item label="Experience Description" name="experience_desc">
+                <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
+            </Form.Item>
+
+            <Form.Item label="Experience Description (TH)" name="experience_desc_th">
                 <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 
@@ -281,6 +312,10 @@ const DetailTab: React.FC<DetailTabProps> = ({ data }) => {
             <div style={{ marginBottom: '16px', fontWeight: 'bold' }}>International Standards and Trust</div>
 
             <Form.Item label="Description" name="standard_desc">
+                <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
+            </Form.Item>
+
+            <Form.Item label="Description (TH)" name="standard_desc_th">
                 <TextArea autoSize={{ minRows: 3, maxRows: 5 }} />
             </Form.Item>
 

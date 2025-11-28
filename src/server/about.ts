@@ -5,15 +5,21 @@ const API_URL = import.meta.env.VITE_API_URL;
 export interface About {
     id: number;
     desc: string;
+    desc_th: string;
     founderName: string;
+    founderName_th: string;
     founderDesc: string;
+    founderDesc_th: string;
     founderImg: string;
     sec2Desc: string;
+    sec2Desc_th: string;
     sec2Img: string;
     sec3Desc: string;
+    sec3Desc_th: string;
     sec3img: string;
     sec3Experience: string;
     sec4Desc: string;
+    sec4Desc_th: string;
     sec4img: string;
 }
 

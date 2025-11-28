@@ -5,7 +5,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface Blog {
     id: number;
     title: string;
+    title_th: string;
     content: string;
+    content_th: string;
     img: string;
     blogsType: string;
     blogsStatus: string;
@@ -15,7 +17,9 @@ interface Blog {
 interface BlogResponse {
     id: number;
     title: string;
+    title_th: string;
     content: string;
+    content_th: string;
     blogsType: string;
     blogsStatus: string;
     img: string;

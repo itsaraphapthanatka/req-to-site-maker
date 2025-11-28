@@ -6,6 +6,7 @@ interface Slide {
     id: number;
     slide_image: string;
     slide_desc: string;
+    slide_desc_th: string;
 }
 
 export const getSlide = async () => {
@@ -18,7 +19,7 @@ export const getSlide = async () => {
 }
 
 export const getSlideById = async (id: number) => {
-    const response = await axios.get(`${API_URL}/slides/${id}`, {
+    const response = await axios.get<Slide>(`${API_URL}/slides/${id}`, {
         headers: {
             "accept": "application/json",
         },
@@ -36,6 +37,7 @@ export const createSlide = async (slide: Slide) => {
 }
 
 export const updateSlide = async (id: number, slide: FormData) => {
+    console.log(slide);
     const response = await axios.put<Slide>(`${API_URL}/slides/${id}`, slide, {
         headers: {
             "Content-Type": "multipart/form-data",

@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 interface odmService {
     id: number;
     name: string;
+    name_th: string;
 }
 
 export const getOdmService = async () => {
@@ -20,6 +21,7 @@ export const addOdmService = async (data: odmService) => {
     const response = await axios.post(`${API_URL}/odm`,
         {
             name: data.name,
+            name_th: data.name_th,
         },
         {
             headers: {
@@ -110,6 +112,7 @@ export const updateOdmServiceOrder = async (odmId: number, orderIds: number[]) =
 interface oemService {
     id: number;
     name: string;
+    name_th: string;
 }
 
 export const getOemService = async () => {
@@ -125,6 +128,7 @@ export const addOemService = async (data: oemService) => {
     const response = await axios.post(`${API_URL}/oem`,
         {
             name: data.name,
+            name_th: data.name_th,
         },
         {
             headers: {
