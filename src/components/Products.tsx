@@ -24,6 +24,10 @@ import { useLang } from "@/context/LanguageContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+
+
+
+
 // ----------------- Types -----------------
 interface Collection {
   id: number;
@@ -93,7 +97,6 @@ const Products = () => {
     Record<number, CollectionImage[]>
   >({});
   const [loadingCollections, setLoadingCollections] = useState(false);
-
   // --------- Standard Product (from API) ----------
   const [standardProducts, setStandardProducts] = useState<
     StandardProductApi[]
@@ -206,7 +209,7 @@ const Products = () => {
   const handleCardClick = (item: PortfolioItem) => {
     setModalContent(
       <div>
-        <img
+        <Image
           src={item.image}
           alt={item.desc}
           className="w-full h-auto mb-4"
@@ -370,27 +373,36 @@ const Products = () => {
           {/* Portfolio Grid */}
           {visiblePortfolio.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {visiblePortfolio.map((item) => (
-                <Card
-                  key={item.id}
-                  onClick={() => handleCardClick(item)}
-                  className="group relative overflow-hidden aspect-[3/4] cursor-pointer hover:shadow-warm transition-smooth border hover:border-primary/50"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.desc}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth">
+              <Image.PreviewGroup
+                preview={{
+                  onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
+                }}
+              >
+                {visiblePortfolio.map((item) => (
+
+                  <Card
+                    key={item.id}
+                    // onClick={() => handleCardClick(item)}
+                    className="group relative overflow-hidden aspect-[3/4] cursor-pointer hover:shadow-warm transition-smooth border hover:border-primary/50"
+                  >
+
+                    <Image
+                      src={item.image}
+                      alt={item.desc}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+
+                    {/* <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth">
                     <div className="text-center bg-background/90 px-6 py-3 rounded-lg shadow-warm">
                       <p className="text-foreground text-sm font-semibold">
                         {item.desc}
                       </p>
                     </div>
-                  </div>
-                </Card>
-              ))}
+                  </div> */}
+                  </Card>
+                ))}
+              </Image.PreviewGroup>
             </div>
           ) : (
             !loadingCollections && (
@@ -422,27 +434,27 @@ const Products = () => {
             <Collapse size="large" items={standardCollapseItems} />
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Modal Collection */}
-      <Modal
+      < Modal
         centered
         open={openModal}
         onCancel={() => setOpenModal(false)}
         footer={null}
       >
         {modalContent}
-      </Modal>
+      </Modal >
 
       {/* Modal Standard Production */}
-      <Modal
+      < Modal
         centered
         open={openModalStandard}
         onCancel={() => setOpenModalStandard(false)}
         footer={null}
       >
         {ContentProductStandard}
-      </Modal>
+      </Modal >
     </>
   );
 };
