@@ -247,11 +247,11 @@ const Contact = () => {
                     <img src={twitter} alt="Twitter" className="w-8 h-8" />
                   </a>
                 )}
-                {/* {contact?.wechat && ( */}
-                <a href={contact?.wechat} target="_blank" rel="noopener noreferrer">
-                  <img src={wechat} alt="Wechat" className="w-8 h-8" />
-                </a>
-                {/* )} */}
+                {contact?.wechat && (
+                  <a href={contact?.wechat} target="_blank" rel="noopener noreferrer">
+                    <img src={wechat} alt="Wechat" className="w-8 h-8" />
+                  </a>
+                )}
               </div>
             </Card>
 
