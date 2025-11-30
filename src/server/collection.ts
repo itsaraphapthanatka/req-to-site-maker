@@ -6,6 +6,8 @@ interface Collection {
     id: number;
     collection_name: string;
     collection_name_th: string;
+    name_edit: string;
+    name_th_edit: string;
 }
 
 interface StandardResponse {
@@ -72,6 +74,7 @@ export const getCollectionById = async (id: number) => {
 }
 
 export const createCollection = async (collection: Collection) => {
+    console.log(collection);
     const response = await axios.post(`${API_URL}/collection`, collection, {
         headers: {
             "accept": "application/json",
@@ -81,7 +84,12 @@ export const createCollection = async (collection: Collection) => {
 }
 
 export const updateCollection = async (id: number, collection: Collection) => {
-    const response = await axios.put(`${API_URL}/collection/${id}`, collection, {
+    console.log("server collection", collection);
+    const collectionData = {
+        name: collection.name_edit,
+        name_th: collection.name_th_edit,
+    };
+    const response = await axios.put(`${API_URL}/collection/${id}`, collectionData, {
         headers: {
             "accept": "application/json",
         },
