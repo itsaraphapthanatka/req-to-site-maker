@@ -50,7 +50,7 @@ const SiderMenu: React.FC<SiderMenuProps> = ({ collapsed = false, mobileVisible 
   const siderContent = (
     <Sider collapsed={collapsed} breakpoint="lg" style={{ minHeight: '100vh' }}>
       <div className="logo" style={{ textAlign: 'center', padding: 16 }}>
-        <img src={logo} alt="Logo" style={{ width: '100%' }} />
+        <a href="/"><img src={logo} alt="Logo" style={{ width: '100%' }} /></a>
       </div>
 
       <Menu
