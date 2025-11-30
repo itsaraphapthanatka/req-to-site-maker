@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
 import { Image } from 'antd';
 import { login } from "../server/auth";
+import logo from '@/assets/logo.png';
 const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -57,7 +58,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
-        <Image src="@/assets/logo.png" />
+        <Image src={logo} />
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label>Email</label>
