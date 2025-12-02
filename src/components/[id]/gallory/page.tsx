@@ -33,12 +33,12 @@ const GalloryDetail = () => {
     const [detailImages, setDetailImages] = useState<Record<number, string>>({});
     const standId = id ? parseInt(id, 10) : NaN;
 
-    const defaultImageByStandId: Record<number, string> = {
-        1: tops,
-        2: pants,
-        3: skirts,
-        4: dresses,
-    };
+    // const defaultImageByStandId: Record<number, string> = {
+    //     1: tops,
+    //     2: pants,
+    //     3: skirts,
+    //     4: dresses,
+    // };
 
     const standTitleMap: Record<number, string> = {
         1: "TOP",
@@ -128,12 +128,11 @@ const GalloryDetail = () => {
 
                 <Row gutter={[16, 16]} className="container-custom px-4 md:px-8 mx-auto">
                     {filteredSets.map((set) => {
-                        const fallbackImg = defaultImageByStandId[set.standid];
                         const mainImg = detailImages[set.id]
                             ? detailImages[set.id]
                             : set.standsetimg
                                 ? API_URL + set.standsetimg
-                                : fallbackImg;
+                                : "";
 
                         return (
                             <Col key={set.id} xs={24} sm={12} md={8} lg={6} xl={6}>
@@ -144,7 +143,11 @@ const GalloryDetail = () => {
                                         onClick={() => handleReadMore(set.standid, set.id)}
                                         cover={
                                             <div style={{ position: "relative", width: "100%", overflow: "hidden" }}>
-                                                <img draggable={false} alt={set.standsetname} src={mainImg} />
+                                                {mainImg ? (
+                                                    <img draggable={false} alt={set.standsetname} src={mainImg} />
+                                                ) : (
+                                                    <div style={{ height: 250, background: "#f0f0f0" }} />
+                                                )}
                                             </div>
                                         }
                                     >
@@ -153,6 +156,7 @@ const GalloryDetail = () => {
                                             description={pageTitle}
                                         />
                                     </Card>
+
                                 </div>
                             </Col>
                         );
