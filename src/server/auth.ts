@@ -9,10 +9,14 @@ interface LoginInput {
 
 export const login = async (loginInput: LoginInput) => {
     try {
-        const response = await axios.post(`${API_URL}/users/login?email=${loginInput.email}&password=${loginInput.password}`);
+        const response = await axios.post(`${API_URL}/users/login`, loginInput, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         return response.data;
     } catch (error) {
         console.error("Login failed:", error);
         throw error;
     }
-};  
+};
