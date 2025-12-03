@@ -53,6 +53,44 @@ const GalloryDetailID = () => {
     return API_URL ? `${API_URL}${path}` : path;
   };
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (!postId || !imgId) return;
+
+  //     try {
+  //       setLoading(true);
+
+  //       // 1) รูปในเซ็ต (detail)
+  //       const resDetail = await getStandard_product_set_detail(
+  //         Number(postId),
+  //         Number(imgId)
+  //       );
+  //       const arrDetail: StandardProductSetDetail[] = Array.isArray(resDetail)
+  //         ? resDetail
+  //         : [resDetail];
+
+  //       arrDetail.sort((a, b) => a.position - b.position);
+  //       setDetails(arrDetail);
+
+  //       // 2) ข้อมูลเซ็ต (ชื่อ + description HTML)
+  //       const resSet = await getStandard_product_set_by_id(Number(imgId));
+  //       const arrSet: StandardProductSet[] = Array.isArray(resSet)
+  //         ? resSet
+  //         : [resSet];
+
+  //       setProductSet(arrSet);
+  //       setIndex(0);
+  //     } catch (err) {
+  //       console.error("Error fetching standard product set:", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [postId, imgId]);
+
+
   useEffect(() => {
     const fetchData = async () => {
       if (!postId || !imgId) return;
@@ -69,7 +107,12 @@ const GalloryDetailID = () => {
           ? resDetail
           : [resDetail];
 
+        // sort ตาม position
         arrDetail.sort((a, b) => a.position - b.position);
+
+        // หาภาพ main
+        const mainIndex = arrDetail.findIndex((d) => d.s_set_chk_main === 1);
+
         setDetails(arrDetail);
 
         // 2) ข้อมูลเซ็ต (ชื่อ + description HTML)
@@ -79,7 +122,9 @@ const GalloryDetailID = () => {
           : [resSet];
 
         setProductSet(arrSet);
-        setIndex(0);
+
+        // ตั้ง index ของ main image
+        setIndex(mainIndex >= 0 ? mainIndex : 0);
       } catch (err) {
         console.error("Error fetching standard product set:", err);
       } finally {
@@ -89,6 +134,7 @@ const GalloryDetailID = () => {
 
     fetchData();
   }, [postId, imgId]);
+
 
   const images = details.map((d) => ({
     id: d.id,
