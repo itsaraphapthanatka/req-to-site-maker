@@ -307,10 +307,11 @@ export const deleteStandard_product_set_detail = async (id: number) => {
 
 export const updateStandard_product_set_main = async (id: number) => {
     const response = await axios.put(
-        `${API_URL}/standard_set_detail/${id}`,
-        { s_set_chk_main: 1 },   // ส่งค่าที่ backend ต้องการ
+        `${API_URL}/standard_set_detail/update_check_main/${id}`,
+        { s_set_chk_main: 1 },
         {
             headers: {
+                "Content-Type": "application/json",
                 "accept": "application/json",
             },
         }
