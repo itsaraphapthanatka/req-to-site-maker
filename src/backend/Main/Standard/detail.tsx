@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Table, Button, Image, UploadFile, UploadProps, Radio, Flex, Modal, Form, Upload, message } from "antd";
+import { Layout, Typography, Table, Button, Image, UploadFile, UploadProps, Radio, Flex, Modal, Form, Upload, message, Input, Checkbox } from "antd";
 const { Content } = Layout;
 const { Title } = Typography;
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
@@ -156,32 +156,31 @@ const StandardSetDetailPage = () => {
         }
 
         const formData = new FormData();
-
         formData.append("s_id", String(id));
         formData.append("s_set_id", String(standard_id));
         formData.append("s_set_title", standard?.standname || "");
         formData.append("s_set_desc", "");
-        if (selectedMainId) {
+        if (selectedMainId === null) {
             formData.append("s_set_chk_main", "1");
-        } else {
-            formData.append("s_set_chk_main", "0");
+            console.log("s_set_chk_main", "1");
         }
         formData.append("file", fileList[0].originFileObj as File);
+
         try {
             setLoading(true);
             await createStandard_product_set_detail(formData);
-            message.success("Standard product set detail created successfully");
+            message.success("Created successfully");
             form.resetFields();
             setFileList([]);
             setIsModalOpenAdd(false);
             fetchData();
-            setLoading(false);
         } catch (error) {
-            console.log("Error creating standard product set detail:", error);
-            console.log("error", error);
+            console.log(error);
+        } finally {
             setLoading(false);
         }
     };
+
 
     const updateMain = async (detailId: number) => {
         try {

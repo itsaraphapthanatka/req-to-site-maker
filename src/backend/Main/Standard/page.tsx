@@ -269,15 +269,22 @@ const StandardSetPage = () => {
                             <Input />
                         </Form.Item>
                         <Form.Item name="standsetdesc" label="Standard Set Description">
-                            <Input.TextArea />
+                            <ReactQuill
+                                theme="snow"
+                                style={{ height: "200px" }}
+                            />
                         </Form.Item>
 
-                        <Divider>Th</Divider>
+                        <Divider style={{ marginTop: "80px" }}>Th</Divider>
                         <Form.Item name="standsetname_th" label="Standard Set Name (Thai)">
                             <Input />
                         </Form.Item>
-                        <Form.Item name="standsetdesc_th" label="Standard Set Description (Thai)">
-                            <Input.TextArea />
+
+                        <Form.Item style={{ marginBottom: "80px" }} name="standsetdesc_th" label="Standard Set Description (Thai)">
+                            <ReactQuill
+                                theme="snow"
+                                style={{ height: "200px" }}
+                            />
                         </Form.Item>
                     </Form>
                 </>
