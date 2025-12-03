@@ -206,9 +206,9 @@ const GalloryDetailID = () => {
             <h2 className="text-2xl font-bold mb-4">{title}</h2>
             <div
               className="prose max-w-none"
-            // dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
             >
-              {descriptionHtml}
+              {/* {descriptionHtml} */}
             </div>
           </div>
         )}
