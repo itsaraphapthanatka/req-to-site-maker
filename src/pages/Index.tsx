@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Products from "@/components/Products";
+import Review from "@/components/Review";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -19,10 +20,11 @@ const Index = () => {
         <section className="w-full">
           <Hero />
         </section>
-          <About />
-          <Services />
-          <Products />
-          <Contact />
+        <About />
+        <Services />
+        <Products />
+        <Review />
+        <Contact />
       </main>
 
       {/* Footer */}
