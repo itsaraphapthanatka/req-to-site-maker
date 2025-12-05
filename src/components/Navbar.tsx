@@ -18,6 +18,7 @@ const Navbar = () => {
       services: "Services",
       products: "Products",
       blogs: "Blogs",
+      testimonial: "Testimonial",
       contact: "Contact Us",
     },
     th: {
@@ -26,6 +27,7 @@ const Navbar = () => {
       services: "บริการ",
       products: "สินค้า",
       blogs: "บทความ",
+      testimonial: "รีวิว",
       contact: "ติดต่อเรา",
     },
   };
@@ -37,6 +39,7 @@ const Navbar = () => {
     { id: "services", label: t[lang].services, href: "/#services" },
     { id: "products", label: t[lang].products, href: "/#products" },
     { id: "blogs", label: t[lang].blogs, href: "/blogs" },
+    { id: "testimonial", label: t[lang].testimonial, href: "/#testimonial" },
     { id: "contact", label: t[lang].contact, href: "/#contact" },
   ];
 

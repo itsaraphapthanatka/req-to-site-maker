@@ -36,6 +36,9 @@ import StandardPage from "./backend/Main/StandardPage";
 import StandardSet from "./backend/Main/Standard/page";
 import StandardSetDetail from "./backend/Main/Standard/detail";
 import EditBlog from "./backend/Main/Blog/edit";
+import ReviewPage from "./backend/Main/ReviewPage";
+import AddReview from "./backend/Main/Review/page";
+import EditReview from "./backend/Main/Review/edit"
 
 const queryClient = new QueryClient();
 
@@ -88,6 +91,10 @@ const App = () => (
 
             <Route path="standardset/:id" element={<StandardSet />} />
             <Route path="standardsetdetail/:id/:standard_id" element={<StandardSetDetail />} />
+
+            <Route path="review" element={<ReviewPage />} />
+            <Route path="review/add" element={<AddReview />} />
+            <Route path="review/edit/:id" element={<EditReview />} />
           </Route>
 
           {/* Catch-all */}
