@@ -55,32 +55,29 @@ const EditBlog = () => {
     }, [id]);
 
 
-    const onFinish = async (values: any) => {
-        try {
-            const formData = new FormData();
-            formData.append("title", values.title);
-            formData.append("title_th", values.title_th);
-            formData.append("content", description);
-            formData.append("content_th", description_th);
-            formData.append("blogsType", values.blogType || "");
-            formData.append("blogsStatus", values.status || "");
+    const onFinish = async (values) => {
+        const formData = new FormData();
 
-            // เพิ่มไฟล์ถ้ามี
-            if (fileList.length > 0) {
-                formData.append("file", fileList[0].originFileObj);
-            }
+        formData.append("title", values.title);
+        formData.append("title_th", values.title_th || "");
+        formData.append("content", description);
+        formData.append("content_th", description_th);
+        formData.append("blogsType", values.blogType || "");
+        formData.append("blogsStatus", values.status || "");
 
-            const result = await axios.put(`${API_URL}/blogs/${id}`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            message.success("Form submitted successfully!");
-            navigate("/admin/blog");
-        } catch (err) {
-            console.error(err);
-            message.error("Form submission failed!");
+        // ✔ เช็คว่าผู้ใช้เลือกไฟล์ใหม่ไหม
+        if (fileList.length > 0 && fileList[0].originFileObj) {
+            formData.append("file", fileList[0].originFileObj);  // ← รูปใหม่
         }
+        // ❌ ถ้าไม่เลือกไฟล์ → ไม่ต้อง append("file")
+
+        const res = await axios.put(`${API_URL}/blogs/${id}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        message.success("Updated successfully!");
     };
+
 
 
 
@@ -128,7 +125,7 @@ const EditBlog = () => {
                 <Form.Item
                     label="Upload Parent Image"
                     name="image"
-                    rules={[{ required: true, message: 'Please upload an image!' }]}
+                // rules={[{ required: true, message: 'Please upload an image!' }]}
                 >
                     <Upload
                         name="file" // ต้องตรงกับ FastAPI parameter
