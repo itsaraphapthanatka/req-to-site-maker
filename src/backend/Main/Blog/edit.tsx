@@ -215,7 +215,7 @@ const EditBlog = () => {
                 </Form.Item>
 
                 <Form.Item style={{ marginTop: "20px" }}>
-                    <Flex justify="end">
+                    <Flex justify="end" gap={10}>
                         <Button type="default" onClick={() => navigate("/admin/blog")}>
                             Cancel
                         </Button>
