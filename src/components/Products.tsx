@@ -127,6 +127,9 @@ const Products = () => {
         ? collectionRes
         : [collectionRes];
 
+      // เรียงจากใหม่ไปเก่า (Desc by id)
+      collectionList.sort((a, b) => b.id - a.id);
+
       setCollections(collectionList);
       console.log("collections", collectionList);
 
@@ -139,6 +142,8 @@ const Products = () => {
             const imgArr: CollectionImage[] = Array.isArray(imgRes)
               ? imgRes
               : [imgRes];
+            // เรียงรูปจากใหม่ไปเก่า (Desc by id)
+            imgArr.sort((a, b) => b.id - a.id);
             imagesMap[col.id] = imgArr;
             console.log(`images for collection ${col.id}`, imgArr);
           } catch (err) {
