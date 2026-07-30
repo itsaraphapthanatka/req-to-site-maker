@@ -6,10 +6,13 @@ import Products from "@/components/Products";
 import Review from "@/components/Review";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import FloatingSocial from "@/components/FloatingSocial";
 
 const Index = () => {
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Floating Social Media Icons */}
+      <FloatingSocial />
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md">
         <Navbar />
