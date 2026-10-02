@@ -29,7 +29,7 @@ const GalloryDetail = () => {
     const navigate = useNavigate();
     const { lang } = useLang(); // ✅ แก้ตรงนี้
     const [standardProductSet, setStandardProductSet] = useState<StandardProductSet[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [detailImages, setDetailImages] = useState<Record<number, string>>({});
     const standId = id ? parseInt(id, 10) : NaN;
 
@@ -96,7 +96,7 @@ const GalloryDetail = () => {
         navigate(`/gallorydetail/${standid}/${setId}`);
     };
 
-    if (!loading && (Number.isNaN(standId) || filteredSets.length === 0)) {
+    if (Number.isNaN(standId) || !(standId in standTitleMap)) {
         return (
             <div>
                 <Navbar />
@@ -123,6 +123,14 @@ const GalloryDetail = () => {
                 {loading && (
                     <p className="text-center text-gray-600 mb-6">
                         {lang === "en" ? "Loading..." : "กำลังโหลดข้อมูล..."}
+                    </p>
+                )}
+
+                {!loading && filteredSets.length === 0 && (
+                    <p className="text-center text-gray-600 mb-6">
+                        {lang === "en"
+                            ? "No products in this category yet."
+                            : "ยังไม่มีสินค้าในหมวดหมู่นี้"}
                     </p>
                 )}
 
